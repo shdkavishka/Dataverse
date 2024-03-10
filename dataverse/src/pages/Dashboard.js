@@ -5,7 +5,7 @@ const Dashboard = () => {
   const Navigate=useNavigate();
   return (
     <div>
-      Dashboard
+      Dashboard Kavishka
         <button onClick={()=>Navigate(-1)}>
             Logout
         </button>
