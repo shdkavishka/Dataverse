@@ -1,0 +1,47 @@
+/* Dashboard.css */
+
+/* Container styles */
+
+
+/* Button styles */
+.btn1 {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4f46e5;
+  color: #ffffff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1rem; /* Updated to a valid margin value */
+  margin: 1cm;
+}
+.btn2 {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4f46e5;
+  color: #ffffff;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  margin-bottom: 1rem; /* Updated to a valid margin value */
+  margin: 1cm;
+}
+.btn:hover {
+  background-color: #4338ca;
+}
+
+/* Grid layout styles */
+.grid {
+  display: grid;
+}
+
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .grid-cols-2 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
