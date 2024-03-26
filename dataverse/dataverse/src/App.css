@@ -1,0 +1,29 @@
+:root{
+    --darkblue: #061C36;
+    --darkorange:#F26E20;
+    --lightorange:#E38B4F;
+    }
+    
+    .App {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 6rem;
+      overflow: hidden;
+      mix-blend-mode: overlay;
+      height: 100vh;
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    
+
+    .input {
+      box-shadow: inset 7px -7px 10px #88888874;
+      font-size: 1.5rem;
+      padding: 1rem;
+      width: 26%;
+      border-radius: 5px;
+      margin: 0.7rem;
+    }
+  
