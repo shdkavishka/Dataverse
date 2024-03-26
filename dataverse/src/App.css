@@ -1,0 +1,19 @@
+:root{
+  --darkblue: #061C36;
+  --darkorange:#F26E20;
+  --lightorange:#E38B4F;
+  }
+  
+  .App {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+    overflow: hidden;
+    mix-blend-mode: overlay;
+    height: 100vh;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  

@@ -1,21 +1,11 @@
-import { Routes, Route } from "react-router-dom";
-import "./App.css";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signin from "./pages/Signin";
-import Dashboard from "./pages/Dashboard";
 
+import './App.css';
+import Chat from './components/Chat'
 
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route exact path="/" Component={Home} />
-        <Route exact path="/Login" Component={Login} />
-        <Route exact path="/Signin" Component={Signin} />
-        <Route path="/Signin/Dashboard" Component={Dashboard} />
-        <Route path="/Login/Dashboard" Component={Dashboard} />
-      </Routes>
+     <Chat/>
     </div>
   );
 }
