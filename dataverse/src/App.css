@@ -1,0 +1,49 @@
+.App {
+  text-align: center;
+}
+
+.employee-data {
+  margin-top: 50px; /* Adjust the margin as needed */
+}
+
+.chart-container {
+  position: relative;
+  display: inline-block;
+  
+}
+
+.dropdown {
+  position: absolute;
+  top: 10px; /* Adjust the top position as needed */
+  right: 10px; /* Adjust the right position as needed */
+}
+
+.dropbtn {
+  background-color: transparent;
+  color: rgb(11, 7, 7);
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content select {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+

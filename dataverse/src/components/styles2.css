@@ -1,0 +1,96 @@
+/* Style for the form */
+form {
+    margin-bottom: 20px;
+  }
+  
+  input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #63686d;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  button:hover {
+    background-color: #042141;
+  }
+  
+  /* Style for the table */
+  table {
+    border-collapse: collapse;
+    width: 40%;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+ 
+/* Style for the chart */
+.canvas-container {
+    position: relative;
+    width: 70%;
+    height: 500px; /* Adjust the height as needed */
+    max-width: 70%; /* Set maximum width to 90% of the container */
+    max-height: 500px; /* Adjust the maximum height as needed */
+    margin:20px 60px auto;
+  }
+  
+  canvas {
+    width: 100%; /* Set chart width to fill the container */
+    height: 100%; /* Set chart height to fill the container */
+    border: 1px solid #0f0f0f; /* Set chart border and color */
+    border-radius: 4px;
+  }
+  
+  
+  /* Style for popup */
+  .popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .popup-content {
+    margin-bottom: 20px;
+  }
+  
+  .popup-button-container {
+    text-align: center;
+  }
+  
+  .popup-button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .popup-button:hover {
+    background-color: #0056b3;
+  }
+  
