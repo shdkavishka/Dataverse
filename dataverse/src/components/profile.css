@@ -1,0 +1,148 @@
+.profile{
+    background-image: url(./../assets/bg.jpg);
+
+}
+
+.profile-top{
+    height: calc(100vh/3);
+    display: flex;
+    background-color:#141c20db ;
+    width: 100%;
+}
+
+.dp{
+flex: 2;
+padding: 2rem;
+padding-left: 10%;
+}
+.dp>img{
+    width: 14rem;
+border-radius: 50%;
+
+border: 5px solid #FB9B51;
+}
+
+.Display-name{
+flex: 10;
+font-size: 2rem;
+padding: 2rem;
+display: flex;
+color: white;
+}
+.Display-name>div:nth-child(1){
+    margin-top: 8%;
+    font-size: 8rem;
+    font-weight: 900;
+    padding-left: 2rem;
+}
+.Display-name>div:nth-child(2){
+    margin-top: 16.5%;
+    padding-left: 2rem;
+}
+
+.logo{
+flex: 2;
+padding: 2rem;
+
+}
+.logo>img{
+    width: 8rem;
+}
+
+
+
+
+
+.profile-bottom{
+    background-color: white;
+}
+
+.edit-profile{
+    float: right;
+    padding: 2rem;
+    padding-right: 10%;
+}
+
+.edit-profile>button{
+border: none;
+background-color: rgb(232, 232, 232);
+border-radius: 3px;
+}
+
+.edit-profile>button:hover{
+
+    background-color:rgb(223, 223, 223);
+    }
+.edit-profile>button>img{ 
+    width: 2rem;
+    }
+
+    .profile-details{
+        width: 100%;
+        display: flex;
+    }
+
+    .profile-details>div{
+       width: 40%;
+       padding: 2rem;
+    }
+   
+    .profile-details>div:nth-of-type(1){
+        padding-left: 10%;
+     }
+
+     .profile-details>div:nth-of-type(2){
+ 
+padding-right: 9%;
+     }
+
+    .profile-details>div>div{
+    background-color: rgb(235, 235, 235);
+    border-radius: 5px;
+    width: 95%;
+    margin: 1rem 0 1rem 0;
+    padding: 5px;
+    }
+
+    .profile-details>div>div:hover{
+        background-color: rgb(223, 223, 223);
+
+        }
+
+
+    
+        
+
+     .label1{
+        font-size: 1.8rem;
+        font-weight: 600;
+
+     }
+
+     .data1{
+        padding-left: 1rem;
+        font-size: 1.8rem;
+        font-weight: 400;
+
+     }
+
+     .profile-last{
+        float: right;
+        padding: 2rem;
+        padding-right: 9.7%;
+    
+     }
+
+     .profile-last>div>button{
+ 
+    border: none;
+    background-color: white;
+    float: right;
+    font-size: 1.5rem;
+    color:  #254054;
+    padding-top: 1rem;
+     }
+
+     .profile-last>div>button:hover{
+ text-decoration: underline;
+         }
