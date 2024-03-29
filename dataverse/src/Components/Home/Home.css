@@ -1,0 +1,99 @@
+.Hero {
+    background-color: #1e3954;
+    display: flex; /* lowercase 'display' */
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.left {
+    width: 67%;
+}
+
+.right {
+    width: 33%;
+    background-color: var(--darkblue);
+    margin-top: -20rem;
+}
+.top{
+    width: 33%;
+}
+
+.logo {
+    width: 9rem;
+    padding: 2rem;
+}
+
+.heroText {
+    color: #f26e20;
+    font-weight: 500;
+    font-size: 6rem;
+    text-align: left;
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    overflow: hidden;
+    width: auto;
+}
+
+.heroText > :nth-child(2) {
+    font-size: 3rem;
+}
+
+.heroText > div {
+    position: relative;
+    display: inline-block; /* Changed 'float: left' to 'display: inline-block' */
+}
+
+.heroText > div span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    background: #1e3954;
+    animation-name: typing;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: steps(18, end);
+}
+
+@keyframes typing {
+    0% { width: 100%; }
+    100% { width: 0; }
+}
+
+.HomeButton > div > button {
+    background-color: #ef8f4f;
+    border-radius: 10px;
+    padding: 0.8rem;
+    width: 70%;
+    color: black;
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin: 0.5rem;
+    
+}
+
+.homeText {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin: 0.5rem;
+}
+
+.HomeButton > div > button:hover {
+    background-color: #f26e20;
+}
+
+.right > :nth-child(1) {
+    margin-top: 25rem;
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(0, 0, 0);
+    color: #ef8f4f;
+    text-align: center;
+}
