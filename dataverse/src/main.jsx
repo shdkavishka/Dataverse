@@ -8,10 +8,10 @@ import {
 } from "react-router-dom";
 import Signin from './Components/SignAndLogin/Signin.jsx';
 import Login from './Components/SignAndLogin/Login.jsx';
-import Home from './Components/Home/home.jsx';
 import Header from './Components/Dashboard/Header.jsx';
 import ConnectDatabasePage from './Components/ConnectDB/ConnectDatabasePage.jsx';
 import Dashboard from './Components/Dashboard/Dashboard.jsx';
+import Profile from './Components/Profile/Profile.jsx';
 
 
 const router = createBrowserRouter([
@@ -42,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/signin",
     element:<Signin/> ,
+  },
+  {
+    path: "/profile",
+    element:<Profile/> ,
   },
 
 ]);

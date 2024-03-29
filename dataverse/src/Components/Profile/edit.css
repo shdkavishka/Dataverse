@@ -1,0 +1,34 @@
+input ,textarea,select{
+    padding: 0.5rem;
+    border-radius: 5px;
+    margin: 0.7rem;
+    width: 92%;
+    font-size: 1rem;
+
+  }
+  select{
+ 
+    width: 89%;
+ 
+
+  }
+
+  .save-button{
+    box-shadow: inset 4px 4px 10px #000000ac;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 1rem;
+    width: 95%;
+    border-radius: 5px;
+    background-color: #FB9B51;
+    color: rgb(0, 0, 0);
+    border: none;
+  }
+
+  .save-button:hover{
+    background-color: #ff872c;
+  }
+  .buttons{
+    display: flex;
+    width: 100%;
+  }
