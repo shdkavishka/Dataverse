@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import dp from "../assets/dp.jpg";
-import editprofile from "../assets/edit.png";
-import logo from "../assets/logo.png";
+import dp from "../../assets/dp.jpg";
+import editprofile from "../../assets/edit.png";
+import logo from "../../assets/logo2.png";
 import "./profile.css";
-import ChangePassW from "./pop-ups/changePW";
-import DeleteAcc from "./pop-ups/deleteAcc";
+import ChangePassW from "./pop-ups/ChagnePW"
+import DeleteAcc from "./pop-ups/DeleteAcc";
 
 const Profile = () => {
   const [ChangePassWButton, SetChangePassWButton] = useState(false);

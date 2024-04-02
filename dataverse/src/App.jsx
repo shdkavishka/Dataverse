@@ -1,21 +1,27 @@
+// App.jsx
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './Components/Home/Home.jsx'
+import ConnectDatabasePage from './Components/ConnectDB/ConnectDatabasePage';
+import Header from './Components/Dashboard/Header';
+import Dashboard from './Components/Dashboard/Dashboard';
+import Login from './Components/SignAndLogin/Login';
+import Signin from './Components/SignAndLogin/Signin';
+import Profile from './Components/Profile/Profile';
 
-import { useState } from "react";
-//import Body from "./Components/BodyContent/Body"
-import Home from "./Components/Home/home";
-
-//import Footer from "./Components/FooterContent/Footer"
-
-
-function App() {
-
-
+const App = () => {
   return (
-    <>
-     <div id="wrapper">
-     <Home/>
-     </div>
-    </>
-  )
-}
+    <Routes>
+      <Route path="/" element={<Home/>} />
+      <Route path="/ConnectDatabasePage" element={<ConnectDatabasePage />} />
+      <Route path="/Header" element={<Header />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/Login" element={<Login />} />
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/profile" element={<Profile />} />
+      {/* Add more routes here */}
+    </Routes>
+  );
+};
 
-export default App
+export default App;

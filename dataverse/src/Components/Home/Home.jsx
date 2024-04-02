@@ -1,13 +1,17 @@
+// Home.jsx
 import React from 'react';
 import './Home.css';
-import { useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo2.png';
+import { useAuthContext } from '@asgardeo/auth-react';
+import Dashboard from '../Dashboard/Dashboard';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const navigate = useNavigate();
+  const { signIn,state } = useAuthContext();
 
   return (
-    <div className="Hero">
+    <>{(state.isAuthenticated)?(<Dashboard/>)
+    :(<div className="Hero">
       <div className="left">
         <img
           src={Logo}
@@ -28,17 +32,18 @@ const Home = () => {
           <div className="homeText">Get Started</div>
           <div className="HomeButton">
             <div>
-                <button onClick={() => navigate('/Login')}>Login</button>
+              <button type='submit'
+               onClick={() => signIn()}>Login</button>
             </div>
             <div>
-              <button onClick={() => navigate('/Signin')}>SignIn</button>
+              <button type='submit' >SignIn</button>
             </div>
           </div>
         </div>
       </div>
       <div className="footer">@divergent</div>
-    </div>
+    </div>)
+}</>
   );
 };
-
 export default Home;

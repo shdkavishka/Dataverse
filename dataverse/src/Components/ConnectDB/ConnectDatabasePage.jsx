@@ -14,7 +14,7 @@ const handleSubmit = ()=>{
     server:server,
     database:database,
   };
-  axios.post('http://localhost:5000/test-connections',[data])
+  axios.post('http://localhost:5000/test-sql-connection',[data])
   .then(response =>{
     console.log('connection successful' , response.data)
     alert('Connecyion Successfull')

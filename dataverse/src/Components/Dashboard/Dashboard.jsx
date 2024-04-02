@@ -34,7 +34,7 @@ const Dashboard = () => {
 
   const fetchConnectedDatabases = () => {
     axios
-      .get("http://localhost:5000/connected-databases")
+      .get("http://localhost:5000/connected-sql-databases")
       .then((response) => {
         setDatabases(response.data.databases || []);
       })
@@ -66,7 +66,7 @@ const Dashboard = () => {
           {/* Databases Section */}
           <div className="section bg-white shadow-md rounded-md p-6">
             <h2 className="text-xl font-bold mb-4">Databases</h2>
-            <Link to="./ConnectDatabasePage" className="btn1">
+            <Link to="/ConnectDatabasePage" className="btn1">
               {" "}
               Add Database
             </Link>
