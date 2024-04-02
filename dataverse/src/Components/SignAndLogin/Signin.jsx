@@ -1,6 +1,5 @@
 import React from 'react';
 import './Signin.css';
-// import '../App.css';
 import { useNavigate } from 'react-router-dom';
 import logo from "../../assets/logo.png";
 

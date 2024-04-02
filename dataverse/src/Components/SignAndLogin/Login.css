@@ -93,3 +93,12 @@
     float: left;
     margin-left: 2rem;
 }
+
+.input {
+    box-shadow: inset 7px -7px 10px #88888874;
+    font-size: 1.5rem;
+    padding: 1rem;
+    width: 26%;
+    border-radius: 5px;
+    margin: 0.7rem;
+  }
