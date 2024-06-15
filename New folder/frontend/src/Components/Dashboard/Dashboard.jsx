@@ -1,17 +1,19 @@
 // Dashboard.jsx
 import React,{ useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Dashboard.css'; // Import the CSS file
-import addDatabaseIcon from '../../assets/AddDb.png'
-import db from '../../assets/DBGroup.png'
+import './Dashboard.css'; 
+// Import the CSS file
+//import addDatabaseIcon from '../../assets/AddDb.png'
+//import db from '../../assets/DBGroup.png'
 import Joyride from 'react-joyride';
 
 
-const Dashboard = () => {
-  const [joyrideSteps, setJoyrideSteps] = useState([
+const Dashboard = ({ showTour }) => {
+  const steps = [ 
     {
       target: '.btn1',
       content: 'Add your Database Here...',
+      disableBeacon: true,
     },
     {
       target: '.btn1:nth-of-type(2)',
@@ -28,16 +30,9 @@ const Dashboard = () => {
     
     
     // Add more steps as needed for other elements
-  ]);
+  ];
 
-  const [run, setRun] = useState(true); // Set to true to automatically start the tour
-
-  const handleJoyrideCallback = (data) => {
-    const { status } = data;
-    if (status === 'finished' || status === 'skipped') {
-      setRun(false);
-    }
-  };
+  
 
   return (
     <div>
@@ -60,15 +55,15 @@ const Dashboard = () => {
             {/* Add more collaborator buttons */}
           </div>
         </div>
-      </div>
-      <Joyride
-        steps={joyrideSteps}
-        run={run}
-        continuous
-        scrollToFirstStep
-        showSkipButton
-        callback={handleJoyrideCallback}
-      />
+        </div>
+      {showTour && (
+        <Joyride
+          steps={steps}
+          continuous={true}
+          showProgress={true}
+          showSkipButton={true}
+        />
+      )}
     </div>
   );
 }
