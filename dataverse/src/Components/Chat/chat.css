@@ -1,0 +1,35 @@
+.header1{
+    display: flex; 
+    background-color: #061C36; 
+    color: white;
+    height: 7%;
+}
+
+.left-header1{
+    padding: 1.5rem;
+    flex:3; 
+    display: flex; 
+    font-size: 1.5rem;
+}
+.back-button1{
+    flex: 1;
+}
+.profile-picture1{
+    flex: 4;
+margin: -0.5rem 0 0 1.5rem;
+}
+
+.Display-Name1{
+    flex:20;
+}
+
+.right-header1{
+    flex:12;
+    
+}
+
+.main{
+    display: flex;
+    min-height: 100vh;
+}
+
