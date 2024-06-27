@@ -1,148 +1,235 @@
-.profile{
-    background-image: url(./../assets/bg.jpg);
-
-}
-
-.profile-top{
-    height: calc(100vh/3);
+.profile {
     display: flex;
-    background-color:#141c20db ;
-    width: 100%;
-}
+    flex-direction: column;
+    height: 100vh;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+  }
 
-.dp{
-flex: 2;
-padding: 2rem;
-padding-left: 10%;
-}
-.dp>img{
-    width: 14rem;
-border-radius: 50%;
-
-border: 5px solid #FB9B51;
-}
-
-.Display-name{
-flex: 10;
-font-size: 2rem;
-padding: 2rem;
-display: flex;
-color: white;
-}
-.Display-name>div:nth-child(1){
-    margin-top: 8%;
-    font-size: 8rem;
-    font-weight: 900;
-    padding-left: 2rem;
-}
-.Display-name>div:nth-child(2){
-    margin-top: 16.5%;
-    padding-left: 2rem;
-}
-
-.logo{
-flex: 2;
-padding: 2rem;
-
-}
-.logo>img{
-    width: 8rem;
-}
-
-
-
-
-
-.profile-bottom{
+  
+  .Title-text {
+    font-size: 3rem;
+    margin-left: -70%;
+    margin-top: 5%;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .profile-bottom {
+    display: flex;
     background-color: white;
-}
+    flex-grow: 1;
+    margin: 0 20%;
+  
 
-.edit-profile{
-    float: right;
-    padding: 2rem;
-    padding-right: 10%;
-}
-
-.edit-profile>button{
-border: none;
-background-color: rgb(232, 232, 232);
-border-radius: 3px;
-}
-
-.edit-profile>button:hover{
-
-    background-color:rgb(223, 223, 223);
-    }
-.edit-profile>button>img{ 
-    width: 2rem;
-    }
-
-    .profile-details{
-        width: 100%;
-        display: flex;
-    }
-
-    .profile-details>div{
-       width: 40%;
-       padding: 2rem;
-    }
    
-    .profile-details>div:nth-of-type(1){
-        padding-left: 10%;
-     }
+  }
+  
+  .profile-card {
+    flex: 1;
+    background-image: url("../../assets/bg2.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: rgba(218, 218, 218, 0.344) 10px 0 20px;
+  
+  }
+  
+  .card-bottom {
+    width: 100%;
+    border-radius: 30px 30px 0 0;
+    background-color:#061c36ce ;
+    margin-top: 50%;
+    flex-grow: 1;
+    height: 20%;
+    color: #ef8f4f;
+  }
 
-     .profile-details>div:nth-of-type(2){
- 
-padding-right: 9%;
-     }
 
-    .profile-details>div>div{
-    background-color: rgb(235, 235, 235);
+  .card-fn{
+    padding-top: 5%;
+    font-size: 4rem;
+    font-weight: 800;
+    text-align: left;
+    padding-left: 10px;
+  }
+
+  .card-ln{
+    font-size: 2rem;
+    text-align: left;
+    padding-left: 10px;
+  }
+  .card-un{
+    font-size: 1.5rem;
+    text-align: left;
+    padding-left: 10px;
+    font-style: italic;
+  }
+
+
+  .profile-content {
+    flex: 2;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .edit-profile {
+    align-self: flex-end;
+    margin-bottom: 1rem;
+  }
+  
+  .edit-profile > button {
+    border: none;
+    background-color: rgb(232, 232, 232);
+    border-radius: 3px;
+  }
+  
+  .edit-profile > button:hover {
+    background-color: rgb(223, 223, 223);
+  }
+  
+  .edit-profile > button > img {
+    width: 2rem;
+  }
+  
+  .profile-details {
+    width: 100%;
+  }
+  
+  .profile-details .details-section {
+    width: 100%;
+  }
+  
+  .profile-details .details-section > div {
+    background-color: rgb(238, 238, 238);
     border-radius: 5px;
-    width: 95%;
-    margin: 1rem 0 1rem 0;
-    padding: 5px;
-    }
+    width: 100%;
+    margin: 1rem 0;
+    padding: 0.5rem;
+  }
+  
+  .profile-details .details-section > div:hover {
+    background-color: rgb(223, 223, 223);
+  }
+  
+  .label1 {
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+    text-align: left;
+  }
+  
+  .data1 {
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 400;
 
-    .profile-details>div>div:hover{
-        background-color: rgb(223, 223, 223);
+    margin-top: 0.5rem;
+  }
+  
+  .input3 {
+    font-size: 1rem;
+    padding: 0.5rem;
+    width: 90%;
+    border-radius: 5px;
+    margin: 0.2rem 0;
+    border: none;
+    text-align: left;
+    height: 0.5rem;
+  }
 
-        }
-
-
-    
-        
-
-     .label1{
-        font-size: 1.8rem;
-        font-weight: 600;
-
-     }
-
-     .data1{
-        padding-left: 1rem;
-        font-size: 1.8rem;
-        font-weight: 400;
-
-     }
-
-     .profile-last{
-        float: right;
-        padding: 2rem;
-        padding-right: 9.7%;
-    
-     }
-
-     .profile-last>div>button{
- 
+  .select3{
+    font-size: 1rem;
+    padding: 0.1rem;
+    border-radius: 5px;
+    margin: 0.2rem 0;
+    border: none;
+    text-align: left;
+    width: 90%;
+    height: 1.2rem;
+  }
+  
+  .input3:focus {
+    border: 3px solid #E38B4F;
+    outline: none;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .save-button {
+    border: none;
+    background-color: #ef8f4f;
+    border-radius: 10px;
+    padding: 0.8rem;
+    color: black;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0.5rem;
+  }
+  
+  .save-button:hover {
+    background-color: #F26E20;
+  }
+  
+  .profile-last {
+    width: 100%;
+    padding: 1rem;
+    text-align: right;
+  }
+  
+  .profile-last > div > button {
     border: none;
     background-color: white;
-    float: right;
-    font-size: 1.5rem;
-    color:  #254054;
+    font-size: 1rem;
+    color: #254054;
     padding-top: 1rem;
-     }
+  }
+  
+  .profile-last > div > button:hover {
+    text-decoration: underline;
+  }
+  
 
-     .profile-last>div>button:hover{
- text-decoration: underline;
-         }
+.login-btn{
+  background-color: #ef8f4f;
+  border-radius: 10px;
+  padding: 0.8rem;
+  width: 70%;
+  color: black;
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin: 0.5rem;
+}
+
+
+
+.login-btn:hover {
+    background-color: #F26E20;
+
+  }
+
+  .opentext {
+    font-size: 2rem;
+    font-weight: 800;
+    padding-top: 3%;
+    padding-bottom: 2%;
+    color: #2f546e;
+}
+
+.proflogin{
+margin: 0 30%;
+padding-top: 10%;
+}
+
+.logo-login2{
+
+  width: 4rem;
+  padding-top: 3%;
+}
