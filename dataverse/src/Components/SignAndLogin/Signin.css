@@ -45,6 +45,7 @@
     padding: 1rem;
     width: 28.2%;
     border-radius: 5px;
+    
     margin: 0.7rem;
     background-color: #2f546e;
     color: white;
@@ -54,8 +55,7 @@
     
 }
 
-
-.Signin>button:nth-child(1){
+.home_link{
     border: none;
     background-color: white;
     color:#2f546e ;
@@ -63,16 +63,23 @@
     font-size: 1rem;
     float: left;
     padding: 1rem;
-    padding-left: 2rem;
-} 
+    padding-left: 2rem; 
+}
+.home_link:hover{
+    text-decoration: underline;
+}
 
-.login-link>p>button{
+
+.link{
     border: none;
     background-color: white;
     color:#E38B4F ;
     text-decoration: none;
     font-size: 1rem;
 }  
+.link:hover{
+    text-decoration: underline;
+ }  
 
 .social-btn{
     box-shadow: 0 7px 8px #888888;
@@ -93,12 +100,3 @@
     float: left;
     margin-left: 2rem;
 }
-
-.input {
-    box-shadow: inset 7px -7px 10px #88888874;
-    font-size: 1.5rem;
-    padding: 1rem;
-    width: 26%;
-    border-radius: 5px;
-    margin: 0.7rem;
-  }
