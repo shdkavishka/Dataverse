@@ -1,0 +1,99 @@
+.VTT{
+
+    position: fixed;
+    left: calc((100vw - 33%)/2);
+    background-color: #254054;
+    border-radius: 10px;
+    width: 33%;
+    padding: 2rem;
+    box-shadow: 4px 4px 10px #000000ac;
+    min-height: 40%;
+
+
+}
+.mic{
+    padding-top: 1rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    z-index: 4;
+}
+
+.outer-circle {
+    height: 5rem;
+    width: 5rem;
+    z-index: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.inner-circle {
+    background-color: #254054;
+    height: 4.5rem;
+    width: 4.5rem;
+    z-index: 2;
+    border-radius: 50%;
+}
+
+.outer-circle-lis {
+    background-color: #FB9B51;
+    height: 5rem;
+    width: 5rem;
+    z-index: 1;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    animation: recording 2s infinite;
+}
+
+@keyframes recording {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.title-t{
+
+   color: #FB9B51;
+   font-size: 1.5rem;
+   text-align: center;
+   padding: 1rem;
+}
+.save-button7 {
+    border: none;
+    background-color: #ef8f4f;
+    border-radius: 10px;
+    padding: 0.5rem;
+    color: black;
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0.5rem;
+  }
+  
+  .save-button7:hover {
+    background-color: #F26E20;
+  }
+
+  .trans{
+    background-color: white;
+    font-size: 1.5rem;
+    padding: 1rem;
+    width: 83%;
+    border-radius: 5px;
+    margin: 0.7rem;
+    border: none;
+    height: 1rem;
+  }
