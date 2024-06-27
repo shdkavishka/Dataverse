@@ -1,5 +1,6 @@
 .Login{
     height: 100vh;
+    
 }
 
 .logo-login{
@@ -19,25 +20,28 @@
 }
 
 .forgot-password{
-    padding-top: 1%;
     text-align: left;
     padding-left: 36%;
-   
+    margin-top: -3%;
 }
 
 .forgot-password>a{
    
     color:#E38B4F ;
     text-decoration: none;
+  
+}
+.forgot-password>a:hover{
+   
+    text-decoration: underline;
 }
 .remember-me{
     padding-top: 1%;
     text-align: left;
-    padding-left: 35.7%;
+    padding-left: 30%;
     display: flex; 
     padding-bottom: 2%;  
 }
-
 
 .continue-btn{
     box-shadow: inset 4px 4px 10px #000000ac;
@@ -45,6 +49,7 @@
     padding: 1rem;
     width: 28.2%;
     border-radius: 5px;
+    
     margin: 0.7rem;
     background-color: #2f546e;
     color: white;
@@ -55,7 +60,7 @@
 }
 
 
-.Login>button:nth-child(1){
+.home_link{
     border: none;
     background-color: white;
     color:#2f546e ;
@@ -63,10 +68,13 @@
     font-size: 1rem;
     float: left;
     padding: 1rem;
-    padding-left: 2rem;
-} 
+    padding-left: 2rem; 
+}
+.home_link:hover{
+    text-decoration: underline;
+}
 
-.signup-link>p>button{
+.link{
     border: none;
     background-color: white;
     color:#E38B4F ;
@@ -74,6 +82,9 @@
     font-size: 1rem;
 }  
 
+.link:hover{
+   text-decoration: underline;
+}  
 .social-btn{
     box-shadow: 0 7px 8px #888888;
     background-color: white;
@@ -94,11 +105,3 @@
     margin-left: 2rem;
 }
 
-.input {
-    box-shadow: inset 7px -7px 10px #88888874;
-    font-size: 1.5rem;
-    padding: 1rem;
-    width: 26%;
-    border-radius: 5px;
-    margin: 0.7rem;
-  }
