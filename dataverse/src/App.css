@@ -1,0 +1,38 @@
+
+    
+    .App {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 6rem;
+      overflow: hidden;
+      mix-blend-mode: overlay;
+      height: 100vh;
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    
+
+    .input2 {
+      
+      font-size: 1.5rem;
+      padding: 1rem;
+      width: 26%;
+      border-radius: 5px;
+      margin: 0.7rem;
+      border: none;
+    }
+    .input2:focus {
+      border: 3px solid #E38B4F ;
+      outline: none;
+    }
+    .passwordVisibility {
+   text-align: right;
+   padding-right: 36%;
+   padding-bottom: 1rem;
+    }
+    .passwordVisibility:hover {
+     text-decoration: underline;
+       }
+    

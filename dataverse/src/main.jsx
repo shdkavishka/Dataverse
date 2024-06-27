@@ -1,27 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
+import 'regenerator-runtime/runtime';
 import App from './App';
 import './index.css';
 import { BrowserRouter } from 'react-router-dom';
-import { AuthProvider } from "@asgardeo/auth-react";
 
-ReactDOM.render(
+
+
+
+
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
+
+root.render(
   <React.StrictMode>
+    
     <BrowserRouter>
-      <AuthProvider
-        config={{
-          signInRedirectURL: "http://localhost:3000/",
-          signOutRedirectURL: "http://localhost:3000/",
-          clientID: "7KbhUeHptMxSE5RCoySvJb06D78a",
-          baseUrl: "https://api.asgardeo.io/t/aaishah",
-          scope: ["openid", "profile"],
-          disableTrySignInSilently: true,
-          enableOIDCSessionManagement: true
-        }}
-      >
-        <App />
-      </AuthProvider>
+      <App />
     </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
+   
+  </React.StrictMode>
 );
