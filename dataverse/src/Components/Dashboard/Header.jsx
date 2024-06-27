@@ -9,6 +9,7 @@ import logo from "../../assets/logo.png";
 import a from "../../assets/a.png";
 import b from "../../assets/b.png";
 import c from "../../assets/c.png";
+import { handleLogout } from "../Logout/Logout";  // AH-- to handle logout
 
 const Header = () => {
   const navigate = useNavigate();
@@ -31,8 +32,9 @@ const Header = () => {
           id="dropdownContent"
           className={`dropdown-content ${dropdownVisible ? "show" : ""}`}
         >
-          <Link to="/UserPage">Edit User </Link>
-          <Link to="/UserPage">View User </Link>
+          <Link to="/Profile">Edit User </Link>
+          <Link to="/Profile">View User </Link>
+          <Link to="/Login" onClick={handleLogout}>Logout </Link>  {/* AH-- to logout and redirect to login page */}
         </div>
         <img src={logo} alt="" style={{ width: "50px", height: "50px" }} />
         <span>DataVerse</span>
