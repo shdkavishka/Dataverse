@@ -16,9 +16,9 @@
     background-color: #061C36;
 }
 
-.logo{
+.logoh{
     float: left;
-    width: 9rem;
+    width: 5rem;
     padding: 2rem;
 }
 
@@ -66,7 +66,7 @@
   }
 
 
-.HomeButton>div>button {
+.Home-But {
   background-color: #ef8f4f;
   border-radius: 10px;
   padding: 0.8rem;
@@ -83,7 +83,7 @@
     margin: 0.5rem;
 }
 
-.HomeButton>div>button:hover {
+.Home-But:hover {
     background-color: #F26E20;
 
   }
@@ -91,14 +91,4 @@
 
 .right>:nth-child(1){
     margin-top: 25rem;
-}
-
-.footer{
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: rgb(0, 0, 0);
-    color:#ef8f4f;
-    text-align: center;
 }

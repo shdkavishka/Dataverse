@@ -1,27 +1,26 @@
-// Home.jsx
-import React from 'react';
-import './Home.css';
-import Logo from '../../assets/logo2.png';
-import { useAuthContext } from '@asgardeo/auth-react';
-import Dashboard from '../Dashboard/Dashboard';
+import React from 'react'
+import './Home.css'
+import Logo from "../../assets/logo.png"
 import { Link } from 'react-router-dom';
+import Footer from "../footer-all/footer"
 
+
+//AH-- Home 
 const Home = () => {
-  const { signIn,state } = useAuthContext();
 
   return (
-    <>{(state.isAuthenticated)?(<Dashboard/>)
-    :(<div className="Hero">
+    <div className="Hero">
       <div className="left">
         <img
           src={Logo}
           alt="logo"
-          className="logo"
+          className="logoh"
         />
         <div className="heroText">
           <div>
             Create Your Charts&nbsp; &nbsp; &nbsp; &nbsp;<span></span>
           </div>
+          <br />
           <div>
             with JUST chats&nbsp; &nbsp;&nbsp; &nbsp;<span></span>
           </div>
@@ -32,18 +31,23 @@ const Home = () => {
           <div className="homeText">Get Started</div>
           <div className="HomeButton">
             <div>
-              <button type='submit'
-               onClick={() => signIn()}>Login</button>
+              <Link to="/Login">
+                <button className='Home-But'>Login</button>
+              </Link>
             </div>
             <div>
-              <button type='submit' >SignIn</button>
+              <Link to="/SignIn">
+                <button className='Home-But'>Sign In</button>
+              </Link>
             </div>
+
           </div>
         </div>
       </div>
-      <div className="footer">@divergent</div>
-    </div>)
-}</>
+     <Footer/>
+    </div>
   );
 };
-export default Home;
+
+export default Home
+
