@@ -4,11 +4,13 @@ import "./profile.css";
 import logo from "../../assets/logo.png"
 import ChangePassW from "./pop-ups/ChangePW";
 import DeleteAcc from "./pop-ups/DeleteAcc";
+import DeleteConGoogle from "./pop-ups/deleteconGoogle";
 import { Link } from 'react-router-dom';
 import Toast from "../Toast/Toast";
 import Header from "../header-all/Header1";
 import Footer from "../footer-all/footer"
 import handleLogout from "../Logout/Logout";
+
 
 
 //AH-- profile
@@ -19,10 +21,11 @@ const Profile = () => {
   //AH-- to handle pop pups appear and dissappear
   const [ChangePassWButton, SetChangePassWButton] = useState(false);
   const [DeleteAccButton, SetDeleteAccButton] = useState(false);
+  const [DeleteAccSocialButton, SetDeleteAccSocialButton] = useState(false);
 
   //AH-- to hamdle edit profile
   const [isEditing, setIsEditing] = useState(false);
-  
+
   //AH-- for User data
   const [id, setID] = useState("");
   const [first_Name, setFirstName] = useState("");
@@ -32,13 +35,14 @@ const Profile = () => {
   const [userName, setUserName] = useState("");
   const [gender, setGender] = useState("");
   const [location, setLocation] = useState("");
+  const [google_id, seGoogle_id] = useState("")
 
   //AH-- for toast, types success, error, alert
   const [toastMessage, setToastMessage] = useState("");
-  const [toastType, setToastType] = useState(""); 
+  const [toastType, setToastType] = useState("");
 
 
-   //AH-- Fetch user data when component mounts
+  //AH-- Fetch user data when component mounts
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -68,9 +72,10 @@ const Profile = () => {
       setUserName(profileData.name);
       setGender(profileData.gender);
       setLocation(profileData.location);
+      seGoogle_id(profileData.google_id);
 
     } catch (error) {
-    
+
       console.error('Error fetching user data:', error);
       showToast('Error fetching user data:', "error");
     }
@@ -92,6 +97,7 @@ const Profile = () => {
     data.append('username', userName);
     data.append('gender', gender);
     data.append('location', location);
+
 
 
     // AH-- Send PUT request to the editprofile endpoint in bakcend
@@ -123,7 +129,7 @@ const Profile = () => {
       showToast("Failed to update profile. Please try again.", "error");
     }
   };
-  
+
   // AH-- Handle canceling edit and revert back to original profile data
   // AH-- cancel button(form reset)
 
@@ -141,7 +147,7 @@ const Profile = () => {
     }
     setIsEditing(false);
   };
- 
+
   // AH-- to Display toast message
   const showToast = (message, type) => {
     setToastMessage(message);
@@ -154,46 +160,48 @@ const Profile = () => {
 
 
   // AH-- error when editing of username
-  const HandleInputKey=()=>{
+  const HandleInputKey = () => {
     showToast("Cannot edit username", "error");
   }
 
   return (
     <>
 
-    {/* AH-- show profile only if authentucated */}
+      {/* AH-- show profile only if authentucated */}
       {id ? (
         <div className="profile">
           {toastMessage && (
             <Toast message={toastMessage} type={toastType} onClose={() => setToastMessage("")} />
           )}
-  
+
           <Header firstName={first_Name || userName} lastName={last_Name} userName={userName} />
           <div className="profile-bottom">
             <div className="profile-card">
-             
-              <div className="card-bottom"> 
+
+              <div className="card-bottom">
                 <div className="card-fn">
                   {first_Name || userName}
-                  </div>
-                  <div className="card-ln">
-                    {last_Name}</div>
-                    <hr/>
-            <div className="card-un">
-                    @{userName}</div>
-                    </div>
-                    <div>
-                    <Link to="/dashboard"> <button className="save-button" onClick={handleLogout}> Dashboard</button></Link>
-                      <Link to="/login"> <button className="save-button" onClick={handleLogout}> Logout</button></Link>
-                      
-                    </div>
-                      </div>
+                </div>
+                <div className="card-ln">
+                  {last_Name}</div>
+                <hr />
+                <div className="card-un">
+                  @{userName}</div>
+              </div>
+              <div>
+                <Link to="/dashboard"> <button className="save-button" onClick={handleLogout}> Dashboard</button></Link>
+                <Link to="/login"> <button className="save-button" onClick={handleLogout}> Logout</button></Link>
 
-  
+              </div>
+            </div>
+
+
             <div className="profile-content">
               <ChangePassW trigger={ChangePassWButton} setTrigger={SetChangePassWButton} />
               <DeleteAcc trigger={DeleteAccButton} setTrigger={SetDeleteAccButton} />
-  
+              <DeleteConGoogle trigger={DeleteAccSocialButton} setTrigger={SetDeleteAccSocialButton}/>
+              
+
               <div className="edit-profile">
                 {!isEditing && (
                   <button onClick={() => setIsEditing(true)}>
@@ -201,10 +209,10 @@ const Profile = () => {
                   </button>
                 )}
               </div>
-  
+
               <form className="profile-details" onSubmit={handleSubmit} encType="multipart/form-data">
                 <div className="details-section">
-                  <section className="Title-text">{isEditing?("Edit Profile"):("My Profile")}</section>
+                  <section className="Title-text">{isEditing ? ("Edit Profile") : ("My Profile")}</section>
                   <div className="First-name card">
                     <span className="label1">First Name:</span>
                     {isEditing ? (
@@ -238,7 +246,7 @@ const Profile = () => {
                     )}
                   </div>
                   <div className="Username card">
-    
+
                     <span className="label1">UserName:</span>
                     {isEditing ? (
                       <textarea className="input3" value={userName} onKeyDown={HandleInputKey}></textarea>
@@ -277,44 +285,49 @@ const Profile = () => {
                   )}
                 </div>
               </form>
-              {isEditing?null:
-              <div className="profile-last">
-                <div className="ChangePW">
-                  <button onClick={() => SetChangePassWButton(true)}>Change Password</button>
-                </div>
-                <div className="deleteAcc">
-                  <button onClick={() => SetDeleteAccButton(true)}>Delete Account</button>
-                </div>
-              </div>}
+              {isEditing ? null :
+                <div className="profile-last">
+                  {google_id ? (<div className="deleteAcc">
+                    <button onClick={() => SetDeleteAccSocialButton(true)}>Delete Account</button>
+                  </div>) : (<><div className="ChangePW">
+                    <button onClick={() => SetChangePassWButton(true)}>Change Password</button>
+                  </div>
+
+                    <div className="deleteAcc">
+                      <button onClick={() => SetDeleteAccButton(true)}>Delete Account</button>
+                    </div></>
+                  )}
+
+                </div>}
             </div>
           </div>
-          <Footer/>
+          <Footer />
         </div>
       ) : (
         <div>
 
 
-<Link className='link2' to="/Home">Home</Link>
-        <div className="proflogin">
-           
-          <img
-                src={logo}
-                alt="logo-login"
-                className="logo-login2"
+          <Link className='link2' to="/Home">Home</Link>
+          <div className="proflogin">
+
+            <img
+              src={logo}
+              alt="logo-login"
+              className="logo-login2"
             />
-          <p className="opentext">You are not logged in</p>
-          <Link to="/Login">
-            <button className="login-btn">Login</button>
-          </Link>
-          <Footer/>
+            <p className="opentext">You are not logged in</p>
+            <Link to="/Login">
+              <button className="login-btn">Login</button>
+            </Link>
+            <Footer />
+          </div>
         </div>
-        </div>
-       
+
       )}
     </>
   );
-  
-  
+
+
 }
 
 export default Profile;

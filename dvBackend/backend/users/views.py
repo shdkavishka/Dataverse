@@ -1,11 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
-from .serializers import UserSerializer,ResetPasswordSerializer,ResetPasswordConfirmSerializer
+from .serializers import UserSerializer,ResetPasswordSerializer,ResetPasswordConfirmSerializer,GoogleUserSerializer
 from .models import User
 import jwt, datetime
 from django.conf import settings
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.parsers import MultiPartParser, FormParser
 
 from django.contrib.auth.tokens import default_token_generator
@@ -16,7 +15,8 @@ from rest_framework.views import APIView
 from rest_framework import status
 from django.contrib.auth.hashers import check_password, make_password
 from django.utils.http import urlsafe_base64_decode
-
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
 
 
 # Create your views here.
@@ -27,8 +27,26 @@ class RegisterView(APIView):
         serializer = UserSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         #AH-- Save the validated data, including hashing the password
-        serializer.save()
-        return Response(serializer.data)
+        user = serializer.save()
+
+        #AH-- Prepare payload for JWT token
+        payload = {
+            'id': user.id,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+            'iat': datetime.datetime.utcnow()
+        }
+        #AH-- Create JWT token
+        token = jwt.encode(payload, 'secret', algorithm='HS256')
+
+        response = Response({
+            'user': serializer.data,
+            'jwt': token
+        }, status=status.HTTP_201_CREATED)
+
+        #AH-- Set the token in the response cookies
+        response.set_cookie(key='jwt', value=token, httponly=True)
+
+        return response
 
 #AH-- Handle user login
 class LoginView(APIView):
@@ -257,3 +275,121 @@ class ResetPasswordConfirm2(APIView):
 
         return Response({"message": "Password reset successfully."}, status=status.HTTP_200_OK)
     
+
+
+
+
+# AH-- Handle Google user registration
+class SaveGoogleUserView(APIView):
+    def post(self, request):
+        # AH-- Initialize the serializer with request data
+        serializer = GoogleUserSerializer(data=request.data)
+
+        # AH-- Validate the serializer
+        if serializer.is_valid():
+            # AH-- Save validated data to create or update user
+            user = serializer.save()
+
+            # AH-- Prepare payload for JWT token
+            payload = {
+                'id': user.id,
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+                'iat': datetime.datetime.utcnow()
+            }
+            # AH-- Create JWT token
+            token = jwt.encode(payload, 'secret', algorithm='HS256')
+
+            response = Response({
+                'user': serializer.data,
+                'jwt': token
+            }, status=status.HTTP_201_CREATED)
+
+            # AH-- Set the token in the response cookies
+            response.set_cookie(key='jwt', value=token, httponly=True)
+
+            return response
+        else:
+            # AH-- Return errors
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
+# AH-- Handle Google user login
+class GoogleLoginView(APIView):
+    def post(self, request):
+        # AH-- Get the email and google_id
+        email = request.data.get('email')
+        google_id = request.data.get('google_id')
+
+        if not email:
+            return Response({'error': 'Email is required!'}, status=status.HTTP_400_BAD_REQUEST)
+        if not google_id:
+            return Response({'error': 'Google ID is required!'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            # AH-- Validate email
+            validate_email(email)
+        except ValidationError:
+            return Response({'error': 'Invalid email format!'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # AH-- Check if the user already exists in your database
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            return Response({'error': 'No user with this email exists!'}, status=status.HTTP_404_NOT_FOUND)
+
+        # AH-- Prepare JWT token
+        payload = {
+            'id': user.id,
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60),
+            'iat': datetime.datetime.utcnow()
+        }
+
+        # AH-- Create JWT token
+        token = jwt.encode(payload, 'secret', algorithm='HS256')
+
+        response = Response({
+            'jwt': token
+        }, status=status.HTTP_200_OK)
+
+        # AH-- Set the token in the response cookies
+        response.set_cookie(key='jwt', value=token, httponly=True)
+
+        return response
+
+
+    
+
+
+
+class DeleteGoogleUserAccountView(APIView):
+
+    def delete(self, request):
+        #AH-- Verify JWT token
+        token = request.COOKIES.get('jwt')
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        try:
+            payload = jwt.decode(token, key='secret', algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+
+
+        #AH-- Retrieve user from database based on JWT
+        user = User.objects.filter(id=payload['id']).first()
+        if not user:
+            raise AuthenticationFailed('User not found!')
+
+        #AH-- Check if email exists in request data
+        email = request.data.get('email')
+        if not email:
+            return Response({"error": "Email is required!"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # AH-- Check if the provided email exists in the database
+        existing_user = User.objects.filter(email=email).first()
+        if not existing_user:
+            return Response({"error": "User with this email does not exist!"}, status=status.HTTP_404_NOT_FOUND)
+
+        # AH-- Delete the user account
+        existing_user.delete()
+        return Response({"message": "User deletion successful!"}, status=status.HTTP_204_NO_CONTENT)

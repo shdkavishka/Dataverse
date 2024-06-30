@@ -90,7 +90,7 @@
     margin: 0.7rem;
     color: #2f546e;
     border-color: black;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     text-align: left;
 }
 
@@ -98,5 +98,21 @@
 .social-btn>img{
     width: 2rem;
     float: left;
-    margin-left: 2rem;
+    margin-left: 5rem;
+}
+
+.hr{
+    width: 28.2%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.or{
+    margin-top: -2.7rem;
+    background-color: transparent;
+
+}
+
+.login-link2{
+    margin-top: -5rem;
 }

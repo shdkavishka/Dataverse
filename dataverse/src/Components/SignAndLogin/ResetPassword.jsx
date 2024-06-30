@@ -34,25 +34,24 @@ const ResetPassword = () => {
             const response = await axios.post('http://localhost:8000/api/reset_password/', {
                 email: email
             });
-        
+
             console.log(response.data);
             if (response.status === 200) {
                 showToast('Password reset email has been sent.', "success");
-            } else if (response.status === 400 && response.data.message === "User with this email address does not exist.") {
+            } else if (response.status === 400 && response.data.message === "Invalid token or user not found.") {
                 showToast('User not found. Please check your email address.', "error");
-            } else {
+            }
+             else {
+
                 showToast('Failed to reset password. Please try again.', "error");
+                
             }
         } catch (error) {
             console.error('An error occurred:', error);
-            if (error.response && error.response.data.message === "User with this email address does not exist.") {
-                showToast('User not found. Please check your email address.', "error");
-            } else {
-                showToast('Failed to reset password. Please try again.', "error");
-            }
+            showToast('Failed to reset password. Please try again.', "error");
         } finally {
             setIsLoading(false); 
-            // AH-- Stop loading state
+            //AH-- Stop loading state
         }
     };
 

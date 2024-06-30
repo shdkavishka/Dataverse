@@ -1,4 +1,3 @@
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
@@ -8,7 +7,7 @@ def upload_to(instance,filename):
 
 # Create your models here.
 
-#my custom user model
+# AH-- my custom user model
 class User(AbstractUser):
     name = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True)
@@ -19,8 +18,9 @@ class User(AbstractUser):
     profilePicture = models.ImageField(default='default.png', upload_to=upload_to)
     gender = models.CharField(max_length=255, blank=True, default='')
     location = models.CharField(max_length=255, blank=True, default='')
+    google_id = models.CharField(max_length=255, blank=True, default='')
     username = None
 
-#using email to uniquly identify each user
+# AH-- using email to uniquly identify each user
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []

@@ -9,6 +9,8 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons';
 import Toast from "../Toast/Toast";
 import Footer from "../footer-all/footer"
 import Cookies from 'universal-cookie'
+import { useGoogleLogin } from '@react-oauth/google';
+import google from "../../assets/google.png";
 
 // AH-- login
 const Login = () => {
@@ -23,12 +25,71 @@ const Login = () => {
   const [toastType, setToastType] = useState(""); 
 
 
+  // AH-- for social rlogin
+  // AH-- continure with google
+  const login = useGoogleLogin({
+    onSuccess: async (response) => {
+      try {
+        //AH-- Get user info from Google API
+        const res = await axios.get(
+          "https://www.googleapis.com/oauth2/v3/userinfo",
+          {
+            headers: {
+              Authorization: `Bearer ${response.access_token}`,
+            },
+          }
+        );
+        console.log(res.data); //AH-- Log user info for debugging
+        const email = res.data.email;
+        const google_id=res.data.sub;
+
+        // AH-- Send email to your backend for authentication
+        try {
+          const response = await axios.post(
+            'http://localhost:8000/api/google_login',
+            {email,google_id} ,
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          );
+          console.log('Backend response:', response.data);
+          setRedirect(true);
+          const jwt_token = response.data.jwt;
+          const expiryDate = new Date();
+          expiryDate.setDate(expiryDate.getDate() + 1);
+    
+          // AH-- Set JWT token in cookies
+          cookies.set("jwt", jwt_token, {
+            path: '/',
+            expires: expiryDate,
+            secure: true, 
+            sameSite: 'strict'
+          });
+        } catch (err) {
+          console.error('Error sending email to backend:', err);
+        
+          
+        }
+      } catch (err) {
+        console.error('Error fetching user info from Google API:', err);
+        showToast("Error fetching info from Google", "error");
+      }
+    },
+    onFailure: (error) => {
+      console.error('Login failed:', error);
+      showToast("Failed to Login. Please try again.", "error");
+      showToast("Failed to Login. Please try again.", "error");
+    },
+  });
+
 // AH-- Handles form submission for login
 // AH-- continue
   const submit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
-      showToast( "All Fields are required" ,"error")
+      setErrors({ ...errors, emptyFeilds: "All Fields are required" });
       return;
     }
 
@@ -108,6 +169,16 @@ const Login = () => {
             <p>Don't have an account? <Link className='link' to="/Signin">Signup</Link></p>
           </div>
         </form>
+        <hr className='hr'/>
+        <p className='or'>or</p>
+
+        <div className="social-login">
+
+          <div>
+            <div><button onClick={() => login()} className="social-btn"> <img src={google} alt="google" className="google" /><div>&nbsp; &nbsp; &nbsp;  Continue with Google</div> </button></div>
+
+          </div>
+        </div>
       </div>
       <Footer/>
     </div>
@@ -115,3 +186,4 @@ const Login = () => {
 }
 
 export default Login;
+
