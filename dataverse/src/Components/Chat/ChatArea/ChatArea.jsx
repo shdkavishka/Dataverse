@@ -6,6 +6,7 @@ import send from "../../../assets/send.png";
 import mic from "../../../assets/microphone.png";
 import VoiceToText from '../VoiceToText/VoiceToText.jsx';
 import Toast from "../../Toast/Toast";
+import Feedback from '../../Feedback/Feedback.jsx';
 import "./ChatArea.css";
 
 // NSN - Constant for the maximum number of messages allowed in a chat
@@ -167,12 +168,23 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId }) => {
 
       <div className="chat-section">
         <div className="chats">
-          {messages.map((message, i) => (
-            <div key={i} className={message.isBot ? "QandA bot" : "QandA"}>
-              <img src={message.isBot ? bot : profile} alt="dp" />
-              <div>{message.prompt}{message.output}</div>
-            </div>
-          ))}
+        {messages.map((message, i) => {
+            const question = i > 0 && !messages[i - 1].isBot ? messages[i - 1].prompt : "";
+            const answer = message.isBot ? message.output : "";
+
+            return (
+              <div key={i} className={message.isBot ? "QandA bot" : "QandA"}>
+                <img src={message.isBot ? bot : profile} alt="dp" />
+                <div>
+                  {message.prompt}
+                  {message.output}
+                  {message.isBot && i > 0 && (
+                    <Feedback question={question} answer={answer} /> // Here I Using Feedback component
+                  )}
+                </div>
+              </div>
+            );
+          })}
           {limitReached && (
             <>
               <div className="limit-message">

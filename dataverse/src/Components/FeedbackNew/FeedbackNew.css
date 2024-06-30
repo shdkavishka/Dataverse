@@ -1,0 +1,71 @@
+.feedback-container{
+    position:fixed;
+    left:0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5)
+
+}
+ 
+.feedback-area {
+    background-color: #25323A;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width:30em;
+}
+
+.btn {
+    border: none;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0px 5px 5px white;
+    font-size: 1rem;
+}
+
+.btn-submit {
+    background-color: #25323A;
+
+}
+
+.btn-close {
+    background-color: #25323A;
+}
+
+.close {
+    cursor: pointer;
+}
+
+.feedback-text {
+    color: black;
+    width: 80%;
+    margin: 1rem 1rem 2rem 2rem;
+    padding: 1rem;
+    background-color:white;
+}
+.feedback-body {
+    margin-bottom: 1rem;
+    color: white;
+    font-size: 1.3rem;
+}
+
+.feedback-footer {
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    display: flex;
+    justify-content:space-evenly;
+}
+
+.feedback-header {
+    display: flex;
+    justify-content:end;
+    font-size: 2rem;
+    margin-top: -30px;
+    margin-bottom: -40px;
+    margin-right: 20px;
+}
