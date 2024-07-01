@@ -12,6 +12,8 @@ import ResetPassword from './Components/SignAndLogin/ResetPassword';
 import Chat from './Components/Chat/Chat.jsx';
 import ResetPasswordConfirm from './Components/SignAndLogin/ResetPasswordConfirm'
 import './App.css'
+import ChartPage from './components/ChartPage';
+import SavedCharts from './components/SavedCharts';
 
 const App = () => {
   return (
@@ -33,8 +35,10 @@ const App = () => {
         <Route path="/Signin/Login/Dashboard" Component={Dashboard} />
         <Route path="/ResetPassword" element={<ResetPassword />} />
         <Route path="/api/reset_password_confirm/:uidb64/:token/" element={<ResetPasswordConfirm />} />
+        <Route path="/" element={<ChartPage />} />
+        <Route path="/saved-charts" element={<SavedCharts />} />  
     </Routes>
-    </div>
+    </div>  
   );
 };
 

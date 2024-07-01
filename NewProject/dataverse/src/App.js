@@ -16,7 +16,7 @@ const App = () => {
               <Link to="/saved-charts" className="nav-link">Saved Charts</Link>
             </li>
           </ul>
-        </nav>
+        </nav>*
         <Routes>
           <Route path="/" element={<ChartPage />} />
           <Route path="/saved-charts" element={<SavedCharts />} />
