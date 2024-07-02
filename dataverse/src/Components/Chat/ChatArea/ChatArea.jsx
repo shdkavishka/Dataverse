@@ -13,9 +13,13 @@ import "./ChatArea.css";
 const MAX_MESSAGES = 20;
 
 // NSN - ChatArea component 
-const ChatArea = ({ newChatTrigger, setNewChat, databaseId }) => {
+const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,setView}) => {
+
   // NSN - State variables for managing various aspects of the chat
+  const database=databaseId;
   const [userPrompt, setUserPrompt] = useState("");
+  const [query,setQuery] =useState("Error");
+  const [result,setResult] =useState("No result");
   const [isLoading, setIsLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
@@ -32,15 +36,15 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId }) => {
   // NSN - useEffect to handle new chat initialization
   useEffect(() => {
     if (newChatTrigger) {
-      // NSN - Check if there are messages to save
       if (messages.length > 1) {
-        // NSN - Confirm with the user before starting a new chat
         if (!window.confirm("Are you sure you want to start a new chat? Unsaved messages will be lost.")) {
-          return; // NSN - Cancel starting new chat if user cancels
+          return;
         }
-        saveChat(); // NSN - Save the current chat before starting a new one
+        if(!view){
+          saveChat();
+        }
+       
       }
-      // NSN - Initialize the new chat
       setMessages([
         {
           prompt: "Hi, I'm dataVerse, what can I visualize for you today?",
@@ -48,10 +52,16 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId }) => {
           isBot: true,
         },
       ]);
-      setLimitReached(false); // NSN - Reset the limit reached state
-      setNewChat(false); // NSN - Reset the new chat trigger
+      setLimitReached(false);
+      setNewChat(false);
     }
-  }, [newChatTrigger, setNewChat]);
+    if (view){
+       setMessages(mess)
+    }
+  }, [newChatTrigger, setNewChat,mess,setMessages,view,setView]);
+
+  
+
 
   // NSN - Function to handle sending a message
   const handleSend = async () => {
@@ -76,14 +86,15 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId }) => {
         db_name: "newDB",
         prompt: userPrompt,
       });
-
+      setQuery(response.data.query)
+      setResult(response.data.result)
       // NSN - Update the messages state with the new user and bot messages
       const newMessages = [
         ...messages,
         { prompt: userPrompt, output: "", isBot: false },
-        { prompt: "", output: `Query: ${response.data.query}\nResult: ${response.data.result}`, isBot: true }
+        { prompt: "", output: `Query: ${query}\nResult: ${result}`, isBot: true }
       ];
-
+  
       setMessages(newMessages);
       setUserPrompt("");
 
@@ -98,7 +109,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId }) => {
       const newMessages = [
         ...messages,
         { prompt: userPrompt, output: "", isBot: false },
-        { prompt: "", output: errorMessage, isBot: true },
+        { prompt: "", output: `Query: ${query}\nResult: ${result}`, isBot: true }
       ];
 
       setMessages(newMessages);
@@ -137,20 +148,40 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId }) => {
     setUserPrompt(transcript);
   };
 
-  // NSN - Function to save the current chat
+  const formatMessages = () => {
+    const formattedMessages = [];
+    for (let i = 1; i < messages.length; i += 2) {
+      const userMessage = messages[i];
+      const botMessage = messages[i + 1] || { output: "" };
+      const [queryLine, resultLine] = botMessage.output.split('\n');
+      const query = queryLine ? queryLine.replace('Query: ', '') : '';
+      const result = resultLine ? resultLine.replace('Result: ', '') : '';
+      formattedMessages.push({
+        prompt: userMessage.prompt,
+        query: query,
+        result: result,
+      });
+    }
+    return formattedMessages;
+  };
+
   const saveChat = async () => {
     try {
+      const formattedMessages = formatMessages();
       const response = await axios.post('http://localhost:8000/api/save_chat/', {
-        database: databaseId,
-        title: `Chat ${new Date().toISOString()}`, // Generate a title automatically
-        messages: messages.map(msg => ({ prompt: msg.prompt, output: msg.output }))
+        database: database,
+        title: `Chat ${new Date().toISOString()}`,
+        messages: formattedMessages
       });
+
       showToast('Chat saved successfully', 'success');
     } catch (error) {
       console.error('Error saving chat:', error);
       showToast('Error saving chat', 'error');
     }
   };
+
+
 
   // NSN - Render the chat area component
   return (
@@ -201,17 +232,15 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId }) => {
             value={userPrompt}
             onKeyDown={handleEnter}
             onChange={(e) => setUserPrompt(e.target.value)}
-            disabled={isLoading || limitReached}
+            disabled={isLoading || limitReached|| view==true}
           />
-          <button className='send-button' onClick={handleSend} disabled={isLoading || limitReached}>
+          <button className='send-button' onClick={handleSend} disabled={isLoading || limitReached || view==true}>
             <img src={send} alt="send" />
           </button>
           <button className='mic-button' onClick={handleMicClick} disabled={limitReached}>
             <img src={mic} alt="mic" />
           </button>
-          <button className='new-chat-button' onClick={() => setNewChat(true)} disabled={isLoading || limitReached}>
-            New Chat
-          </button>
+          
         </div>
       </div>
     </span>
@@ -219,3 +248,5 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId }) => {
 };
 
 export default ChatArea;
+
+

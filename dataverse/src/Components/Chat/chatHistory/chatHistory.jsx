@@ -3,67 +3,102 @@ import axios from 'axios';
 import "./chatHistory.css";
 import add from "../../../assets/add.png";
 import del from "../../../assets/delete.png";
+import Toast from "../../Toast/Toast";
 
-// NSN - ChatHistory component (sidebar)
-const ChatHistory = ({ setNewChat, setMessages }) => {
-  // NSN - State variable to store the list of chats
+const ChatHistory = ({  newChatTrigger, setNewChat, databaseId ,mess,setMess ,view,setView}) => {
   const [chats, setChats] = useState([]);
+  const [id, setId] = useState(1); // State to store the ID for the request
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastType, setToastType] = useState("");
+ 
 
-  // NSN - useEffect to fetch chats when the component mounts
-  useEffect(() => {
-    const fetchChats = async () => {
-      try {
-        // NSN - Fetching chats from the backend API
-        const response = await axios.get('http://localhost:8000/api/chats/');
-        setChats(response.data);
-      } catch (error) {
-        console.error('Error fetching chats:', error);
-      }
-    };
-
-    fetchChats();
-  }, []);
-
-  // NSN - Function to handle the creation of a new chat
-  const handleNewChat = (e) => {
-    e.preventDefault();
-    setNewChat(true);
-  };
-
-  // NSN - Function to handle retrieving a specific chat by its ID
-  const handleRetrieveChat = async (chatId) => {
+  const fetchChats = async () => {
     try {
-      // NSN - Fetching the chat data from the backend API
-      const response = await axios.get(`http://localhost:8000/api/retrieve_chat/${chatId}/`);
-      const chatData = response.data;
-      setMessages(chatData.messages.map(msg => ({
-        prompt: msg.prompt,
-        output: msg.output,
-        isBot: msg.output !== "",
-      })));
-      showToast('Chat retrieved successfully', 'success');
+      const response = await axios.post('http://localhost:8000/api/pastchats/', { id });
+      setChats(response.data);
     } catch (error) {
-      console.error('Error retrieving chat:', error);
-      showToast('Error retrieving chat', 'error');
+      console.error('Error fetching chats:', error);
     }
   };
 
-  // NSN - Function to handle deleting a specific chat by its ID
+  useEffect(() => {
+    fetchChats();
+
+    const intervalId = setInterval(fetchChats, 1000);
+    
+    // Cleanup function to clear the interval when the component is unmounted or id changes
+    return () => clearInterval(intervalId);
+  }, [id]);
+
+  const handleNewChat = () => {
+    setNewChat(true);
+    setView(false);
+    setMessages([
+      {
+        prompt: "Hi, I'm dataVerse, what can I visualize for you today?",
+        output: "",
+        isBot: true,
+      },
+    ]);
+  };
+
+
   const handleDeleteChat = async (chatId) => {
     try {
-      // NSN - Deleting the chat from the backend API
       await axios.delete(`http://localhost:8000/api/delete_chat/${chatId}/`);
-      setChats(chats.filter(chat => chat.id !== chatId));
-      showToast('Chat deleted successfully', 'success');
+      // Refetch chats after successful deletion
+      fetchChats();
+      showToast("Chat deletion successful","success")
     } catch (error) {
       console.error('Error deleting chat:', error);
-      showToast('Error deleting chat', 'error');
     }
   };
 
-  // NSN - Rendering the chat history and new chat button
+  const handleViewChat = async (chatId) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/chat/${chatId}/`);
+      const { messages } = response.data;
+      console.log(response.data)
+      setView(true)
+
+      // Transform messages into the desired format
+      const newMessages = messages.flatMap(msg => ([
+        {
+          prompt: msg.prompt,
+          output: "",
+          isBot: false
+        },
+        {
+          prompt: "",
+          output: `Query: ${msg.query}\nResult: ${msg.result}`,
+          isBot: true
+        }
+      ]));
+
+      // Set messages state with the transformed data
+      setMess(newMessages)
+      console.log(newMessages)
+    } catch (error) {
+      console.error('Error fetching chat:', error);
+    }
+  };
+
+    // NSN - Function to show a toast message
+    const showToast = (message, type) => {
+      setToastMessage(message);
+      setToastType(type);
+      setTimeout(() => {
+        setToastMessage("");
+        setToastType("");
+      }, 3000);
+    };
+
   return (
     <span className="side-menu">
+      {toastMessage && (
+        <Toast message={toastMessage} type={toastType} onClose={() => setToastMessage("")} />
+      )}
+
       <div className="newchat">
         <button id="newchat-button" onClick={handleNewChat}>
           New Chat
@@ -73,15 +108,14 @@ const ChatHistory = ({ setNewChat, setMessages }) => {
       <div className="history">
         <div className="historybox">
           {chats.map(chat => (
-            <div key={chat.id} className="past-chat">
-              {chat.title}
-              <button onClick={() => handleRetrieveChat(chat.id)}>
-                Retrieve
-              </button>
+           
+            <div key={chat.id} className="past-chat"  >
+              <button onClick={() => handleViewChat(chat.id)}>{chat.title}</button>
               <button onClick={() => handleDeleteChat(chat.id)}>
                 <img src={del} alt="delete" />
               </button>
             </div>
+            
           ))}
         </div>
       </div>

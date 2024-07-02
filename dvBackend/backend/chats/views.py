@@ -47,27 +47,41 @@ def generate_sql_query(request):
 
 @api_view(['POST'])
 def save_chat(request):
-    chat_serializer = ChatSerializer(data=request.data)
-    if chat_serializer.is_valid():
-        chat_instance = chat_serializer.save()  # NSN - Save the chat instance
+    chat_id = request.data.get('chat_id')
+    chat_instance = None
 
-        messages_data = request.data.get('messages', [])
-        for message_data in messages_data:
-            message_data['chat'] = chat_instance.id  # NSN - Assign chat instance ID to each message data
-
-        # NSN - Create messages for the chat
-        message_serializer = MessageSerializer(data=messages_data, many=True)
-        if message_serializer.is_valid():
-            message_serializer.save()  # NSN - Save messages associated with the chat instance
+    if chat_id:
+        try:
+            chat_instance = Chat.objects.get(id=chat_id) 
+            chat_serializer = ChatSerializer(chat_instance, data=request.data, partial=True)
+            if chat_serializer.is_valid():
+                chat_instance = chat_serializer.save()  # NSN - Save the updated chat instance
+            else:
+                return Response(chat_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Chat.DoesNotExist:
+            return Response({"error": "Chat instance not found"}, status=status.HTTP_404_NOT_FOUND)
+    else:
+        chat_serializer = ChatSerializer(data=request.data)
+        if chat_serializer.is_valid():
+            chat_instance = chat_serializer.save()
         else:
-            # NSN - Handle serializer validation errors
-            return Response(message_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(chat_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        # NSN - Return serialized chat instance with messages
-        return Response(chat_serializer.data, status=status.HTTP_201_CREATED)
-    
-    # NSN - Handle chat serializer validation errors
-    return Response(chat_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    messages_data = request.data.get('messages', [])
+    for message_data in messages_data:
+        message_data['chat'] = chat_instance.id
+
+    message_serializer = MessageSerializer(data=messages_data, many=True)
+    if message_serializer.is_valid():
+        message_serializer.save()
+    else:
+        return Response(message_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    return Response(ChatSerializer(chat_instance).data, status=status.HTTP_201_CREATED)
+
+
+
+
 
 # NSN - To delete chats
 @api_view(['DELETE'])
@@ -93,3 +107,21 @@ def view_chat(request, chat_id):
     
     serializer = ChatSerializer(chat)
     return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+def get_past_chats(request):
+    try:
+        id = request.data.get('id')
+        if id is None:
+            return Response({'error': 'datavaseid is required'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        chats = Chat.objects.filter(database=id).values('id', 'title')
+        serializer = ChatSerializer(chats, many=True)
+        return Response(serializer.data)
+    
+    except Chat.DoesNotExist:
+        return Response({'error': 'Chats not found'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

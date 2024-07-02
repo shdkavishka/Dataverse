@@ -16,6 +16,7 @@ class Database(models.Model):
     
 # NSN - Chat model
 class Chat(models.Model):
+    database = models.ForeignKey(Database, related_name='chats', on_delete=models.CASCADE, default=1)
     title = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
 
