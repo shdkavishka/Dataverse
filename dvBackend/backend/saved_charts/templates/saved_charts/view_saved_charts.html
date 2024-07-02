@@ -1,0 +1,22 @@
+<!-- saved_charts/templates/saved_charts/view_saved_charts.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Saved Charts</title>
+</head>
+<body>
+    <h1>Saved Charts</h1>
+    <ul>
+        {% for chart in charts %}
+            <li>
+                <h2>{{ chart.name }}</h2>
+                {% if chart.chart_image %}
+                   <img src="{{ chart.chart_image.url }}" alt="{{ chart.chart_name }}">
+                <p>Created by: {{ chart.created_by.username }}</p>
+                <p>Created at: {{ chart.created_at|date:"m/d/Y, P" }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

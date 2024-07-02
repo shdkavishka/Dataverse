@@ -19,12 +19,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('users.urls')),
     path('api/', include('chats.urls')),
     path('api/', include('connectDb.urls')),
+    path('', include('myapp.urls')),
+    path('api/', include('myapp.urls')),
+    path('saved-charts/', include('saved_charts.urls')),
     
 ]
 #AH-- For image upload
