@@ -11,17 +11,63 @@ import { handleLogout } from "../Logout/Logout";
 //AH-- header 
 const Header = (props) => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [first_Name, setFirstName] = useState("");
+  const [last_Name, setLastName] = useState("");
+  const [userName, setUserName] = useState("");
+  const [profilePic, setProfilePic] = useState("");
+
+  //fetch user data
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/user", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      const profileData = await response.json();
+      // AH-- Set extracted user data to state variables
+     
+      setFirstName(profileData.firstName);
+      setLastName(profileData.lastName);
+      setUserName(profileData.name);
+      setProfilePic(profileData.profilePicture);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      showToast("Error fetching user data:", "error");
+    }
+  };
+
+
   const dropdownRef = useRef(null);
 
-  //AH-- Effect to handle clicks outside the dropdown to close it
   useEffect(() => {
+    fetchUserData();
+
+    // Interval to fetch data every second (1000 ms)
+    const intervalId = setInterval(fetchUserData, 500);
+
+   
     const handleClickOutside = (event) => {
+      
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownVisible(false);
+        
       }
+       // Cleanup function to clear interval when component unmounts
+    return () => {
+      clearInterval(intervalId);
+    }
     };
     document.addEventListener("mousedown", handleClickOutside);
 
+
+    
+    
     return () => {
       //AH-- Cleanup event listener on component unmount
       document.removeEventListener("mousedown", handleClickOutside);
@@ -33,6 +79,7 @@ const Header = (props) => {
     setDropdownVisible(!dropdownVisible);
   };
 
+  const ImageUrl = `http://localhost:8000${profilePic}`;
   return (
     <div className="header">
       <span className="left-header">
@@ -60,14 +107,11 @@ const Header = (props) => {
       <span className="right-header">
 
       <div className="Display-Name">
-          <div>{props.firstName}</div>
-          <div>{props.lastName}</div>
+          <div>{first_Name || userName}</div>
+          <div>{last_Name}</div>
         </div>
         <div className="profile-picture">
-          <ProfileImage
-            firstName={props.firstName || props.userName}
-            lastName={props.lastName}
-          />
+        <img src={ImageUrl} className="dp-header"/>
         </div>
        
        
