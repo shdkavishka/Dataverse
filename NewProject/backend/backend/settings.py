@@ -42,7 +42,6 @@ INSTALLED_APPS = [
     'myapp',
     'saved_charts',
     'corsheaders',
-    'rest_framework',
 ]
 
 MIDDLEWARE = [
