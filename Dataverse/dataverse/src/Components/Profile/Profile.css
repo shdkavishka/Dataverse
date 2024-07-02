@@ -1,0 +1,269 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  scroll-behavior: smooth;
+  overflow-y: scroll;
+}
+
+
+.Title-text {
+  font-size: 3rem;
+  margin-left: -70%;
+  margin-top: 5%;
+  font-weight: 500;
+  text-align: center;
+}
+
+.profile-bottom {
+  display: flex;
+  background-color: white;
+  flex-grow: 1;
+  margin: 0 20%;
+
+
+ 
+}
+
+.profile-card {
+  flex: 3;
+background-color:rgb(238, 238, 238);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: rgba(218, 218, 218, 0.344) 10px 0 20px;
+
+}
+
+.card-bottom {
+  width: 100%;
+  border-radius: 30px 30px 0 0;
+  background-color:white ;
+  margin-top: 60%;
+  flex-grow: 1;
+  height: 20%;
+  color: #F26E20;
+}
+
+
+.card-fn{
+  padding-top: 5%;
+  font-size: 4rem;
+  font-weight: 800;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.card-ln{
+  font-size: 2rem;
+  text-align: left;
+  padding-left: 10px;
+  color: #254054;
+}
+.card-un{
+  font-size: 1.5rem;
+  text-align: left;
+  padding-left: 10px;
+  font-style: italic;
+  color: #254054;
+}
+
+
+.profile-content {
+  flex: 5;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.edit-profile {
+  align-self: flex-end;
+  margin-bottom: 1rem;
+}
+
+.edit-profile > button {
+  border: none;
+  background-color: rgb(232, 232, 232);
+  border-radius: 3px;
+}
+
+.edit-profile > button:hover {
+  background-color: rgb(223, 223, 223);
+}
+
+.edit-profile > button > img {
+  width: 2rem;
+}
+
+.profile-details {
+  width: 100%;
+}
+
+.profile-details .details-section {
+  width: 100%;
+}
+
+.profile-details .details-section > div {
+  background-color: rgb(238, 238, 238);
+  border-radius: 5px;
+  width: 100%;
+  margin: 1rem 0;
+  padding: 0.5rem;
+}
+
+.profile-details .details-section > div:hover {
+  background-color: rgb(223, 223, 223);
+}
+
+.label1 {
+  font-size: 1rem;
+  font-weight: 600;
+  display: block;
+  text-align: left;
+}
+
+.data1 {
+  text-align: left;
+  font-size: 1rem;
+  font-weight: 400;
+
+  margin-top: 0.5rem;
+}
+
+.input3 {
+  font-size: 1rem;
+  padding: 0.5rem;
+  width: 90%;
+  border-radius: 5px;
+  margin: 0.2rem 0;
+  border: none;
+  text-align: left;
+  height: 0.5rem;
+}
+
+.select3{
+  font-size: 1rem;
+  padding: 0.1rem;
+  border-radius: 5px;
+  margin: 0.2rem 0;
+  border: none;
+  text-align: left;
+  width: 90%;
+  height: 1.2rem;
+}
+
+.input3:focus {
+  border: 3px solid #E38B4F;
+  outline: none;
+}
+
+.buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.save-button {
+  border: none;
+  background-color: #ef8f4f;
+  border-radius: 10px;
+  padding: 0.8rem;
+  color: black;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0.5rem;
+}
+
+.save-button:hover {
+  background-color: #F26E20;
+}
+
+.profile-last {
+  width: 100%;
+  padding: 1rem;
+  text-align: right;
+}
+
+.profile-last > div > button {
+  border: none;
+  background-color: white;
+  font-size: 1rem;
+  color: #254054;
+  padding-top: 1rem;
+}
+
+.profile-last > div > button:hover {
+  text-decoration: underline;
+}
+
+
+.login-btn{
+background-color: #ef8f4f;
+border-radius: 10px;
+padding: 0.8rem;
+width: 70%;
+color: black;
+font-size: 1.8rem;
+font-weight: 900;
+margin: 0.5rem;
+}
+
+
+
+.login-btn:hover {
+  background-color: #F26E20;
+
+}
+
+.opentext {
+  font-size: 2rem;
+  font-weight: 800;
+  padding-top: 3%;
+  padding-bottom: 2%;
+  color: #2f546e;
+}
+
+.proflogin{
+margin: 0 30%;
+padding-top: 10%;
+}
+
+.logo-login2{
+
+width: 4rem;
+padding-top: 3%;
+}
+
+#profilePicInput{
+font-size: 1rem;
+margin: 0;
+padding: 0.5rem;
+}
+
+.profilePicture{
+border-radius: 50%;
+border: #ef8f4f solid 2px;
+width: 17rem;
+margin-top: -30%;
+background-color: rgb(96, 121, 130);
+}
+
+
+.save-button10 {
+width: 100%;
+border: none;
+background-color: white;
+border-radius: 10px;
+padding: 0.8rem;
+color: #254054;
+font-size: 1rem;
+font-weight: 700;
+margin: 0.5rem;
+margin-top: 6rem;
+float: right;
+box-shadow: inset 4px 4px 10px #b1c9d1ac;
+}
+
+.save-button10:hover {
+background-color:rgb(223, 223, 223);
+}

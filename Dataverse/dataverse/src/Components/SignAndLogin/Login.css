@@ -1,0 +1,118 @@
+.Login{
+    height: 100vh;
+    
+}
+
+.logo-login{
+
+    width: 4rem;
+    padding-top: 3%;
+    margin-left: -6rem;
+    
+}
+
+.openText {
+    font-size: 2rem;
+    font-weight: 800;
+    padding-top: 3%;
+    padding-bottom: 1%;
+    color: #2f546e;
+}
+
+.forgot-password{
+    text-align: left;
+    padding-left: 36%;
+    margin-top: -3%;
+}
+
+.forgot-password>a{
+   
+    color:#E38B4F ;
+    text-decoration: none;
+  
+}
+.forgot-password>a:hover{
+   
+    text-decoration: underline;
+}
+.remember-me{
+    padding-top: 1%;
+    text-align: left;
+    padding-left: 30%;
+    display: flex; 
+    padding-bottom: 2%;  
+}
+
+.continue-btn{
+    box-shadow: inset 4px 4px 10px #000000ac;
+    font-size: 1.5rem;
+    padding: 1rem;
+    width: 28.2%;
+    border-radius: 5px;
+    
+    margin: 0.7rem;
+    background-color: #2f546e;
+    color: white;
+}
+.continue-btn:hover{
+    background-color: #192c39;
+    
+}
+
+
+.home_link{
+    border: none;
+    background-color: white;
+    color:#2f546e ;
+    text-decoration: none;
+    font-size: 1rem;
+    float: left;
+    padding: 1rem;
+    padding-left: 2rem; 
+}
+.home_link:hover{
+    text-decoration: underline;
+}
+
+.link{
+    border: none;
+    background-color: white;
+    color:#E38B4F ;
+    text-decoration: none;
+    font-size: 1rem;
+}  
+
+.link:hover{
+   text-decoration: underline;
+}  
+.social-btn{
+    box-shadow: 0 7px 8px #888888;
+    background-color: white;
+    padding: 1rem;
+    width: 28.2%;
+    border-radius: 5px;
+    margin: 0.7rem;
+    color: #2f546e;
+    border-color: black;
+    font-size: 1.3rem;
+    text-align: left;
+}
+
+
+.social-btn>img{
+    width: 2rem;
+    float: left;
+    margin-left: 5rem;
+}
+
+.hr{
+    width: 28.2%;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.or{
+    margin-top: -2.7rem;
+    background-color: transparent;
+
+}

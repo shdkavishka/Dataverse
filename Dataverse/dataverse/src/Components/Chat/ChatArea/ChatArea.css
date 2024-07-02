@@ -1,0 +1,126 @@
+.chat-area{
+    flex:12;
+    background-color: #141c20;
+}
+
+.chat-section{
+    
+    min-height: calc(100vh - 14rem);
+    display: flex;
+    flex-direction: column;
+    margin: 3rem 10rem 6rem 10rem;
+}
+
+.input-box{
+    width: 100%;
+    display: flex;
+ 
+}
+
+.input-box>input{
+    color: #ABB2B8;
+    border: 1px solid #49545e;
+    border-radius: 5rem;
+    width: 100%;
+    padding: 1rem;
+    margin: 0.5rem;
+    background-color:#3a454e;
+    font-size: 1.5rem;
+}
+.input-box>input:hover{
+    background-color:#49545e;
+    border-color: #FB9B51;
+}
+
+
+.logo1{
+    width: 4rem;
+    padding: 1rem 2rem 2rem 2rem ;
+    float: right;
+   
+}
+
+.chats{
+
+    color: #ABB2B8;
+    overflow: hidden;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    width: 100%;
+    max-width: 70rem;
+    height: calc(100vh - 15rem);
+}
+
+.chats>div{
+  
+    display: flex;
+    padding: 1rem;
+}
+.chats>div>div{
+    text-align: justify;
+    font-size: 1.2rem;
+    padding: 2rem;
+    padding-top: 0;
+   }
+.chats>div>img{
+
+    width: 3rem; 
+    height: 3rem;
+    border-radius: 10px;
+
+margin: -0.5rem 0 0 1.5rem;
+}
+
+ 
+.bot{
+background-color:#25323A;
+border-radius: 2rem;
+}
+
+
+.mic-button{
+
+    background-color: #FB9B51;
+    border-radius: 50%;
+    border: none;
+    width: 4.7rem;
+    height: 4rem;
+    margin-top: 0.35rem;
+}
+
+.mic-button>img{
+    width: 2rem;
+    height: 2rem;
+}
+
+.mic-button:hover{
+   background-color: #ff8629;
+    }
+
+
+.send-button{
+ 
+    background-color: #FB9B51;
+    border-radius: 50%;
+    border: none;
+    width: 4.7rem;
+    height: 4rem;
+    margin-top: 0.35rem;
+}
+
+.send-button>img{
+    width: 2rem;
+    height: 2rem;
+    padding-top: 0.27rem;
+}
+
+
+.send-button:hover{
+    background-color: #ff8629;
+}
+
+.limit-message{
+    color: #ABB2B8;
+    padding: 1rem;
+margin-left: 30%;
+}

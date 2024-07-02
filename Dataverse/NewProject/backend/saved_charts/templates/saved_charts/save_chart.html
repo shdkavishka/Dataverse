@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Save Chart</title>
+</head>
+<body>
+    <h1>Save Chart</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save Chart</button>
+    </form>
+</body>
+</html>

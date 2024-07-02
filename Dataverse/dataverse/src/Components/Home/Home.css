@@ -1,0 +1,94 @@
+.Hero {
+    background-color:#1e3954 ;
+    Display: flex;
+    justify-content: space-between;
+    height: 100vh;
+}
+
+.left{
+
+   
+    width: 67%;
+}
+
+.right {
+    width: 33%;
+    background-color: #061C36;
+}
+
+.logoh{
+    float: left;
+    width: 5rem;
+    padding: 2rem;
+}
+
+.heroText {
+    color: #F26E20;
+    font-weight: 500;
+    font-size: 6rem;
+    text-align: left;
+    margin: 0 auto;
+    margin-top:  25rem ;
+    padding: .75rem 1rem;
+    overflow: hidden;
+    width: auto;
+    
+
+}
+
+
+.heroText>:nth-child(2){
+    font-size: 3rem; 
+}
+.heroText>div{
+    position: relative;
+    float: left;
+}
+
+.heroText>div span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 0;
+    background:#1e3954;
+    
+    animation-name: typing;
+    animation-duration: 5s;
+    animation-iteration-count:infinite;
+    animation-timing-function: steps(18,end);
+
+
+}
+@keyframes typing {
+    0%   { width: 100%; }
+    100% { width: 0; }
+  }
+
+
+.Home-But {
+  background-color: #ef8f4f;
+  border-radius: 10px;
+  padding: 0.8rem;
+  width: 70%;
+  color: black;
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin: 0.5rem;
+}
+.homeText {
+    color: white;
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin: 0.5rem;
+}
+
+.Home-But:hover {
+    background-color: #F26E20;
+
+  }
+
+
+.right>:nth-child(1){
+    margin-top: 25rem;
+}

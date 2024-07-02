@@ -1,0 +1,87 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.section {
+  padding: 20px;
+}
+
+.container1 {
+      max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #96d2ba;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Button styles */
+.btn1 {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #6c63ff;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.btn2 {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  text-decoration: none;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 10px;
+  border-radius: 10px;
+  background-color: #b45454;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn1:hover
+ {
+  background-color: #4338ca;
+}
+.btn2:hover
+ {
+  background-color: #f50e0e;
+}
+/* Database and Collaborator section styles */
+.section-bg {
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.section-bg h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Link styles */
+.link {
+  color: #6c63ff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #4338ca;
+}
+
