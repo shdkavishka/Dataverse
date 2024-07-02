@@ -132,28 +132,37 @@ const handleGenerateChart = () => {
   const handleQuerySubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const response = await fetch('http://localhost:8000/api/query', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query }),
-      });
+    // Define your db_details
+    const dbDetails = {
+        db_user: "root",
+        db_password: "",
+        db_host:  "localhost",
+        db_name: "dataset"
+       
+    };
 
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log('Query Data:', responseData);
-        setQueryData(responseData);
-        setData(responseData);
-      } else {
-        const errorMessage = await response.text();
-        console.error('Error executing query:', errorMessage);
-      }
+    try {
+        const response = await fetch('http://localhost:8000/api/query', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ query, db_details: dbDetails }),
+        });
+
+        if (response.ok) {
+            const responseData = await response.json();
+            console.log('Query Data:', responseData);
+            setQueryData(responseData);
+            setData(responseData);
+        } else {
+            const errorMessage = await response.text();
+            console.error('Error executing query:', errorMessage);
+        }
     } catch (error) {
-      console.error('Error executing query:', error);
+        console.error('Error executing query:', error);
     }
-  };
+};
 
   const handleEditChartClick = () => {
     setEditChartOpen(true);
