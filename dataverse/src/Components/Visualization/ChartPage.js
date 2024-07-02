@@ -41,8 +41,6 @@ const ChartPage = () => {
     return null;
   };
 
-  
-
 const handleGenerateChart = () => {
     const validationError = validateData(queryData);
     if (validationError) {
@@ -67,11 +65,9 @@ const handleGenerateChart = () => {
       const keys = Object.keys(row);
       const label = row[keys[0]]; // Assuming the first key is the x-axis label
       const value = row[keys[1]]; // Assuming the second key is the y-axis value
-      //const value = parseFloat(row[keys[1]]); // Assuming the second key is the y-axis value
-  
-     // if (!isNaN(value)) {
-        chartData.labels.push(label);
-        chartData.datasets[0].data.push(value);
+    
+      chartData.labels.push(label);
+      chartData.datasets[0].data.push(value);
 
         const color = generateRandomColor();
         chartData.datasets[0].backgroundColor.push(color);
@@ -216,20 +212,25 @@ const handleGenerateChart = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleQuerySubmit}>
-        <input type="text" value={query} onChange={handleQueryInputChange} />
+    <div className="chart-page-body">
+      <form onSubmit={handleQuerySubmit} className="chart-page-form">
+        <input 
+        type="text"
+        value={query} 
+        onChange={handleQueryInputChange}
+        className="chart-page-input" 
+        />
         <br />
-        <button type="submit">Submit Query</button>
+        <button type="submit" className="chart-page-button">Submit Query</button>
       </form>
       <div>
-      {validationError && <p className="error">{validationError}</p>}
+      {validationError && <p className="chart-page-error">{validationError}</p>}
         {data.length > 0 && (
-          <table>
+          <table className="chart-page-table">
             <thead>
               <tr>
                 {Object.keys(queryData[0] || {}).slice(0,2).map((key) => (
-                  <th key={key}>{key}</th>
+                  <th key={key} className="chart-page-th">{key}</th>
                 ))}
               </tr>
             </thead>
@@ -237,7 +238,7 @@ const handleGenerateChart = () => {
               {queryData.map((row, index) => (
                 <tr key={index}>
                   {Object.entries(row).slice(0, 2).map(([key,value], i) => (
-                    <td key={i}>{value}</td>
+                    <td key={i} className="chart-page-td">{value}</td>
                   ))}
                 </tr>
               ))}
@@ -245,12 +246,12 @@ const handleGenerateChart = () => {
           </table>
         )}
         <br />
-        <button onClick={handleGenerateChart}>Generate Chart</button>
-        <button onClick={handleEditChartClick}>Edit Chart</button>
+        <button onClick={handleGenerateChart} className="chart-page-button">Generate Chart</button>
+        <button onClick={handleEditChartClick} className="chart-page-button">Edit Chart</button>
         {editChartOpen && (
           <div className="edit-chart-modal">
             <div className="edit-chart-content">
-              <span className="close-button" onClick={handleCloseEditChart}>
+              <span className="chart-page-close-button" onClick={handleCloseEditChart}>
                 &times;
               </span>
               <h3>Edit Chart</h3>
@@ -260,6 +261,7 @@ const handleGenerateChart = () => {
                   id="chart-type"
                   value={chartType}
                   onChange={(e) => setChartType(e.target.value)}
+                  className="chart-page-select"
                 >
                   <option value="bar">Bar</option>
                   <option value="line">Line</option>
@@ -271,17 +273,17 @@ const handleGenerateChart = () => {
               </div>
               <br />
 
-              <button onClick={handleUpdateChart}>Update Chart</button>
+              <button onClick={handleUpdateChart} className="chart-page-button">Update Chart</button>
             </div>
           </div>
         )}
       </div>
       <br />
-      <div className="chart-container">
-        <canvas id="chart"></canvas>
+      <div className="chart-page-canvas-container">
+        <canvas id="chart" className="chart-page-canvas"></canvas>
       </div>
       <br />
-      <button onClick={handleSaveChartClick}>Save Chart</button>
+      <button onClick={handleSaveChartClick} className="chart-page-button">Save Chart</button>
       {saveChartOpen && (
         <div className="save-chart-modal">
           <div className="save-chart-content">
@@ -296,6 +298,7 @@ const handleGenerateChart = () => {
                 id="saved-chart-name"
                 value={savedChartName}
                 onChange={(e) => setSavedChartName(e.target.value)}
+                className="chart-page-input"
               />
             </div>
             <div>
@@ -305,15 +308,16 @@ const handleGenerateChart = () => {
                 id="created-by"
                 value={createdBy}
                 onChange={(e) => setCreatedBy(e.target.value)}
+                className="chart-page-input"
               />
             </div>
             <br />
-            <button onClick={handleSaveChart}>Save Chart</button>
+            <button onClick={handleSaveChart} className="chart-page-button">Save Chart</button>
           </div>
         </div>
       )}
       <br /><br />
-      <button onClick={handleViewSavedCharts}>View Saved Charts</button>
+      <button onClick={handleViewSavedCharts} className="chart-page-button">View Saved Charts</button>
     </div>
   );
 };

@@ -1,4 +1,5 @@
-body {
+.chart-page-body,
+.saved-charts-body {
   font-family: Arial, sans-serif;
   background-color: #2c3e50;
   color: #ecf0f1;
@@ -6,20 +7,21 @@ body {
   padding: 0;
 }
 
-h1 {
+.chart-page-h1,
+.saved-charts-h1 {
   text-align: center;
   margin-top: 20px;
   color: #fff;
 }
 
-ul {
+.saved-charts-ul {
   list-style-type: none;
   padding: 0;
   margin: 20px auto;
   width: 80%;
 }
 
-li {
+.saved-charts-li {
   background-color: #1b2a47;
   margin-bottom: 10px;
   padding: 15px;
@@ -27,24 +29,24 @@ li {
   border: 1px solid #2c3e50;
 }
 
-h2 {
+.saved-charts-h2 {
   margin: 0;
   font-size: 24px;
 }
 
-p {
+.saved-charts-p {
   margin: 5px 0;
   color: #bdc3c7;
 }
 
-img {
+.saved-charts-img {
   max-width: 100%;
   border: 1px solid #7f8c8d;
   border-radius: 4px;
   margin-top: 10px;
 }
 
-form {
+.chart-page-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +54,7 @@ form {
   margin-bottom: 20px;
 }
 
-input[type="text"] {
+.chart-page-input {
   padding: 8px;
   font-size: 16px;
   border: 1px solid #ccc;
@@ -60,7 +62,8 @@ input[type="text"] {
   width: 80%;
 }
 
-button {
+.chart-page-button,
+.saved-charts-button {
   padding: 8px 16px;
   font-size: 16px;
   background-color: #63686d;
@@ -71,27 +74,29 @@ button {
   margin-right: 10px;
 }
 
-button:hover {
+.chart-page-button:hover,
+.saved-charts-button:hover {
   background-color: #042141;
 }
 
-table {
+.chart-page-table {
   border-collapse: collapse;
   width: 40%;
   margin: 20px auto;
 }
 
-th, td {
+.chart-page-th,
+.chart-page-td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
 }
 
-th {
+.chart-page-th {
   background-color: #f2f2f243;
 }
 
-.canvas-container {
+.chart-page-canvas-container {
   position: relative;
   width: 80%;
   height: 800px; 
@@ -100,7 +105,7 @@ th {
   margin: 20px  auto;
 }
 
-canvas {
+.chart-page-canvas {
   width: 100%;
   height: 100%;
   border: 1px solid #0f0f0f;
@@ -131,15 +136,15 @@ canvas {
   color: #333;
 }
 
-.close-button {
+.chart-page-close-button {
   color: #aaa;
   float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
-.close-button:hover,
-.close-button:focus {
+.chart-page-close-button:hover,
+.chart-page-close-button:focus {
   color: black;
   text-decoration: none;
   cursor: pointer;

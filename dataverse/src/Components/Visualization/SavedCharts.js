@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './styles2.css';
 
 const SavedCharts = () => {
   const [savedCharts, setSavedCharts] = useState([]);
@@ -48,18 +49,18 @@ const SavedCharts = () => {
 
 
   return (
-    <div>
-      <h1>Saved Charts</h1>
+    <div className="saved-charts-body">
+      <h1 className="saved-charts-h1">Saved Charts</h1>
       {savedCharts.length > 0 ? (
-        <ul>
+        <ul className="saved-charts-ul">
           {savedCharts.map((chart) => (
-            <li key={chart.id}>
-              <h2>{chart.chart_name}</h2>
-              <p>Created by: {chart.created_by}</p>
-              <p>Created at: {new Date(chart.created_at).toLocaleString()}</p>
-              <img src={chart.chart_data} alt={chart.chart_name} />
-              <button onClick={() => handleShareChart(chart.chart_data)}>Share</button>
-              <button onClick={() => handleDeleteChart(chart.id)}>Delete</button>
+            <li key={chart.id} className="saved-charts-li">
+              <h2 className="saved-charts-h2">{chart.chart_name}</h2>
+              <p className="saved-charts-p">Created by: {chart.created_by}</p>
+              <p className="saved-charts-p">Created at: {new Date(chart.created_at).toLocaleString()}</p>
+              <img src={chart.chart_data} alt={chart.chart_name} className="saved-charts-img" />
+              <button onClick={() => handleShareChart(chart.chart_data)} className="saved-charts-button">Share</button>
+              <button onClick={() => handleDeleteChart(chart.id)} className="saved-charts-button">Delete</button>
             </li>
           ))}
         </ul>
