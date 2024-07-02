@@ -24,6 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('users.urls')),
     path('api/', include('chats.urls')),
+    path('api/', include('connectDb.urls')),
+    
 ]
 #AH-- For image upload
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'chats',
+    'connectDb',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
