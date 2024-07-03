@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from './Components/Home/Home.jsx'
 import ConnectDatabasePage from './Components/ConnectDB/ConnectDatabasePage';
 import Header from './Components/Dashboard/Header';
-import Dashboard from './Components/Dashboard/Dashboard';
+import Dashboard from './Components/Dashboard/Dashboard.jsx';
 import Login from './Components/SignAndLogin/Login';
 import Signin from './Components/SignAndLogin/Signin';
 import Profile from './Components/Profile/Profile';
@@ -14,8 +14,15 @@ import ResetPasswordConfirm from './Components/SignAndLogin/ResetPasswordConfirm
 import './App.css'
 import ChartPage from './components/Visualization/ChartPage.jsx';
 import SavedCharts from './Components/Visualization/SavedCharts.jsx';
+<<<<<<< HEAD:Dataverse/Dataverse/src/App.jsx
+import UIGuide from './Components/UIGuide/UIGuide.jsx';
+
+=======
+>>>>>>> 0eeb9feb3273993d49827351651ecbe4a0374900:dataverse/src/App.jsx
 
 const App = () => {
+
+
   return (
     <div className="App">
     <Routes>
@@ -24,12 +31,13 @@ const App = () => {
       <Route path="/Home" element={<Home/>} />
       <Route path="/ConnectDatabasePage" element={<ConnectDatabasePage />} />
       <Route path="/Header" element={<Header />} />
+      <Route path="/UIGuide" element={<UIGuide />} />
       <Route path="/Dashboard" element={<Dashboard />} />
       <Route path="/Signin" element={<Signin />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/Profile" element={<Profile />} />
       <Route path="/Chat" element={<Chat />} />
-      <Route path="/Signin/Dashboard" Component={Dashboard} />
+      <Route path="/Signin/" Component={Dashboard} />
         <Route path="/Login/Dashboard" Component={Dashboard} />
         <Route path="/Login/Signin/Dashboard" Component={Dashboard} />
         <Route path="/Signin/Login/Dashboard" Component={Dashboard} />
