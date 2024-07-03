@@ -14,11 +14,7 @@ import ResetPasswordConfirm from './Components/SignAndLogin/ResetPasswordConfirm
 import './App.css'
 import ChartPage from './components/Visualization/ChartPage.jsx';
 import SavedCharts from './Components/Visualization/SavedCharts.jsx';
-<<<<<<< HEAD:Dataverse/Dataverse/src/App.jsx
-import UIGuide from './Components/UIGuide/UIGuide.jsx';
-
-=======
->>>>>>> 0eeb9feb3273993d49827351651ecbe4a0374900:dataverse/src/App.jsx
+import UIGuide from "./Components/UIGuide/UIGuide.jsx"
 
 const App = () => {
 
@@ -37,7 +33,7 @@ const App = () => {
       <Route path="/Login" element={<Login />} />
       <Route path="/Profile" element={<Profile />} />
       <Route path="/Chat" element={<Chat />} />
-      <Route path="/Signin/" Component={Dashboard} />
+      <Route path="/Signin/Dashboard" Component={Dashboard} />
         <Route path="/Login/Dashboard" Component={Dashboard} />
         <Route path="/Login/Signin/Dashboard" Component={Dashboard} />
         <Route path="/Signin/Login/Dashboard" Component={Dashboard} />
