@@ -11,16 +11,14 @@ import { handleLogout } from "../Logout/Logout";  // AH-- to handle logout
 // NSN - Chat component
 
 const Chat = () => {
+  const [email, setEmail] = useState("");
   const [first_Name, setFirstName] = useState("");
   const [last_Name, setLastName] = useState("");
   const [userName, setUserName] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  // Function to toggle dropdown visibility
-  const toggleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
+
 
   //AH --to fetch data of user
   const fetchUserData = async () => {
@@ -37,7 +35,7 @@ const Chat = () => {
       }
       const profileData = await response.json();
       // AH-- Set extracted user data to state variables
-     
+      setEmail(profileData.email);
       setFirstName(profileData.firstName);
       setLastName(profileData.lastName);
       setUserName(profileData.name);
@@ -48,14 +46,34 @@ const Chat = () => {
     }
   };
 //AH-- To keep fetching
-  useEffect(() => {
-    fetchUserData();
-    const intervalId = setInterval(fetchUserData, 500);
   
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []); 
+useEffect(() => {
+  fetchUserData();
+  const intervalId = setInterval(fetchUserData, 500);
+
+ 
+  const handleClickOutside = (event) => {
+    
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setDropdownVisible(false);
+      
+    }
+     
+  return () => {
+    clearInterval(intervalId);
+  }
+  };
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => {
+   
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, []);
+
+//AH-- Function to toggle dropdown visibility
+const toggleDropdown = () => {
+  setDropdownVisible(!dropdownVisible);
+};
   // NSN - State to manage the trigger for a new chat
 
   const [newChatTrigger, setNewChatTrigger] = useState(true);
@@ -71,35 +89,53 @@ const Chat = () => {
  const ImageUrl = `http://localhost:8000${profilePic}`;
   // NSN - Render the Chat component
   return (
-    <div className="chat"> 
-      <div className="header1"> {/* NSN - Header section */}
-        <span className="left-header1"> 
-          <div className="back-button">  <button onClick={toggleDropdown}>
-          <img src={dropdown} alt="dropdown" />
-        </button>
-        <div
-          id="dropdownContent"
-          className={`dropdown-content ${dropdownVisible ? "show" : ""}`}
-        >
-          <Link to="/Profile">User Profile</Link>
-          <Link to="/Login" onClick={handleLogout}>Logout </Link>  {/* AH-- to logout and redirect to login page */}
-        </div></div> 
-          <div className="profile-picture1">
-          <Link to="/Profile"><img src={ImageUrl} className="dp-chat"/></Link>
-          
+    <>{
+      email?( <div className="chat"> 
+        <div className="header1"> {/* NSN - Header section */}
+          <span className="left-header1"> 
+            <div className="back-button">  <button onClick={toggleDropdown}>
+            <img src={dropdown} alt="dropdown" />
+          </button>
+          <div
+            id="dropdownContent"
+            className={`dropdown-content ${dropdownVisible ? "show" : ""}`}
+          >
+            <Link to="/Profile">User Profile</Link>
+            <Link to="/Login" onClick={handleLogout}>Logout </Link>  {/* AH-- to logout and redirect to login page */}
+          </div></div> 
+            <div className="profile-picture1">
+            <Link to="/Profile"><img src={ImageUrl} className="dp-chat"/></Link>
+            
+            </div>
+            <div className="Display-Name1">{first_Name || userName}&nbsp; {last_Name}</div> 
+          </span>
+          <span className="right-header1"> 
+            <img src={logo} alt="logo" className="logo1" />
+          </span>
+        </div>
+        <div className="main"> {/* NSN - Main content area */}
+          <ChatHistory newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId='1' mess={mess} setMess={setMess} view={ view} setView={setView}/> 
+          <ChatArea newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId='1'  mess={mess} setMess={setMess} view={ view} setView={setView} /> {/* NSN - ChatArea component */}
+        </div>
+        <Footer /> {/* NSN - Footer component */}
+      </div>):(
+        <div>
+          <Link className="link2" to="/Home">
+            Home
+          </Link>
+          <div className="proflogin">
+            <img src={logo} alt="logo-login" className="logo-login2" />
+            <p className="opentext">You are not logged in</p>
+            <Link to="/Login">
+              <button className="login-btn">Login</button>
+            </Link>
           </div>
-          <div className="Display-Name1">{first_Name || userName}&nbsp; {last_Name}</div> 
-        </span>
-        <span className="right-header1"> 
-          <img src={logo} alt="logo" className="logo1" />
-        </span>
-      </div>
-      <div className="main"> {/* NSN - Main content area */}
-        <ChatHistory newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId='1' mess={mess} setMess={setMess} view={ view} setView={setView}/> 
-        <ChatArea newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId='1'  mess={mess} setMess={setMess} view={ view} setView={setView} /> {/* NSN - ChatArea component */}
-      </div>
-      <Footer /> {/* NSN - Footer component */}
-    </div>
+          <Footer />
+        </div>
+      )
+    }
+    </>
+   
   );
 };
 

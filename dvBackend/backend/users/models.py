@@ -16,6 +16,7 @@ class User(AbstractUser):
     lastName = models.CharField(max_length=255, blank=True, default='')
     bio = models.CharField(max_length=300, blank=True, default='')
     profilePicture = models.ImageField(default='default.png', upload_to=upload_to,blank=True)
+    coverPicture = models.ImageField(default='blank.jpg', upload_to=upload_to,blank=True)
     gender = models.CharField(max_length=255, blank=True, default='')
     location = models.CharField(max_length=255, blank=True, default='')
     google_id = models.CharField(max_length=255, blank=True, default='')

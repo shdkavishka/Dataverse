@@ -63,7 +63,6 @@
        width: 80%;
        font-size: 1.3rem;
        align-items: center;
-       justify-content: center;
        box-shadow: 0 1px 5px rgb(0, 0, 0);
        text-align: left;
        height: 3rem;
@@ -77,6 +76,8 @@
     font-size: 1.3rem;
     background-color: transparent;
     border: none; 
+    text-align: left;
+    flex: 9;
   }
    
    .past-chat>button:nth-child(2){
@@ -84,11 +85,12 @@
        border: none; 
        padding: 0;
        margin: 0;
-       float: right;  
+       flex: 1;
+
      }
    
    .past-chat>button>img{
-       width: 3rem;
+       width: 3rem; 
    }
    
    
@@ -104,7 +106,7 @@
    
    .refresh{
     font-weight: 600;
-    color: #FB9B51;
+    color: #aaa;
     float: left;
     margin: 0.2rem;
     display: flex;

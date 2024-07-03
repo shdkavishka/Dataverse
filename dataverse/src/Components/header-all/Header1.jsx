@@ -15,7 +15,7 @@ const Header = (props) => {
   const [userName, setUserName] = useState("");
   const [profilePic, setProfilePic] = useState("");
 
-  //fetch user data
+  //AH-- fetch user data
   const fetchUserData = async () => {
     try {
       const response = await fetch("http://localhost:8000/api/user", {
@@ -42,25 +42,17 @@ const Header = (props) => {
   };
 
 
-  const dropdownRef = useRef(null);
 
+  const dropdownRef = useRef(null);
   useEffect(() => {
     fetchUserData();
-
-    // Interval to fetch data every second (1000 ms)
-    const intervalId = setInterval(fetchUserData, 500);
-
-   
     const handleClickOutside = (event) => {
       
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownVisible(false);
         
       }
-       // Cleanup function to clear interval when component unmounts
-    return () => {
-      clearInterval(intervalId);
-    }
+
     };
     document.addEventListener("mousedown", handleClickOutside);
 
@@ -77,7 +69,7 @@ const Header = (props) => {
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
-
+//AH-- for profilePic
   const ImageUrl = `http://localhost:8000${profilePic}`;
   return (
     <div className="header">

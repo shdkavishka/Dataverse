@@ -77,14 +77,14 @@ def save_chart(request):
             data = json.loads(request.body.decode('utf-8'))
             chart_name = data.get('chartName')
             chart_data = data.get('chartData')
-            created_by_username= data.get('createdBy')
+            created_by_name= data.get('createdBy')
 
             #if not all([chart_name, chart_data, created_by_username]):
              #return JsonResponse({'error': 'Missing required fields'}, status=400)
             
              # Assuming `created_by` is the username and finding the user instance
             try:
-                user = User.objects.get(username=created_by_username)
+                user = User.objects.get(name=created_by_name)
             except User.DoesNotExist:
                return JsonResponse({'error': 'User not found'}, status=404)
             

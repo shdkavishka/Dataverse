@@ -22,12 +22,13 @@
   margin: 0 20%;
 
 
- 
 }
+
 
 .profile-card {
   flex: 3;
-background-color:rgb(238, 238, 238);
+  background-size: cover;
+  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,11 +39,11 @@ background-color:rgb(238, 238, 238);
 .card-bottom {
   width: 100%;
   border-radius: 30px 30px 0 0;
-  background-color:white ;
+  background-color:#ffffffd5;
   margin-top: 60%;
   flex-grow: 1;
   height: 20%;
-  color: #F26E20;
+  color: #254054
 }
 
 
@@ -58,14 +59,14 @@ background-color:rgb(238, 238, 238);
   font-size: 2rem;
   text-align: left;
   padding-left: 10px;
-  color: #254054;
+  
 }
 .card-un{
   font-size: 1.5rem;
   text-align: left;
   padding-left: 10px;
   font-style: italic;
-  color: #254054;
+  color: #F26E20;
 }
 
 
@@ -239,6 +240,11 @@ font-size: 1rem;
 margin: 0;
 padding: 0.5rem;
 }
+#coverPicInput{
+  font-size: 1rem;
+  margin: 0;
+  padding: 0.5rem;
+  }
 
 .profilePicture{
 border-radius: 50%;
@@ -250,8 +256,9 @@ background-color: rgb(96, 121, 130);
 }
 
 
+
 .save-button10 {
-width: 100%;
+width: 50%;
 border: none;
 background-color: white;
 border-radius: 10px;
@@ -267,4 +274,8 @@ box-shadow: inset 4px 4px 10px #b1c9d1ac;
 
 .save-button10:hover {
 background-color:rgb(223, 223, 223);
+}
+
+.image-inputs{
+  display: flex;
 }

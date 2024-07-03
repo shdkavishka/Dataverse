@@ -1,10 +1,9 @@
 // Header.js
-import React, { useState } from "react";
+import React, { useState ,useEffect,useRef} from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Header.css";
 import dropdown from "../../assets/drop.png";
-import user from "../../assets/user.png";
 import logo from "../../assets/logo.png";
 import a from "../../assets/a.png";
 import b from "../../assets/b.png";
@@ -12,15 +11,65 @@ import c from "../../assets/c.png";
 import { handleLogout } from "../Logout/Logout";  // AH-- to handle logout
 
 const Header = () => {
+
+  const [profilePic, setProfilePic] = useState("");
+
+  //AH-- fetch user data
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch("http://localhost:8000/api/user", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      const profileData = await response.json();
+      // AH-- Set extracted user data to state variables
+      setProfilePic(profileData.profilePicture);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+
+    }
+  };
+
+
+
   const navigate = useNavigate();
   // State to toggle dropdown visibility
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
-  // Function to toggle dropdown visibility
+  const dropdownRef = useRef(null);
+  useEffect(() => {
+    fetchUserData();
+    const handleClickOutside = (event) => {
+      
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+        
+      }
+
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+
+
+    
+    
+    return () => {
+      //AH-- Cleanup event listener on component unmount
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  //AH-- Function to toggle dropdown visibility
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
-
+//AH-- for profilePic
+  const ImageUrl = `http://localhost:8000${profilePic}`;
   return (
     <div className="header">
       <div className="left">
@@ -56,7 +105,7 @@ const Header = () => {
         </button>
         {/* Clickable icon */}
         <button onClick={() => navigate("/profile")}>
-          <img src={user} alt="User Icon" />
+          <img src={ImageUrl} alt="User Icon" />
         </button>
       </div>
       <div className="right"></div>

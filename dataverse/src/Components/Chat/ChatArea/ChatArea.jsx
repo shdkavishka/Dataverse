@@ -8,9 +8,9 @@ import VoiceToText from '../VoiceToText/VoiceToText.jsx';
 import Toast from "../../Toast/Toast";
 import Feedback from '../../Feedback/Feedback.jsx';
 import "./ChatArea.css";
-
+import ChartPage from '../../Visualization/ChartPage.jsx';
 // NSN - Constant for the maximum number of messages allowed in a chat
-const MAX_MESSAGES = 20;
+const MAX_MESSAGES = 21;
 
 // NSN - ChatArea component 
 const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,setView}) => {
@@ -18,12 +18,13 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
   // NSN - State variables for managing various aspects of the chat
   const database=databaseId;
   const [userPrompt, setUserPrompt] = useState("");
-  const [query,setQuery] =useState("Error");
+  const [query,setQuery] =useState("SELECT p.Name AS PublisherName, SUM(s.TotalAmount) AS TotalSales FROM Publishers p JOIN Books b ON p.PublisherID = b.PublisherID JOIN Sales s ON b.BookID = s.BookID GROUP BY p.PublisherID ORDER BY TotalSales DESC;");
   const [result,setResult] =useState("No result");
   const [isLoading, setIsLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
   const [voice, setVoice] = useState(false);
+  const [visualisation, setVisualisation] = useState(false);
   const [messages, setMessages] = useState([
     {
       prompt: "Hi, I'm dataVerse, what can I visualize for you today?",
@@ -209,8 +210,22 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
                 <div>
                   {message.prompt}
                   {message.output}
-                  {message.isBot && i > 0 && (
-                    <Feedback question={question} answer={answer} /> // Here I Using Feedback component
+                    {message.isBot && i > 0 && (
+                      <>
+                      <div>
+                      <button className="vis-button"onClick={() => setVisualisation(!visualisation)}> {visualisation?"X":"Generate Table for this query"}</button>
+                    </div>
+                    <div>
+                      {
+                        visualisation?<ChartPage LangchainQuery={query}/>:null
+                      }
+                    </div>
+                      
+                      </>
+                    
+                  )}
+                      {message.isBot && i > 0 && (
+                    <Feedback question={question} answer={answer} /> //lakshi- Here I Using Feedback component
                   )}
                 </div>
               </div>

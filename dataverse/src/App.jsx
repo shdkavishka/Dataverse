@@ -12,7 +12,7 @@ import ResetPassword from './Components/SignAndLogin/ResetPassword';
 import Chat from './Components/Chat/Chat.jsx';
 import ResetPasswordConfirm from './Components/SignAndLogin/ResetPasswordConfirm'
 import './App.css'
-import ChartPage from './components/Visualization/ChartPage.jsx';
+import ChartPage from './Components/Visualization/ChartPage.jsx';
 import SavedCharts from './Components/Visualization/SavedCharts.jsx';
 import UIGuide from "./Components/UIGuide/UIGuide.jsx"
 

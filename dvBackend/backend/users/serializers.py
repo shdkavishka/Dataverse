@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
         fields = [
             'id', 'name', 'email', 'password', 
             'firstName', 'lastName', 'bio', 
-            'profilePicture', 'gender', 'location','google_id'
+            'profilePicture', 'gender', 'location','google_id','coverPicture'
         ]
 
         #AH--pw cannot be read

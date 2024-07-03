@@ -180,7 +180,7 @@ const Signin = () => {
 
   // AH-- Redirect to login once successfully signed in
   if (redirect) {
-    Navigate('/Dashboard');
+    Navigate('/UIGuide');
   }
 
   // AH-- to show toast

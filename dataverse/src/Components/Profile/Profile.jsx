@@ -4,17 +4,13 @@ import "./profile.css";
 import logo from "../../assets/logo.png";
 import ChangePassW from "./pop-ups/ChangePW";
 import DeleteAcc from "./pop-ups/DeleteAcc";
-import DeleteConGoogle from "./pop-ups/deleteconGoogle";
+import DeleteConGoogle from "./pop-ups/DeleteconGoogle";
 import { Link } from "react-router-dom";
 import Toast from "../Toast/Toast";
 import Header from "../header-all/Header1";
-import Footer from "../footer-all/footer";
+import Footer from "../footer-all/Footer";
 import handleLogout from "../Logout/Logout";
-import dp from "../../assets/default.png"
-
-
-
-
+import dp from "../../assets/default.png";
 
 //AH-- profile
 
@@ -39,10 +35,13 @@ const Profile = () => {
   const [gender, setGender] = useState("");
   const [location, setLocation] = useState("");
   const [profilePic, setProfilePic] = useState("");
-  const [google_id, seGoogle_id] = useState("");
+  const [coverPic, setCoverPic] = useState("");
+  const [google_id, setGoogle_id] = useState("");
 
   //AH-- State to store the selected profile picture file
   const [profilePicFile, setProfilePicFile] = useState(null);
+  //AH-- State to store the selected cover picture file
+  const [coverPicFile, setCoverPicFile] = useState(null);
 
   //AH-- for toast, types success, error, alert
   const [toastMessage, setToastMessage] = useState("");
@@ -52,8 +51,6 @@ const Profile = () => {
   useEffect(() => {
     fetchUserData();
   }, []);
-
- 
 
   // AH-- Send GET request to the user profile endpoint in backend
   const fetchUserData = async () => {
@@ -80,8 +77,9 @@ const Profile = () => {
       setUserName(profileData.name);
       setGender(profileData.gender);
       setLocation(profileData.location);
-      seGoogle_id(profileData.google_id);
+      setGoogle_id(profileData.google_id);
       setProfilePic(profileData.profilePicture);
+      setCoverPic(profileData.coverPicture);
     } catch (error) {
       console.error("Error fetching user data:", error);
       showToast("Error fetching user data:", "error");
@@ -90,7 +88,6 @@ const Profile = () => {
 
   //AH-- Handle form submission to update user profile
   // AH-- update button(form submit)
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -107,6 +104,11 @@ const Profile = () => {
     // Append profile picture file if selected
     if (profilePicFile) {
       data.append("profilePicture", profilePicFile);
+    }
+
+    // Append cover picture file if selected
+    if (coverPicFile) {
+      data.append("coverPicture", coverPicFile);
     }
 
     // AH-- Send PUT request to the edit profile endpoint in backend
@@ -131,6 +133,7 @@ const Profile = () => {
       setGender(result.gender);
       setLocation(result.location);
       setProfilePic(result.profilePicture);
+      setCoverPic(result.coverPicture);
       setIsEditing(false);
 
       showToast("Profile updated successfully", "success");
@@ -142,7 +145,6 @@ const Profile = () => {
 
   // AH-- Handle canceling edit and revert back to original profile data
   // AH-- cancel button(form reset)
-
   const handleCancel = (e) => {
     e.preventDefault();
     if (profile) {
@@ -155,6 +157,7 @@ const Profile = () => {
       setGender(profile.gender);
       setLocation(profile.location);
       setProfilePic(profile.profilePicture);
+      setCoverPic(profile.coverPicture);
     }
     setIsEditing(false);
   };
@@ -181,10 +184,16 @@ const Profile = () => {
     }
   };
 
+  //AH-- handle cover picture change
+  const handleCoverPicChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setCoverPicFile(e.target.files[0]);
+    }
+  };
 
- 
+  const coverImageStyle = coverPic ? { backgroundImage: `url(http://localhost:8000${coverPic})` } : {};
   const ImageUrl = `http://localhost:8000${profilePic}`;
-  console.log(ImageUrl)
+
   return (
     <>
       {/* AH-- show profile only if authenticated */}
@@ -196,23 +205,23 @@ const Profile = () => {
 
           <Header firstName={first_Name || userName} lastName={last_Name} userName={userName} />
           <div className="profile-bottom">
-            <div className="profile-card">
+            <div className="profile-card" style={coverImageStyle}>
+        
               <div className="card-bottom">
-              <img src={ImageUrl || dp} id="profilePicture" className="profilePicture" />
+                <img src={ImageUrl || dp} id="profilePicture" className="profilePicture" />
 
                 <div className="card-fn">{first_Name || userName}</div>
                 <div className="card-ln">{last_Name}</div>
                 <hr />
                 <div className="card-un">@{userName}</div>
                 <div>
-                <Link to="/login">
-                  <button className="save-button10" onClick={handleLogout}>
-                    Logout
-                  </button>
-                </Link>
+                  <Link to="/login">
+                    <button className="save-button10" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </Link>
+                </div>
               </div>
-              </div>
-              
             </div>
 
             <div className="profile-content">
@@ -232,15 +241,27 @@ const Profile = () => {
                 <div className="details-section">
                   <section className="Title-text">{isEditing ? "Edit Profile" : "My Profile"}</section>
                   {isEditing && (
-                    <div>
-                      <span className="label1"> Profile Picture:</span>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        id="profilePicInput"
-                        onChange={handleProfilePicChange}
-                        name="profilePic"
-                      />
+                    <div className="image-inputs">
+                      <span>
+                        <span className="label1">Profile Picture:</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          id="profilePicInput"
+                          onChange={handleProfilePicChange}
+                          name="profilePic"
+                        />
+                      </span>
+                      <span>
+                        <span className="label1">Cover Picture:</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          id="coverPicInput"
+                          onChange={handleCoverPicChange}
+                          name="coverPic"
+                        />
+                      </span>
                     </div>
                   )}
 
@@ -304,14 +325,14 @@ const Profile = () => {
                     )}
                   </div>
                   {isEditing && (
-                    <di className="buttons">
+                    <div className="buttons">
                       <button className="save-button" type="submit">
                         Update
                       </button>
                       <button className="save-button" type="button" onClick={handleCancel}>
                         Cancel
                       </button>
-                    </di>
+                    </div>
                   )}
                 </div>
               </form>
@@ -348,7 +369,6 @@ const Profile = () => {
             <Link to="/Login">
               <button className="login-btn">Login</button>
             </Link>
-            
           </div>
           <Footer />
         </div>
