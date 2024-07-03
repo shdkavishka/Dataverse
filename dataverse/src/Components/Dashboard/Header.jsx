@@ -105,7 +105,7 @@ const Header = () => {
         </button>
         {/* Clickable icon */}
         <button onClick={() => navigate("/profile")}>
-          <img src={ImageUrl} alt="User Icon" />
+          <img src={ImageUrl} alt="User Icon" className="user-icon" />
         </button>
       </div>
       <div className="right"></div>

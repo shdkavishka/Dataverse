@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useRef} from "react";
 import "./chat.css";
 import logo from "../../assets/logo.png";
 import ChatHistory from "./chatHistory/chatHistory.jsx";
@@ -17,7 +17,7 @@ const Chat = () => {
   const [userName, setUserName] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
-
+  const dropdownRef = useRef(null);
 
 
   //AH --to fetch data of user
@@ -48,6 +48,7 @@ const Chat = () => {
 //AH-- To keep fetching
   
 useEffect(() => {
+  
   fetchUserData();
   const intervalId = setInterval(fetchUserData, 500);
 
