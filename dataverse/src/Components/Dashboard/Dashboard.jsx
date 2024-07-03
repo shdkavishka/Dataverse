@@ -3,23 +3,27 @@ import { Link } from "react-router-dom";
 import "./Dashboard.css"; // Import the CSS file
 import Joyride from "react-joyride";
 import axios from "axios";
-import Header from "./Header";
+import Header from "../Dashboard/Header";
 
-const Dashboard = () => {
+const Dashboard = ({ showTour }) => {
   const [connectedDatabases, setConnectedDatabases] = useState([]);
-  const [joyrideSteps, setJoyrideSteps] = useState([
+
+  const steps = [
     {
       target: ".add-database-btn",
-      content: "Add your Database Here...",
+      content: "Click here to add your Database",
+      disableBeacon: true,
     },
     {
-      target: ".btn1:nth-of-type(2)",
-      content: "View your Database here...",
+      target: ".dropdown",
+      content: "Click here to see more option",
     },
-
-    // Add more steps as needed for other elements
-  ]);
-  const [run, setRun] = useState(true); // Set to true to automatically start the tour
+    {
+      target: ".profile",
+      content: "Click here to edit your profile details",
+    },
+    
+  ];
 
   useEffect(() => {
     fetchConnectedDatabases();
@@ -37,13 +41,6 @@ const Dashboard = () => {
       });
   };
 
-  const handleJoyrideCallback = (data) => {
-    const { status } = data;
-    if (status === "finished" || status === "skipped") {
-      setRun(false);
-    }
-  };
-
   const renderDatabaseLinks = () => {
     return connectedDatabases.map((db, index) => (
       <Link key={index} to={`/databases/${db.id}`} className="btn1">
@@ -54,10 +51,9 @@ const Dashboard = () => {
 
   return (
     <div>
-      <Header />
+      <Header /> {/* Render the Header1 component */}
       <div className="container1">
         <Link to="/ConnectDatabasePage" className="btn2 add-database-btn">
-          {" "}
           Add Database
         </Link>
       </div>
@@ -69,16 +65,15 @@ const Dashboard = () => {
             {renderDatabaseLinks()}
           </div>
         </div>
-        
-      </div>
-      <Joyride
-        steps={joyrideSteps}
-        run={run}
-        continuous
-        scrollToFirstStep
-        showSkipButton
-        callback={handleJoyrideCallback}
-      />
+      </div> 
+      {showTour && (
+        <Joyride
+          steps={steps}
+          continuous={true}
+          showProgress={true}
+          showSkipButton={true}
+        />
+      )}
     </div>
   );
 };
