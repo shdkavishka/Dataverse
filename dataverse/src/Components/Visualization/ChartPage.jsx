@@ -26,6 +26,14 @@ const ChartPage = ({ LangchainQuery }) => {
     handleQuerySubmit();
   }, [query]);
 
+  useEffect(() => {
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+      }
+    };
+  }, []);
+
   const generateRandomColor = () => {
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -122,10 +130,12 @@ const ChartPage = ({ LangchainQuery }) => {
     };
 
     if (chartRef.current) {
+      console.log('Destroying previous chart instance...'); 
       chartRef.current.destroy();
     }
 
     const ctx = document.getElementById('chart');
+    console.log('Creating new chart instance...');
     const newChart = new Chart(ctx, {
       type: chartType,
       data: chartData,
@@ -133,6 +143,7 @@ const ChartPage = ({ LangchainQuery }) => {
       plugins: [ChartDataLabels],
     });
     chartRef.current = newChart;
+    console.log('New chart instance created');
   };
 
   const handleQuerySubmit = async () => {
