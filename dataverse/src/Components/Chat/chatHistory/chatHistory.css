@@ -96,4 +96,18 @@
        background-color: #698BA3;
    
    }
+
+   .chat-reset{
+    width: 1rem;
+    
+   }
    
+   .refresh{
+    font-weight: 600;
+    color: #FB9B51;
+    float: left;
+    margin: 0.2rem;
+    display: flex;
+    font-size: 1rem;
+   }
+

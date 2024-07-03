@@ -83,7 +83,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
         db_user: "root",
         db_password: "",
         db_host: "localhost",
-        db_name: "newDB",
+        db_name: "dataset",
         prompt: userPrompt,
       });
       setQuery(response.data.query)

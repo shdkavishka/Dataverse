@@ -4,8 +4,9 @@ import logo from "../../assets/logo.png";
 import ChatHistory from "./chatHistory/chatHistory.jsx";
 import Footer from "../footer-all/footer.jsx";
 import ChatArea from "./ChatArea/ChatArea.jsx";
-import ProfileImage from "../Profile/profileImage.jsx";
-
+import dropdown from "../../assets/drop.png";
+import { Link } from "react-router-dom";
+import { handleLogout } from "../Logout/Logout";  // AH-- to handle logout
 
 // NSN - Chat component
 
@@ -14,6 +15,12 @@ const Chat = () => {
   const [last_Name, setLastName] = useState("");
   const [userName, setUserName] = useState("");
   const [profilePic, setProfilePic] = useState("");
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
+  // Function to toggle dropdown visibility
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
+  };
 
   //AH --to fetch data of user
   const fetchUserData = async () => {
@@ -67,10 +74,19 @@ const Chat = () => {
     <div className="chat"> 
       <div className="header1"> {/* NSN - Header section */}
         <span className="left-header1"> 
-          <div className="back-button">..</div> 
+          <div className="back-button">  <button onClick={toggleDropdown}>
+          <img src={dropdown} alt="dropdown" />
+        </button>
+        <div
+          id="dropdownContent"
+          className={`dropdown-content ${dropdownVisible ? "show" : ""}`}
+        >
+          <Link to="/Profile">User Profile</Link>
+          <Link to="/Login" onClick={handleLogout}>Logout </Link>  {/* AH-- to logout and redirect to login page */}
+        </div></div> 
           <div className="profile-picture1">
-          <img src={ImageUrl} className="dp-chat"/>
-            <ProfileImage firstName="A" lastName="" /> 
+          <Link to="/Profile"><img src={ImageUrl} className="dp-chat"/></Link>
+          
           </div>
           <div className="Display-Name1">{first_Name || userName}&nbsp; {last_Name}</div> 
         </span>

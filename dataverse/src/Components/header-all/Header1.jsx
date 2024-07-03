@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import dropdown from "../../assets/drop.png";
 import './Header1.css'
-import ProfileImage from '../Profile/profileImage'
 import logo from "../../assets/logo.png";
 import logoname from  "../../assets/dataverse.png";
 import { Link } from 'react-router-dom';

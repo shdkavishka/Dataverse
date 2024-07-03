@@ -4,6 +4,7 @@ import "./chatHistory.css";
 import add from "../../../assets/add.png";
 import del from "../../../assets/delete.png";
 import Toast from "../../Toast/Toast";
+import reset from "../../../assets/reset.png"
 
 const ChatHistory = ({  newChatTrigger, setNewChat, databaseId ,mess,setMess ,view,setView}) => {
   const [chats, setChats] = useState([]);
@@ -24,10 +25,6 @@ const ChatHistory = ({  newChatTrigger, setNewChat, databaseId ,mess,setMess ,vi
   useEffect(() => {
     fetchChats();
 
-    const intervalId = setInterval(fetchChats, 1000);
-    
-    // Cleanup function to clear the interval when the component is unmounted or id changes
-    return () => clearInterval(intervalId);
   }, [id]);
 
   const handleNewChat = () => {
@@ -106,18 +103,18 @@ const ChatHistory = ({  newChatTrigger, setNewChat, databaseId ,mess,setMess ,vi
         </button>
       </div>
       <div className="history">
-        <div className="historybox">
-          {chats.map(chat => (
-           
-            <div key={chat.id} className="past-chat"  >
-              <button onClick={() => handleViewChat(chat.id)}>{chat.title}</button>
-              <button onClick={() => handleDeleteChat(chat.id)}>
-                <img src={del} alt="delete" />
-              </button>
-            </div>
-            
-          ))}
-        </div>
+     
+<button onClick={fetchChats} className="refresh"><img src={reset} className="chat-reset"/> Refresh </button>
+<div className="historybox">
+  {chats.slice().reverse().map(chat => (
+    <div key={chat.id} className="past-chat">
+      <button onClick={() => handleViewChat(chat.id)}>{chat.title}</button>
+      <button onClick={() => handleDeleteChat(chat.id)}>
+        <img src={del} alt="delete" />
+      </button>
+    </div>
+  ))}
+</div>
       </div>
     </span>
   );
