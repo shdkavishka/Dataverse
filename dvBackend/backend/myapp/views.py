@@ -4,7 +4,7 @@ from django.views.decorators.http import require_http_methods
 from django.db import connection
 from .models import SavedChart
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
+from users.models import User
 import json
 import traceback
 import pymysql
