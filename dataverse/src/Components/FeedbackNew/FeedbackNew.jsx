@@ -7,7 +7,7 @@ const FeedbackNew = ({ question, answer, onClose }) => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post("http://127.0.0.1:8000/api/qna/add_feedback_or_reaction/", {
+      await axios.post("http://localhost:8000/api/feedback/add_feedback_or_reaction/", {
         question: question,
         answer: answer,
         feedback: feedback,

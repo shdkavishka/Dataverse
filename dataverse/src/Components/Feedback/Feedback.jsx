@@ -20,7 +20,7 @@ const Feedback = ({ question, answer }) => {
   };
 
   const handleThumb = async (reaction) => {
-    await axios.post('http://localhost:8000/api/qna/add_feedback_or_reaction/', {
+    await axios.post('http://localhost:8000/api/feedback/add_feedback_or_reaction/', {
       question: currentQuestion,
       answer: currentAnswer,
       reaction: reaction,
