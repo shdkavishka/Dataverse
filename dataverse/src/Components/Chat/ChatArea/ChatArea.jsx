@@ -25,6 +25,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
   const [toastType, setToastType] = useState("");
   const [voice, setVoice] = useState(false);
   const [visualisation, setVisualisation] = useState(false);
+  const [chartData, setChartData] = useState(null);
   const [messages, setMessages] = useState([
     {
       prompt: "Hi, I'm dataVerse, what can I visualize for you today?",
@@ -33,6 +34,10 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
     },
   ]);
   const [limitReached, setLimitReached] = useState(false);
+
+  const handleChartData = (base64Image) => {
+    setChartData(base64Image);
+  };
 
   // NSN - useEffect to handle new chat initialization
   useEffect(() => {
@@ -217,7 +222,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
                     </div>
                     <div>
                       {
-                        visualisation?<ChartPage LangchainQuery={query}/>:null
+                        visualisation?<ChartPage LangchainQuery={query} onChartData={handleChartData}/>:null
                       }
                     </div>
                       
@@ -225,7 +230,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
                     
                   )}
                       {message.isBot && i > 0 && (
-                    <Feedback question={question} answer={answer} /> //lakshi- Here I Using Feedback component
+                    <Feedback question={question} answer={answer} chartData={chartData} /> //lakshi- Here I Using Feedback component
                   )}
                 </div>
               </div>

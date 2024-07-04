@@ -14,10 +14,11 @@ class FeedbackViewSet(viewsets.ModelViewSet):
         answer_query = request.data.get('answer')
         reaction = request.data.get('reaction', '')
         feedback = request.data.get('feedback', '')
+        chart_image = request.data.get('chartData', '')
 
         feedback_instance, created = Feedback.objects.get_or_create(
             question=question, answer_query=answer_query,
-            defaults={'reaction': reaction, 'feedback': feedback}
+            defaults={'reaction': reaction, 'feedback': feedback, 'chart_image': chart_image}
         )
 
         if not created:
@@ -25,6 +26,8 @@ class FeedbackViewSet(viewsets.ModelViewSet):
                 feedback_instance.reaction = reaction
             if feedback:
                 feedback_instance.feedback = feedback
+            if chart_image:
+                feedback_instance.chart_image = chart_image
             feedback_instance.save()
 
         serializer = self.get_serializer(feedback_instance)

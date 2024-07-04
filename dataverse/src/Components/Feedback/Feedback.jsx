@@ -6,7 +6,7 @@ import Feedback_icon from "../../assets/feedback-icon.png";
 import FeedbackNew from "../FeedbackNew/FeedbackNew";
 import "./Feedback.css";
 
-const Feedback = ({ question, answer }) => {
+const Feedback = ({ question, answer, chartData }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState(question);
   const [currentAnswer, setCurrentAnswer] = useState(answer);
@@ -24,6 +24,7 @@ const Feedback = ({ question, answer }) => {
       question: currentQuestion,
       answer: currentAnswer,
       reaction: reaction,
+      chartData: chartData,
     });
   };
 
@@ -42,6 +43,7 @@ const Feedback = ({ question, answer }) => {
         <FeedbackNew
           question={currentQuestion}
           answer={currentAnswer}
+          chartData={chartData}
           onClose={handleButtonClick}
         />
       )}
