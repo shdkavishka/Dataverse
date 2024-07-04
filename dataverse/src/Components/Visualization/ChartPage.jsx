@@ -4,19 +4,19 @@ import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import './styles2.css';
 
-const ChartPage = ({ LangchainQuery }) => {
+const ChartPage = ({ LangchainQuery, onChartData }) => {
   const [query, setQuery] = useState('');
   const [queryData, setQueryData] = useState([]);
   const [data, setData] = useState([]);
   const [editChartOpen, setEditChartOpen] = useState(false);
-  const [chartType, setChartType] = useState('bar');
+  const [chartType, setChartType] = useState('bar'); 
   const [saveChartOpen, setSaveChartOpen] = useState(false);
   const [savedChartName, setSavedChartName] = useState('');
   const [createdBy, setCreatedBy] = useState('');
   const [validationError, setValidationError] = useState('');
   const [chartInstance, setChartInstance] = useState(null);
   const canvasRef = useRef(null);
-
+ 
   const chartRef = useRef(null);
   const navigate = useNavigate();
 
@@ -59,7 +59,7 @@ const ChartPage = ({ LangchainQuery }) => {
 
     return null;
   };
-
+  
   const handleGenerateTable = () => {
     // This function will be called when "Generate Table" is clicked
     handleQuerySubmit();
@@ -157,26 +157,32 @@ const ChartPage = ({ LangchainQuery }) => {
     if (ctx) {
       ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
   
-      console.log('Creating new chart instance...');
-      const newChart = new Chart(ctx, {
-        type: chartType,
-        data: chartData,
-        options,
-        plugins: [ChartDataLabels],
-      });
+    console.log('Creating new chart instance...');
+    const newChart = new Chart(ctx, {
+      type: chartType,
+      data: chartData,
+      options,
+      plugins: [ChartDataLabels],
+    });
       setChartInstance(newChart);
-      console.log('New chart instance created');
-  
+    console.log('New chart instance created');
+
+    // Send chart data to parent component (ChatArea.jsx)
+    if (typeof onChartData === 'function') {
+      const base64Image = canvasRef.current.toDataURL('image/png');
+      onChartData(base64Image);
+    }
+
       // Force an update after a short delay
       setTimeout(() => {
         newChart.update();
       }, 100);
     }
   };
-
+        
 
   const handleQuerySubmit = async () => {
-    
+
     const dbDetails = {
       db_user: 'root',
       db_password: '',

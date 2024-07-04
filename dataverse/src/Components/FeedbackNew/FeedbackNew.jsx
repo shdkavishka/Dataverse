@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./FeedbackNew.css";
 
-const FeedbackNew = ({ question, answer, onClose }) => {
+const FeedbackNew = ({ question, answer, chartData, onClose }) => {
   const [feedback, setFeedback] = useState("");
 
   const handleSubmit = async () => {
@@ -11,6 +11,7 @@ const FeedbackNew = ({ question, answer, onClose }) => {
         question: question,
         answer: answer,
         feedback: feedback,
+        chartData: chartData,
       });
       setFeedback("");
       onClose(); 
