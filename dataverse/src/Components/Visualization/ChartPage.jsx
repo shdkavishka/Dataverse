@@ -14,7 +14,9 @@ const ChartPage = ({ LangchainQuery }) => {
   const [savedChartName, setSavedChartName] = useState('');
   const [createdBy, setCreatedBy] = useState('');
   const [validationError, setValidationError] = useState('');
- 
+  const [chartInstance, setChartInstance] = useState(null);
+  const canvasRef = useRef(null);
+
   const chartRef = useRef(null);
   const navigate = useNavigate();
 
@@ -58,6 +60,12 @@ const ChartPage = ({ LangchainQuery }) => {
     return null;
   };
 
+  const handleGenerateTable = () => {
+    // This function will be called when "Generate Table" is clicked
+    handleQuerySubmit();
+    setChartInstance(null); 
+  };
+
   const handleGenerateChart = () => {
     const validationError = validateData(queryData);
 
@@ -66,8 +74,12 @@ const ChartPage = ({ LangchainQuery }) => {
       return;
     }
 
-
     setValidationError('');
+    createChart();
+  };
+
+  const createChart = () => {
+
     const chartData = {
       labels: [],
       datasets: [
@@ -96,6 +108,13 @@ const ChartPage = ({ LangchainQuery }) => {
     const options = {
       responsive: true,
       maintainAspectRatio: false,
+      animation: {
+        duration: 1000, // General animation time
+      },
+      hover: {
+        animationDuration: 0, // Duration of animations when hovering an item
+      },
+      responsiveAnimationDuration: 0,
       scales: {
         y: {
           beginAtZero: true,
@@ -129,22 +148,32 @@ const ChartPage = ({ LangchainQuery }) => {
       },
     };
 
-    if (chartRef.current) {
-      console.log('Destroying previous chart instance...'); 
-      chartRef.current.destroy();
+    if (chartInstance) {
+      console.log('Destroying previous chart instance...');
+      chartInstance.destroy();
     }
-
-    const ctx = document.getElementById('chart');
-    console.log('Creating new chart instance...');
-    const newChart = new Chart(ctx, {
-      type: chartType,
-      data: chartData,
-      options,
-      plugins: [ChartDataLabels],
-    });
-    chartRef.current = newChart;
-    console.log('New chart instance created');
+  
+    const ctx = canvasRef.current.getContext('2d');
+    if (ctx) {
+      ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+  
+      console.log('Creating new chart instance...');
+      const newChart = new Chart(ctx, {
+        type: chartType,
+        data: chartData,
+        options,
+        plugins: [ChartDataLabels],
+      });
+      setChartInstance(newChart);
+      console.log('New chart instance created');
+  
+      // Force an update after a short delay
+      setTimeout(() => {
+        newChart.update();
+      }, 100);
+    }
   };
+
 
   const handleQuerySubmit = async () => {
     
@@ -187,7 +216,7 @@ const ChartPage = ({ LangchainQuery }) => {
   };
 
   const handleUpdateChart = () => {
-    handleGenerateChart();
+    createChart();
     setEditChartOpen(false);
   };
 
@@ -201,7 +230,12 @@ const ChartPage = ({ LangchainQuery }) => {
 
   const handleSaveChart = async () => {
     try {
-      const chartData = chartRef.current.toBase64Image();
+      if (!chartInstance) {
+        console.error('No chart to save');
+        return;
+      }
+
+      const chartData = canvasRef.current.toDataURL('image/png');
       const response = await fetch('http://localhost:8000/api/save-chart', {
         method: 'POST',
         headers: {
@@ -260,7 +294,9 @@ const ChartPage = ({ LangchainQuery }) => {
         )}
         <br />
         <button onClick={handleGenerateChart} className="chart-page-button">Generate Chart</button>
+        {chartInstance && (
         <button onClick={handleEditChartClick} className="chart-page-button">Edit Chart</button>
+        )}
         {editChartOpen && (
           <div className="edit-chart-modal">
             <div className="edit-chart-content">
@@ -293,8 +329,8 @@ const ChartPage = ({ LangchainQuery }) => {
       </div>
       <br />
 
-      <div className="chart-page-canvas-container">
-        <canvas id="chart" className="chart-page-canvas"></canvas>
+      <div className="chart-page-canvas-container" style={{ width: '100%', height: '400px' }}>
+        <canvas ref={canvasRef} className="chart-page-canvas"></canvas>
       </div>
       <br />
       <button onClick={handleSaveChartClick} className="chart-page-button">Save Chart</button>
