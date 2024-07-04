@@ -24,30 +24,6 @@ class ConnectedDatabase(models.Model):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class DataAnalysisResult(models.Model):
     connected_database = models.ForeignKey(ConnectedDatabase, on_delete=models.CASCADE)
     # Add fields for analysis results

@@ -8,15 +8,18 @@ import DeleteConGoogle from "./pop-ups/DeleteconGoogle";
 import { Link } from "react-router-dom";
 import Toast from "../Toast/Toast";
 import Header from "../header-all/Header1";
-import Footer from "../footer-all/Footer";
+import Footer from "../footer-all/footer.jsx";
 import handleLogout from "../Logout/Logout";
 import dp from "../../assets/default.png";
+import Profile2 from "./ProfileOther.jsx";
+import { useParams } from 'react-router-dom';
 
 //AH-- profile
 
 const Profile = () => {
   //AH-- for current user profile
   const [profile, setProfile] = useState(null);
+  const { userId } = useParams();
   //AH-- to handle pop ups appear and disappear
   const [ChangePassWButton, SetChangePassWButton] = useState(false);
   const [DeleteAccButton, SetDeleteAccButton] = useState(false);
@@ -193,7 +196,9 @@ const Profile = () => {
 
   const coverImageStyle = coverPic ? { backgroundImage: `url(http://localhost:8000${coverPic})` } : {};
   const ImageUrl = `http://localhost:8000${profilePic}`;
-
+  if (userId) {
+    return <Profile2 />;
+  }
   return (
     <>
       {/* AH-- show profile only if authenticated */}

@@ -15,6 +15,7 @@ import './App.css'
 import ChartPage from './Components/Visualization/ChartPage.jsx';
 import SavedCharts from './Components/Visualization/SavedCharts.jsx';
 import UIGuide from "./Components/UIGuide/UIGuide.jsx"
+import Profile2 from './Components/Profile/ProfileOther.jsx';
 
 const App = () => {
 
@@ -41,6 +42,8 @@ const App = () => {
         <Route path="/api/reset_password_confirm/:uidb64/:token/" element={<ResetPasswordConfirm />} />
         <Route path="/ChartPage" element={<ChartPage />} />
         <Route path="/saved-charts" element={<SavedCharts />} />  
+        <Route path="/profile/:userId" element={<Profile2 />} />
+    
     </Routes>
     </div>  
   );

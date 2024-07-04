@@ -6,7 +6,7 @@ from .models import User
 import jwt, datetime
 from django.conf import settings
 from rest_framework.parsers import MultiPartParser, FormParser
-
+import json
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -17,7 +17,7 @@ from django.contrib.auth.hashers import check_password, make_password
 from django.utils.http import urlsafe_base64_decode
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
-
+from django.db.models import Q
 
 # Create your views here.
 #AH-- Register new user
@@ -360,7 +360,7 @@ class GoogleLoginView(APIView):
     
 
 
-
+#AH-- to delete an account opened with goofle
 class DeleteGoogleUserAccountView(APIView):
 
     def delete(self, request):
@@ -393,3 +393,55 @@ class DeleteGoogleUserAccountView(APIView):
         # AH-- Delete the user account
         existing_user.delete()
         return Response({"message": "User deletion successful!"}, status=status.HTTP_204_NO_CONTENT)
+    
+#AH--search other users
+
+class SearchUserView(APIView):
+
+    def post(self, request):
+        # Extract the token from cookies in request
+        token = request.COOKIES.get('jwt')
+
+        if not token:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        try:
+            # Decode JWT token
+            payload = jwt.decode(token, key='secret', algorithms=['HS256'])
+        except jwt.ExpiredSignatureError:
+            raise AuthenticationFailed('Unauthenticated!')
+
+        # Get the search query from request body
+        data = json.loads(request.body)
+        query = data.get('query', '')
+
+        if query:
+            # Perform the search
+            users = User.objects.filter(
+                Q(name__icontains=query) |
+                Q(email__icontains=query) |
+                Q(firstName__icontains=query) |
+                Q(lastName__icontains=query)
+            )
+        else:
+            users = User.objects.none()
+
+        # Serialize the result
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
+
+
+class UserView2(APIView):
+    
+    def get(self, request, user_id):
+        try:
+            # Retrieve the user from the database based on user_id
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            raise NotFound("User does not exist")
+        
+        # Serialize the retrieved user data
+        serializer = UserSerializer(user)
+        
+        # Return the serialized user data as JSON response
+        return Response(serializer.data)

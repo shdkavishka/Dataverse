@@ -5,6 +5,7 @@ import logo from "../../assets/logo.png";
 import logoname from  "../../assets/dataverse.png";
 import { Link } from 'react-router-dom';
 import { handleLogout } from "../Logout/Logout";
+import Searchbar from "../Profile/search other users/searchbar";
 
 
 //AH-- header 
@@ -95,6 +96,8 @@ const Header = (props) => {
         </div>
        
       </span>
+
+      <Searchbar/>
       <span className="right-header">
 
       <div className="Display-Name">
