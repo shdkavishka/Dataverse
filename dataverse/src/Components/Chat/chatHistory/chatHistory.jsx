@@ -6,7 +6,7 @@ import del from "../../../assets/delete.png";
 import Toast from "../../Toast/Toast";
 import reset from "../../../assets/reset.png"
 
-const ChatHistory = ({  newChatTrigger, setNewChat, databaseId ,mess,setMess ,view,setView}) => {
+const ChatHistory = ({  newChatTrigger, setNewChat, databaseId ,mess,setMess ,view,setView,nowViewing, setNowViewing}) => {
   const [chats, setChats] = useState([]);
   const [id, setId] = useState(1); // State to store the ID for the request
   const [toastMessage, setToastMessage] = useState("");
@@ -57,6 +57,7 @@ const ChatHistory = ({  newChatTrigger, setNewChat, databaseId ,mess,setMess ,vi
       const { messages } = response.data;
       console.log(response.data)
       setView(true)
+      setNowViewing(chatId)
 
       // Transform messages into the desired format
       const newMessages = messages.flatMap(msg => ([
@@ -72,7 +73,9 @@ const ChatHistory = ({  newChatTrigger, setNewChat, databaseId ,mess,setMess ,vi
         }
       ]));
 
+
       // Set messages state with the transformed data
+      
       setMess(newMessages)
       console.log(newMessages)
     } catch (error) {

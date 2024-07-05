@@ -8,7 +8,7 @@
     min-height: calc(100vh - 14rem);
     display: flex;
     flex-direction: column;
-    margin: 3rem 10rem 6rem 10rem;
+    margin: 3rem 13rem 6rem 13rem;
 }
 
 .input-box{
@@ -16,7 +16,10 @@
     display: flex;
  
 }
-
+.input-box{
+    border: 1px solid #49545e;
+    border-radius: 5rem;
+}
 .input-box>input{
     color: #ABB2B8;
     border: 1px solid #49545e;
@@ -46,8 +49,7 @@
     overflow: hidden;
     overflow-y: scroll;
     scroll-behavior: smooth;
-    width: 100%;
-    max-width: 70rem;
+    width: 99%;
     height: calc(100vh - 15rem);
 }
 
@@ -63,10 +65,9 @@
     padding-top: 0;
    }
 .chats>div>img{
-
-    width: 3rem; 
+ 
     height: 3rem;
-    border-radius: 10px;
+    border-radius: 10px 0 10px 0;
 
 margin: -0.5rem 0 0 1.5rem;
 }

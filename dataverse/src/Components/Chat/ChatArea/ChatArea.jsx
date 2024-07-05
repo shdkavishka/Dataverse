@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import profile from "../../../assets/profile.jpg";
-import bot from "../../../assets/bot.jpg";
+import bot from "../../../assets/logo.png";
 import send from "../../../assets/send.png";
 import mic from "../../../assets/microphone.png";
 import VoiceToText from '../VoiceToText/VoiceToText.jsx';
@@ -9,11 +8,12 @@ import Toast from "../../Toast/Toast";
 import Feedback from '../../Feedback/Feedback.jsx';
 import "./ChatArea.css";
 import ChartPage from '../../Visualization/ChartPage.jsx';
+
 // NSN - Constant for the maximum number of messages allowed in a chat
 const MAX_MESSAGES = 21;
 
 // NSN - ChatArea component 
-const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,setView}) => {
+const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,setView,nowViewing, setNowViewing,ImageUrl}) => {
 
   // NSN - State variables for managing various aspects of the chat
   const database=databaseId;
@@ -23,7 +23,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
   const [isLoading, setIsLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
-  const [voice, setVoice] = useState(false);
+  const [voice, setVoice] = useState(false)
   const [messages, setMessages] = useState([
     {
       prompt: "Hi, I'm dataVerse, what can I visualize for you today?",
@@ -49,9 +49,6 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
       if (messages.length > 1) {
         if (!window.confirm("Are you sure you want to start a new chat? Unsaved messages will be lost.")) {
           return;
-        }
-        if(!view){
-          saveChat();
         }
        
       }
@@ -121,7 +118,9 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
         { prompt: userPrompt, output: "", isBot: false },
         { prompt: "", output: `Query: ${query}\nResult: ${result}`, isBot: true }
       ];
-
+      if(view){
+        setMessages([])
+      }
       setMessages(newMessages);
       setUserPrompt("");
 
@@ -181,6 +180,8 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
     }
     return formattedMessages;
   };
+  
+  
 
   const saveChat = async () => {
     try {
@@ -197,6 +198,58 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
       showToast('Error saving chat', 'error');
     }
   };
+
+  const formatMessages2 = (messages) => {
+    const formattedMessages = [];
+    for (let i = 0; i < messages.length; i += 2) { // Start from index 0 and increment by 2
+      const userMessage = messages[i];
+      const botMessage = messages[i + 1] || { output: "" }; // Default to an empty object if undefined
+      const [queryLine, resultLine] = botMessage.output.split('\n');
+      const query = queryLine ? queryLine.replace('Query: ', '') : '';
+      const result = resultLine ? resultLine.replace('Result: ', '') : '';
+      formattedMessages.push({
+        prompt: userMessage.prompt,
+        query: query,
+        result: result,
+      });
+    }
+    return formattedMessages;
+  };
+  
+
+  const updateChat = async () => {
+    const formattedMessages2 = formatMessages2(messages);
+
+    try {
+      const response = await axios.post('http://localhost:8000/api/updatechat/', {
+        chat_id: nowViewing,
+        database: database,
+        messages: formattedMessages2
+      });
+  
+      showToast('Chat updated successfully', 'success');
+    } catch (error) {
+      console.error('Error updating chat:', error);
+      if (error.response && error.response.data) {
+        console.error('Backend response errors:', error.response.data);
+      }
+      showToast('Error updating chat', 'error');
+    }
+  };
+  
+  
+
+
+  const handleSave=()=>{
+    if(!view){
+      
+      saveChat()
+    }
+    else{
+
+      updateChat()
+    }
+  }
 
 
 
@@ -222,7 +275,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
 
             return (
              <div key={i} className={message.isBot ? "QandA bot" : "QandA"}>
-  <img src={message.isBot ? bot : profile} alt="dp" />
+  <img src={message.isBot ? bot : ImageUrl} alt="dp" />
   <div>
     {message.prompt}
     {message.output}
@@ -262,13 +315,16 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
             value={userPrompt}
             onKeyDown={handleEnter}
             onChange={(e) => setUserPrompt(e.target.value)}
-            disabled={isLoading || limitReached|| view==true}
+            disabled={isLoading || limitReached}
           />
-          <button className='send-button' onClick={handleSend} disabled={isLoading || limitReached || view==true}>
+          <button className='send-button' onClick={handleSend} disabled={isLoading || limitReached}>
             <img src={send} alt="send" />
           </button>
           <button className='mic-button' onClick={handleMicClick} disabled={limitReached}>
             <img src={mic} alt="mic" />
+          </button>
+          <button className='mic-button' onClick={handleSave} disabled={limitReached}>
+            Save chat
           </button>
           
         </div>

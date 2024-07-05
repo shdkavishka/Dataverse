@@ -17,6 +17,7 @@ const Chat = () => {
   const [userName, setUserName] = useState("");
   const [profilePic, setProfilePic] = useState("");
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [nowViewing, setNowViewing] = useState("");
   const dropdownRef = useRef(null);
 
 
@@ -88,7 +89,7 @@ const toggleDropdown = () => {
   };
    //AH-- profile pic url
  const ImageUrl = `http://localhost:8000${profilePic}`;
-  // NSN - Render the Chat component
+
   return (
     <>{
       email?( <div className="chat"> 
@@ -115,8 +116,8 @@ const toggleDropdown = () => {
           </span>
         </div>
         <div className="main"> {/* NSN - Main content area */}
-          <ChatHistory newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId='1' mess={mess} setMess={setMess} view={ view} setView={setView}/> 
-          <ChatArea newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId='1'  mess={mess} setMess={setMess} view={ view} setView={setView} /> {/* NSN - ChatArea component */}
+        <ChatHistory newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId='1' mess={mess} setMess={setMess} view={ view} setView={setView} nowViewing={nowViewing} setNowViewing={setNowViewing}/> 
+        <ChatArea newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId='1'  mess={mess} setMess={setMess} view={ view} setView={setView} nowViewing={nowViewing} setNowViewing={setNowViewing} ImageUrl={ImageUrl}/>
         </div>
         <Footer /> {/* NSN - Footer component */}
       </div>):(

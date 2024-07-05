@@ -125,3 +125,30 @@ def get_past_chats(request):
         return Response({'error': 'Chats not found'}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+
+@api_view(['POST'])
+def add_messages_to_chat(request):
+    chat_id = request.data.get('chat_id')
+    
+    if not chat_id:
+        return Response({"error": "Chat ID is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        chat_instance = Chat.objects.get(id=chat_id)
+    except Chat.DoesNotExist:
+        return Response({"error": "Chat instance not found"}, status=status.HTTP_404_NOT_FOUND)
+
+    messages_data = request.data.get('messages', [])
+    if not messages_data:
+        return Response({"error": "Messages data is required"}, status=status.HTTP_400_BAD_REQUEST)
+    
+    for message_data in messages_data:
+        message_data['chat'] = chat_instance.id
+
+    message_serializer = MessageSerializer(data=messages_data, many=True)
+    if message_serializer.is_valid():
+        message_serializer.save()
+        return Response(ChatSerializer(chat_instance).data, status=status.HTTP_200_OK)
+    else:
+        return Response(message_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
