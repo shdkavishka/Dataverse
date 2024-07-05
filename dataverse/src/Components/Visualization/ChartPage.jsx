@@ -185,7 +185,7 @@ const ChartPage = ({ LangchainQuery, onChartData }) => {
 
     const dbDetails = {
       db_user: 'root',
-      db_password: '',
+      db_password: 'Aaishah1234',
       db_host: 'localhost',
       db_name: 'dataset',
     };

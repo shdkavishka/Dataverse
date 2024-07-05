@@ -24,19 +24,23 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
   const [voice, setVoice] = useState(false);
-  const [visualisation, setVisualisation] = useState(false);
-  const [chartData, setChartData] = useState(null);
   const [messages, setMessages] = useState([
     {
       prompt: "Hi, I'm dataVerse, what can I visualize for you today?",
       output: "",
       isBot: true,
+      visualisation: false,
+      chartData: null,
     },
   ]);
+  
   const [limitReached, setLimitReached] = useState(false);
 
-  const handleChartData = (base64Image) => {
-    setChartData(base64Image);
+  const handleChartData = (base64Image, index) => {
+    const updatedMessages = messages.map((message, i) =>
+      i === index ? { ...message, chartData: base64Image } : message
+    );
+    setMessages(updatedMessages);
   };
 
   // NSN - useEffect to handle new chat initialization
@@ -134,6 +138,13 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
     if (e.key === "Enter") handleSend();
   };
 
+  const toggleVisualisation = (index) => {
+    const updatedMessages = messages.map((message, i) =>
+      i === index ? { ...message, visualisation: !message.visualisation } : message
+    );
+    setMessages(updatedMessages);
+  };
+
   // NSN - Function to show a toast message
   const showToast = (message, type) => {
     setToastMessage(message);
@@ -210,30 +221,29 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
             const answer = message.isBot ? message.output : "";
 
             return (
-              <div key={i} className={message.isBot ? "QandA bot" : "QandA"}>
-                <img src={message.isBot ? bot : profile} alt="dp" />
-                <div>
-                  {message.prompt}
-                  {message.output}
-                    {message.isBot && i > 0 && (
-                      <>
-                      <div>
-                      <button className="vis-button"onClick={() => setVisualisation(!visualisation)}> {visualisation?"X":"Generate Table for this query"}</button>
-                    </div>
-                    <div>
-                      {
-                        visualisation?<ChartPage LangchainQuery={query} onChartData={handleChartData}/>:null
-                      }
-                    </div>
-                      
-                      </>
-                    
-                  )}
-                      {message.isBot && i > 0 && (
-                    <Feedback question={question} answer={answer} chartData={chartData} /> //lakshi- Here I Using Feedback component
-                  )}
-                </div>
-              </div>
+             <div key={i} className={message.isBot ? "QandA bot" : "QandA"}>
+  <img src={message.isBot ? bot : profile} alt="dp" />
+  <div>
+    {message.prompt}
+    {message.output}
+    {message.isBot && i > 0 && (
+      <>
+        <div>
+          <button className="vis-button" onClick={() => toggleVisualisation(i)}> 
+            {message.visualisation ? "X" : "Generate Table for this query"}
+          </button>
+        </div>
+        <div>
+          {message.visualisation ? <ChartPage LangchainQuery={query} onChartData={(data) => handleChartData(data, i)} /> : null}
+        </div>
+      </>
+    )}
+    {message.isBot && i > 0 && (
+      <Feedback question={question} answer={answer} chartData={message.chartData} />
+    )}
+  </div>
+</div>
+
             );
           })}
           {limitReached && (

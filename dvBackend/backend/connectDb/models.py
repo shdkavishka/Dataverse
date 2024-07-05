@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class ConnectedDatabase(models.Model):
     name = models.CharField(max_length=100)
     server = models.CharField(max_length=100)
@@ -31,4 +32,3 @@ class DataAnalysisResult(models.Model):
 
     def __str__(self):
         return f"Analysis Result for {self.connected_database}"
-    

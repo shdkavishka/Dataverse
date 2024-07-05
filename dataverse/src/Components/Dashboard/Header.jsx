@@ -64,7 +64,7 @@ const Header = () => {
     };
   }, []);
 
-  //AH-- Function to toggle dropdown visibility
+
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
