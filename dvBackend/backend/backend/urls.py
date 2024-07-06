@@ -26,7 +26,6 @@ urlpatterns = [
     path('api/', include('connectDb.urls')),
     path('', include('myapp.urls')),
     path('api/', include('myapp.urls')),
-    path('saved-charts/', include('saved_charts.urls')),
     path('api/', include('feedback.urls')),
     path('api/', include('collaboration.urls')),
     

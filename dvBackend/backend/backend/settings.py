@@ -63,7 +63,6 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework.authtoken',
     'myapp',
-    'saved_charts',
     'feedback',
     'collaboration'
 
