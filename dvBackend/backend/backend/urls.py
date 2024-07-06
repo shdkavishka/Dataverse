@@ -28,6 +28,7 @@ urlpatterns = [
     path('api/', include('myapp.urls')),
     path('saved-charts/', include('saved_charts.urls')),
     path('api/', include('feedback.urls')),
+    path('api/', include('collaboration.urls')),
     
 ]
 #AH-- For image upload

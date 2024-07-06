@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 class ConnectedDatabase(models.Model):
@@ -7,6 +8,7 @@ class ConnectedDatabase(models.Model):
     database = models.CharField(max_length=100)
     user = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
+    owner= models.ForeignKey(settings.AUTH_USER_MODEL, related_name='connectedDatabases', on_delete=models.CASCADE)
 
 #   This method returns a string representation of the database connection object.
 #   It returns the name of the database.
@@ -32,3 +34,6 @@ class DataAnalysisResult(models.Model):
 
     def __str__(self):
         return f"Analysis Result for {self.connected_database}"
+    
+from django.db import models
+

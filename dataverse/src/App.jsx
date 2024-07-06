@@ -16,6 +16,7 @@ import ChartPage from './Components/Visualization/ChartPage.jsx';
 import SavedCharts from './Components/Visualization/SavedCharts.jsx';
 import UIGuide from "./Components/UIGuide/UIGuide.jsx"
 import Profile2 from './Components/Profile/ProfileOther.jsx';
+import CollaborationConfirm from './Components/Collaboration/CollaborationConfirm.jsx';
 
 const App = () => {
 
@@ -43,7 +44,8 @@ const App = () => {
         <Route path="/ChartPage" element={<ChartPage />} />
         <Route path="/saved-charts" element={<SavedCharts />} />  
         <Route path="/profile/:userId" element={<Profile2 />} />
-    
+        <Route path="/confirm-collaboration/:db_id/:user_id/:sender_id" element={<CollaborationConfirm/>} />
+
     </Routes>
     </div>  
   );

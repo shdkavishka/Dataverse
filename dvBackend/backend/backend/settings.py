@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'myapp',
     'saved_charts',
     'feedback',
+    'collaboration'
 
 ]
 
@@ -176,3 +177,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True  
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
+
+FRONTEND_URL = 'http://localhost:5173/'

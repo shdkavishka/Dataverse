@@ -18,6 +18,7 @@ from django.utils.http import urlsafe_base64_decode
 from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.db.models import Q
+from rest_framework.exceptions import NotFound
 
 # Create your views here.
 #AH-- Register new user

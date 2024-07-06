@@ -23,6 +23,5 @@ urlpatterns = [
     path('save_google_user', SaveGoogleUserView.as_view()),
     path('google_login', GoogleLoginView.as_view()),
     path('google_delete', DeleteGoogleUserAccountView.as_view()),
-
 ]
 
