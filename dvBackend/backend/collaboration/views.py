@@ -2,17 +2,17 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Collaboration, ConnectedDatabase
 from .serializers import CollaborationSerializer
-from django.contrib.auth import get_user_model
 from rest_framework.exceptions import AuthenticationFailed
 import jwt
-import datetime
 from users.serializers import UserSerializer
 from users.models import User
+from connectDb.serializers import ConnectedDatabaseSerializer
+from connectDb.models import ConnectedDatabase
+from rest_framework import generics
 
 
 
@@ -117,10 +117,10 @@ class UserCollaborationsView(APIView):
         # Get all collaborations for the user
         collaborations = Collaboration.objects.filter(user=user)
         
-        # Serialize the collaborations
-        serializer = CollaborationSerializer(collaborations, many=True)
+        # Get only the IDs of collaborations
+        collaboration_ids = list(collaborations.values_list('database_id', flat=True))
         
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(collaboration_ids, status=status.HTTP_200_OK)
     
 class DatabaseCollaboratorsView(APIView):
 
@@ -160,3 +160,15 @@ class DatabaseCollaboratorsView(APIView):
         serializer = UserSerializer(users, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+
+class DatabaseDetailView(APIView):
+    def get(self, request, *args, **kwargs):
+        database_id = kwargs.get('pk')
+        try:
+            database = ConnectedDatabase.objects.get(pk=database_id)
+            serializer = ConnectedDatabaseSerializer(database)
+            return Response(serializer.data)
+        except ConnectedDatabase.DoesNotExist:
+            return Response({"error": "Database not found"}, status=status.HTTP_404_NOT_FOUND)

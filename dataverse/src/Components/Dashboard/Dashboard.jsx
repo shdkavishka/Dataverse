@@ -1,20 +1,48 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Dashboard.css"; // Import the CSS file
 import Joyride from "react-joyride";
 import axios from "axios";
-import logo from "../../assets/logo.png"
+import logo from "../../assets/logo.png";
 import Header from "./Header";
-import Footer from "../../Components/footer-all/footer"
+import Footer from "../../Components/footer-all/footer";
+import dropdown from "../../assets/drop.png";
 
 const Dashboard = ({ showTour }) => {
   const [connectedDatabases, setConnectedDatabases] = useState([]);
+  const [collaboratedDatabases, setCollaboratedDatabases] = useState([]);
   const [email, setEmail] = useState("");
+  const [activeDropdown, setActiveDropdown] = useState(null);
+
+  const dropdownRefs = useRef([]);
 
   useEffect(() => {
     fetchUserData();
     fetchConnectedDatabases();
+    fetchCollaboratedDatabases();
+
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRefs.current.some(
+          (ref) => ref && !ref.contains(event.target)
+        )
+      ) {
+        setActiveDropdown(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
+
+  const toggleDropdown = (index) => {
+    setActiveDropdown((prevState) =>
+      prevState === index ? null : index
+    );
+  };
 
   const fetchUserData = async () => {
     try {
@@ -48,13 +76,69 @@ const Dashboard = ({ showTour }) => {
       });
   };
 
+  const fetchCollaboratedDatabases = async () => {
+    try {
+      const response = await axios.get("http://localhost:8000/api/database-collabs/", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      
+      });
+    
+      const databaseIds = response.data;
+      console.log(response.data)
+
+      const databaseRequests = databaseIds.map(id => axios.get(`http://localhost:8000/api/view-database/${id}/`));
+      const responses = await Promise.all(databaseRequests);
+      const details = responses.map(response => response.data);
+      setCollaboratedDatabases(details);
+    } catch (error) {
+      console.error("Error fetching collaborated databases: ", error);
+    }
+  };
+
   const renderDatabaseLinks = () => {
     return connectedDatabases.map((db, index) => (
-      <Link key={index} to={`/databases/${db.id}`} className="btn1">
-        {db.name}
-      </Link>
+      <div key={index} className="database-item">
+        <div className="btn1">
+          <Link to={`/databases/${db.id}`} className="btn1">
+            {db.name}
+          </Link>
+          <button
+            onClick={() => toggleDropdown(index)}
+            className="dropdown-button"
+          >
+            <img src={dropdown} alt="dropdown" />
+          </button>
+        </div>
+        <div
+          ref={(el) => (dropdownRefs.current[index] = el)}
+          className={`dropdown-content2 ${
+            activeDropdown === index ? "show" : ""
+          }`}
+        >
+          <Link to="/Chat">Chat </Link>
+          <Link to="/saved-charts">View saved charts </Link>
+          <Link to="">View Collaborators </Link>
+          <Link to="">Add Collaborators </Link>
+        </div>
+      </div>
     ));
   };
+
+  const renderCollaboratedDBs = () => {
+    return collaboratedDatabases.map((db, index) => (
+      <div key={index} className="database-item">
+        <div className="btn1">
+          <Link to={`/databases/${db.id}`} className="btn1">
+            {db.name}
+          </Link>
+        </div>
+      </div>
+    ));
+  };
+  
 
   const steps = [
     {
@@ -87,7 +171,15 @@ const Dashboard = ({ showTour }) => {
             <div className="databases-section">
               <div className="section bg-white shadow-md rounded-md p-6">
                 <h2 className="text-xl font-bold mb-4">Databases</h2>
-                {renderDatabaseLinks()}
+                <div className="databases">
+                  {renderDatabaseLinks()}
+                </div>
+              </div>
+              <div className="section bg-white shadow-md rounded-md p-6">
+                <h2 className="text-xl font-bold mb-4">Collaborations</h2>
+                <div className="databases">
+                  {renderCollaboratedDBs()}
+                </div>
               </div>
             </div>
           </div>
