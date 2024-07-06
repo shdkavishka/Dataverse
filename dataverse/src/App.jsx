@@ -17,6 +17,7 @@ import SavedCharts from './Components/Visualization/SavedCharts.jsx';
 import UIGuide from "./Components/UIGuide/UIGuide.jsx"
 import Profile2 from './Components/Profile/ProfileOther.jsx';
 import CollaborationConfirm from './Components/Collaboration/CollaborationConfirm.jsx';
+import ViewDatabase from './Components/Collaboration/viewDatabase.jsx';
 
 const App = () => {
 
@@ -34,8 +35,8 @@ const App = () => {
       <Route path="/Signin" element={<Signin />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/Profile" element={<Profile />} />
-      <Route path="/Chat" element={<Chat />} />
-      <Route path="/Chat" Component={Chat} />
+      <Route path="/Chat/:database_id" element={<Chat />} />
+      <Route path="/Chat/:database_id" Component={Chat} />
       <Route path="/Signin/Dashboard" Component={Dashboard} />
         <Route path="/Login/Dashboard" Component={Dashboard} />
         <Route path="/Login/Signin/Dashboard" Component={Dashboard} />
@@ -46,6 +47,7 @@ const App = () => {
         <Route path="/saved-charts" element={<SavedCharts />} />  
         <Route path="/profile/:userId" element={<Profile2 />} />
         <Route path="/confirm-collaboration/:db_id/:user_id/:sender_id" element={<CollaborationConfirm/>} />
+        <Route path="/databases/:database_id/" element={<ViewDatabase />}/>
 
     </Routes>
     </div>  

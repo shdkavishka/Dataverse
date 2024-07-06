@@ -1,0 +1,18 @@
+.addCollab{
+    position: fixed;
+    left: calc((100vw - 33%)/2);
+    background-color: #254054;
+    border-radius: 10px;
+    width: 33%;
+    padding: 2rem;
+    box-shadow: 4px 4px 10px #000000ac;
+    min-height: 10%;
+
+}
+
+.close{
+    background-color: #aaa;
+    color:#254054 ;
+    width: 1rem;
+    float: right;
+}

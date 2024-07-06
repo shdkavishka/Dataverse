@@ -38,7 +38,7 @@ const Header = (props) => {
       setProfilePic(profileData.profilePicture);
     } catch (error) {
       console.error("Error fetching user data:", error);
-      showToast("Error fetching user data:", "error");
+  
     }
   };
 

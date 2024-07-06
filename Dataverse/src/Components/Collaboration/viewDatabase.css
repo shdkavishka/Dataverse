@@ -1,0 +1,14 @@
+.area{
+    margin: 0 20% 0 20%;
+    margin-top:4%;
+}
+
+.area a{
+    text-decoration: none;
+    background-color: #2f546e;
+    padding: 1rem;
+    margin: 0.5rem;
+    color: white;
+    border-radius: 10px;
+   
+}

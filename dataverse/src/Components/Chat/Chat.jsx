@@ -5,12 +5,13 @@ import ChatHistory from "./chatHistory/chatHistory.jsx";
 import Footer from "../footer-all/footer.jsx";
 import ChatArea from "./ChatArea/ChatArea.jsx";
 import dropdown from "../../assets/drop.png";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { handleLogout } from "../Logout/Logout";  // AH-- to handle logout
 
 // NSN - Chat component
 
 const Chat = () => {
+  const {database_id}=useParams();
   const [email, setEmail] = useState("");
   const [first_Name, setFirstName] = useState("");
   const [last_Name, setLastName] = useState("");
@@ -116,8 +117,8 @@ const toggleDropdown = () => {
           </span>
         </div>
         <div className="main"> {/* NSN - Main content area */}
-        <ChatHistory newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId='1' mess={mess} setMess={setMess} view={ view} setView={setView} nowViewing={nowViewing} setNowViewing={setNowViewing}/> 
-        <ChatArea newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId='1'  mess={mess} setMess={setMess} view={ view} setView={setView} nowViewing={nowViewing} setNowViewing={setNowViewing} ImageUrl={ImageUrl}/>
+        <ChatHistory newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId={database_id} mess={mess} setMess={setMess} view={ view} setView={setView} nowViewing={nowViewing} setNowViewing={setNowViewing}/> 
+        <ChatArea newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId={database_id}  mess={mess} setMess={setMess} view={ view} setView={setView} nowViewing={nowViewing} setNowViewing={setNowViewing} ImageUrl={ImageUrl}/>
         </div>
         <Footer /> {/* NSN - Footer component */}
       </div>):(

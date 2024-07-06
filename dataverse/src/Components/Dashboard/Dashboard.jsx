@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import "./Dashboard.css"; // Import the CSS file
 import Joyride from "react-joyride";
@@ -7,42 +7,22 @@ import logo from "../../assets/logo.png";
 import Header from "./Header";
 import Footer from "../../Components/footer-all/footer";
 import dropdown from "../../assets/drop.png";
+import AddCollab from "../Collaboration/addCollab";
 
 const Dashboard = ({ showTour }) => {
   const [connectedDatabases, setConnectedDatabases] = useState([]);
   const [collaboratedDatabases, setCollaboratedDatabases] = useState([]);
   const [email, setEmail] = useState("");
-  const [activeDropdown, setActiveDropdown] = useState(null);
 
-  const dropdownRefs = useRef([]);
 
+ 
   useEffect(() => {
     fetchUserData();
     fetchConnectedDatabases();
     fetchCollaboratedDatabases();
 
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRefs.current.some(
-          (ref) => ref && !ref.contains(event.target)
-        )
-      ) {
-        setActiveDropdown(null);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+  
   }, []);
-
-  const toggleDropdown = (index) => {
-    setActiveDropdown((prevState) =>
-      prevState === index ? null : index
-    );
-  };
 
   const fetchUserData = async () => {
     try {
@@ -102,36 +82,19 @@ const Dashboard = ({ showTour }) => {
     return connectedDatabases.map((db, index) => (
       <div key={index} className="database-item">
         <div className="btn1">
-          <Link to={`/databases/${db.id}`} className="btn1">
-            {db.name}
-          </Link>
-          <button
-            onClick={() => toggleDropdown(index)}
-            className="dropdown-button"
-          >
-            <img src={dropdown} alt="dropdown" />
-          </button>
-        </div>
-        <div
-          ref={(el) => (dropdownRefs.current[index] = el)}
-          className={`dropdown-content2 ${
-            activeDropdown === index ? "show" : ""
-          }`}
-        >
-          <Link to="/Chat">Chat </Link>
-          <Link to="/saved-charts">View saved charts </Link>
-          <Link to="">View Collaborators </Link>
-          <Link to="">Add Collaborators </Link>
+        <Link to={`/databases/${db.id}`} className="btn1">
+          {db.name}
+        </Link>
         </div>
       </div>
     ));
   };
-
+  
   const renderCollaboratedDBs = () => {
     return collaboratedDatabases.map((db, index) => (
       <div key={index} className="database-item">
         <div className="btn1">
-          <Link to={`/databases/${db.id}`} className="btn1">
+          <Link to={`/collab-databases/${db.id}`} className="btn1">
             {db.name}
           </Link>
         </div>
@@ -156,6 +119,9 @@ const Dashboard = ({ showTour }) => {
     },
   ];
 
+
+
+
   return (
     <>
       {email ? (
@@ -170,7 +136,7 @@ const Dashboard = ({ showTour }) => {
             {/* Databases Section */}
             <div className="databases-section">
               <div className="section bg-white shadow-md rounded-md p-6">
-                <h2 className="text-xl font-bold mb-4">Databases</h2>
+                <h2 className="text-xl font-bold mb-4">Own Databases</h2>
                 <div className="databases">
                   {renderDatabaseLinks()}
                 </div>
@@ -182,6 +148,7 @@ const Dashboard = ({ showTour }) => {
                 </div>
               </div>
             </div>
+    
           </div>
           {showTour && (
             <Joyride
