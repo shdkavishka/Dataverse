@@ -101,7 +101,7 @@ const toggleDropdown = () => {
           </button>
           <div
             id="dropdownContent"
-            className={`dropdown-content ${dropdownVisible ? "show" : ""}`}
+            className={`dropdown-content3 ${dropdownVisible ? "show" : ""}`}
           >
             <Link to="/Profile">User Profile</Link>
             <Link to="/Login" onClick={handleLogout}>Logout </Link>  {/* AH-- to logout and redirect to login page */}

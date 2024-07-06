@@ -71,7 +71,7 @@ const SearchbarCollab = (database_id) => {
   }, []);
 
   return (
-    <div className="searchcontainer">
+    <div className="searchcontainer2">
         {toastMessage && (
             <Toast message={toastMessage} type={toastType} onClose={() => setToastMessage("")} />
           )}
