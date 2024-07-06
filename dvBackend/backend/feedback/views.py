@@ -32,3 +32,20 @@ class FeedbackViewSet(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(feedback_instance)
         return Response(serializer.data)
+    
+    @action(detail=False, methods=['get'])
+    def get_all_feedbacks(self, request):
+        feedbacks = Feedback.objects.all()
+        serializer = FeedbackSerializer(feedbacks, many=True)
+        return Response(serializer.data)
+    
+    @action(detail=True, methods=['delete'])
+    def delete_feedback(self, request, pk=None):
+        feedback = self.get_object()
+        feedback.delete()
+        return Response(status=204)
+    
+    @action(detail=False, methods=['get'])
+    def count_feedbacks(self, request):
+        count = Feedback.objects.count()
+        return Response({'count': count})

@@ -18,6 +18,8 @@ import UIGuide from "./Components/UIGuide/UIGuide.jsx"
 import Profile2 from './Components/Profile/ProfileOther.jsx';
 import CollaborationConfirm from './Components/Collaboration/CollaborationConfirm.jsx';
 import ViewDatabase from './Components/Collaboration/viewDatabase.jsx';
+import Admin from "./Components/Admin/Admin.jsx"
+
 
 const App = () => {
 
@@ -31,6 +33,7 @@ const App = () => {
       <Route path="/ConnectDatabasePage" element={<ConnectDatabasePage />} />
       <Route path="/Header" element={<Header />} />
       <Route path="/UIGuide" element={<UIGuide />} />
+      <Route path="/Admin" element={<Admin />} />
       <Route path="/Dashboard" element={<Dashboard />} />
       <Route path="/Signin" element={<Signin />} />
       <Route path="/Login" element={<Login />} />
