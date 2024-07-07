@@ -21,6 +21,7 @@ import ViewDatabase from './Components/Collaboration/viewDatabase.jsx';
 import Admin from "./Components/Admin/Admin.jsx"
 
 
+
 const App = () => {
 
 
@@ -51,6 +52,7 @@ const App = () => {
         <Route path="/profile/:userId" element={<Profile2 />} />
         <Route path="/confirm-collaboration/:db_id/:user_id/:sender_id" element={<CollaborationConfirm/>} />
         <Route path="/databases/:database_id/" element={<ViewDatabase />}/>
+     
 
     </Routes>
     </div>  
