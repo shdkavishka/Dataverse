@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchbarCollab from './search collabs/searchbarCollab';
+import SearchbarCollab from './searchCollabs/searchbarCollab';
 import "./addCollab.css";
 
 const AddCollab = ({ database_id, onClose }) => {

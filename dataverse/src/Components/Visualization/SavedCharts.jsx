@@ -1,24 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import './styles2.css';
+import { useParams } from 'react-router-dom';
 
 const SavedCharts = () => {
   const [savedCharts, setSavedCharts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const { user_id } = useParams();
 
   useEffect(() => {
     fetchSavedCharts();
-  }, []);
+  }, [user_id]);
 
   const fetchSavedCharts = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/get_saved-charts');
+      const response = await fetch(`http://localhost:8000/api/charts/user/${user_id}/`);
       if (response.ok) {
         const data = await response.json();
-        setSavedCharts(data);
+        setSavedCharts(data.charts);
       } else {
         console.error('Error fetching saved charts:', response.status);
+        setError('Error fetching saved charts');
       }
     } catch (error) {
       console.error('Error fetching saved charts:', error);
+      setError('Error fetching saved charts');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -47,6 +55,13 @@ const SavedCharts = () => {
       });
   };
 
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>{error}</p>;
+  }
 
   return (
     <div className="saved-charts-body">

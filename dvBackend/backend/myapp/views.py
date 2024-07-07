@@ -68,30 +68,38 @@ def execute_query(request):
 
 
    
+import json
+import traceback
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+from .models import SavedChart, User, ConnectedDatabase
+
 @csrf_exempt
 @require_http_methods(["POST"])
 def save_chart(request):
-   if request.method == 'POST':
+    if request.method == 'POST':
         try:
-        # Parse JSON data from request body
+            # Parse JSON data from request body
             data = json.loads(request.body.decode('utf-8'))
             chart_name = data.get('chartName')
             chart_data = data.get('chartData')
-            created_by_name= data.get('createdBy')
+            created_by_id = data.get('createdBy')
+            database_id = data.get('database_id')
 
-            #if not all([chart_name, chart_data, created_by_username]):
-             #return JsonResponse({'error': 'Missing required fields'}, status=400)
-            
-             # Assuming `created_by` is the username and finding the user instance
             try:
-                user = User.objects.get(name=created_by_name)
+                user = User.objects.get(id=created_by_id)
             except User.DoesNotExist:
-               return JsonResponse({'error': 'User not found'}, status=404)
-            
-             
-       # Create and save the chart object
-            chart = SavedChart(chart_name=chart_name, chart_data=chart_data, created_by=user)
-            chart.save(using='saved_charts')
+                return JsonResponse({'error': 'User not found'}, status=404)
+
+            try:
+                database = ConnectedDatabase.objects.get(id=database_id)
+            except ConnectedDatabase.DoesNotExist:
+                return JsonResponse({'error': 'Database not found'}, status=404)
+
+            # Create and save the chart object
+            chart = SavedChart(chart_name=chart_name, chart_data=chart_data, created_by=user, database=database)
+            chart.save()
 
             return JsonResponse({'message': 'Chart saved successfully'})
         except json.JSONDecodeError:
@@ -99,6 +107,8 @@ def save_chart(request):
         except Exception as e:
             traceback.print_exc()
             return JsonResponse({'error': str(e)}, status=500)
+
+
 
 @require_http_methods(["GET"])
 def get_saved_charts(request):
@@ -117,9 +127,46 @@ def get_saved_charts(request):
 @require_http_methods(["DELETE"])
 def delete_chart(request, chart_id):
     try:
-        chart = get_object_or_404(SavedChart.objects.using('saved_charts'), id=chart_id)
+        chart = get_object_or_404(SavedChart, id=chart_id)
         chart.delete()
         return JsonResponse({'message': 'Chart deleted successfully'})
     except Exception as e:
         traceback.print_exc()
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+from .models import SavedChart, User, ConnectedDatabase
+
+
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def get_charts_by_user(request, user_id):
+    try:
+        user = User.objects.get(id=user_id)
+        charts = SavedChart.objects.filter(created_by=user)
+        chart_list = list(charts.values('id', 'chart_name', 'chart_data', 'created_at', 'updated_at', 'database_id'))
+
+        return JsonResponse({'charts': chart_list}, status=200)
+    except User.DoesNotExist:
+        return JsonResponse({'error': 'User not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+
+@csrf_exempt
+@require_http_methods(["GET"])
+def get_charts_by_database(request, database_id):
+    try:
+        database = ConnectedDatabase.objects.get(id=database_id)
+        charts = SavedChart.objects.filter(database=database)
+        chart_list = list(charts.values('id', 'chart_name', 'chart_data', 'created_at', 'updated_at', 'created_by_id'))
+
+        return JsonResponse({'charts': chart_list}, status=200)
+    except ConnectedDatabase.DoesNotExist:
+        return JsonResponse({'error': 'Database not found'}, status=404)
+    except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)

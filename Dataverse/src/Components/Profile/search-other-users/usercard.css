@@ -1,0 +1,47 @@
+
+.user-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 8px 0;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    
+  }
+
+  .user-card:hover{
+    background-color: #cecece ;
+  }
+  
+  .user-info {
+    flex: 9;
+    text-align: left;
+    padding-left: 2rem;
+  }
+  
+  .user-info h2 {
+    margin: 0;
+    font-size: 1.2em;
+    color: black;
+  
+  }
+
+  
+  .user-info p {
+    margin: 4px 0 0;
+    color: #666;
+  }
+  
+  .user-image{
+    flex:1;
+  }
+  .user-image img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+  }
+  

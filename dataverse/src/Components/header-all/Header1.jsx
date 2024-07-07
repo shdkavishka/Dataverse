@@ -5,7 +5,7 @@ import logo from "../../assets/logo.png";
 import logoname from  "../../assets/dataverse.png";
 import { Link } from 'react-router-dom';
 import { handleLogout } from "../Logout/Logout";
-import Searchbar from "../Profile/search other users/searchbar";
+import Searchbar from "../Profile/search-other-users/searchbar";
 
 
 //AH-- header 

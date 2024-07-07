@@ -4,12 +4,13 @@ import axios from 'axios';
 import Header from '../header-all/Header1';
 import "./viewDatabase.css";
 import AddCollab from './addCollab';
-
+import ViewCollab from "./ViewCollab/ViewCollab"
 const ViewDatabase = () => {
     const { database_id } = useParams(); 
     const [databaseName, setDatabaseName] = useState('');
     const [error, setError] = useState(null);
-    const [showAddCollab, setShowAddCollab] = useState(false); // State for showing Add Collaborators modal
+    const [showAddCollab, setShowAddCollab] = useState(false);
+    const [showViewCollab, setShowViewCollab] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -33,6 +34,13 @@ const ViewDatabase = () => {
         setShowAddCollab(false);
     }
 
+    const handleViewCollabs=()=>{
+        setShowViewCollab(true);
+    }
+    const handleCloseViewCollabs=()=>{
+        setShowViewCollab(false);
+    }
+
     return (
         <div className='view'>
             <div>
@@ -44,6 +52,10 @@ const ViewDatabase = () => {
                         <p className='opentext'>{databaseName}</p>
                     )}
 
+                    {showViewCollab && (
+                        <ViewCollab database_id={database_id} onClose={handleCloseViewCollabs} />
+                    )}
+
                     {showAddCollab && (
                         <div className="modal-background">
                             <div className="modal-content">
@@ -53,8 +65,8 @@ const ViewDatabase = () => {
                     )}
 
                     <Link to={`/Chat/${database_id}`}>Chat </Link>
-                    <Link to="/saved-charts">View saved charts </Link>
-                    <Link to="">View Collaborators </Link>
+                    <Link to={`/saved-charts2/${database_id}`}>View saved charts </Link>
+                    <Link to="" onClick={handleViewCollabs}>View Collaborators </Link>
                     <Link onClick={handleAddCollaborators}>Add Collaborators</Link>
                 </div>
             </div>
