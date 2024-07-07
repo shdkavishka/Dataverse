@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react';
 import './styles2.css';
 import { useParams } from 'react-router-dom';
 
-const SavedCharts = () => {
+const SavedCharts3 = () => {
   const [savedCharts, setSavedCharts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user_id } = useParams();
+  const { other_user_id ,name} = useParams();
 
   useEffect(() => {
     fetchSavedCharts();
-  }, [user_id]);
+  }, [other_user_id ]);
 
   const fetchSavedCharts = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/charts/user/${user_id}/`);
+      console.log(other_user_id);
+      const response = await fetch(`http://localhost:8000/api/showCollabCharts/${other_user_id}/`, {
+        credentials: 'include'
+      });
       if (response.ok) {
         const data = await response.json();
         setSavedCharts(data.charts);
@@ -29,6 +32,7 @@ const SavedCharts = () => {
       setLoading(false);
     }
   };
+   
   const handleDeleteChart = async (chartId) => {
     try {
       const response = await fetch(`http://localhost:8000/api/delete-chart/${chartId}/`, {
@@ -46,6 +50,7 @@ const SavedCharts = () => {
       // Handle network errors
     }
   };
+
   const handleShareChart = (chartImageUrl) => {
     navigator.clipboard.writeText(chartImageUrl)
       .then(() => {
@@ -80,11 +85,12 @@ const SavedCharts = () => {
             </li>
           ))}
         </ul>
-      ) : (
-        <p>No saved charts available.</p>
+      ) : ( 
+        <p>No saved charts from any collaborated databases with {name}</p>
+       
       )}
     </div>
   );
 };
 
-export default SavedCharts;
+export default SavedCharts3;

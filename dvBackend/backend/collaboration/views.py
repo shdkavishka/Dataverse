@@ -4,7 +4,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Collaboration, ConnectedDatabase
+from .models import Collaboration
+from connectDb.models import ConnectedDatabase
 from .serializers import CollaborationSerializer
 from rest_framework.exceptions import AuthenticationFailed
 import jwt
@@ -12,7 +13,13 @@ from users.serializers import UserSerializer
 from users.models import User
 from connectDb.serializers import ConnectedDatabaseSerializer
 from connectDb.models import ConnectedDatabase
-from rest_framework import generics
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+from rest_framework.exceptions import AuthenticationFailed
+import jwt
+from users.models import User
+from myapp.models import SavedChart
 
 
 
@@ -172,3 +179,47 @@ class DatabaseDetailView(APIView):
             return Response(serializer.data)
         except ConnectedDatabase.DoesNotExist:
             return Response({"error": "Database not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+
+
+class GetCollaboratorChartsView(APIView):
+
+    @method_decorator(csrf_exempt)
+    def get(self, request, user_id):
+        try:
+            # Extract the token from cookies in the request
+            token = request.COOKIES.get('jwt')
+
+            if not token:
+                raise AuthenticationFailed('Unauthenticated!')
+
+            try:
+                # Decode JWT token
+                payload = jwt.decode(token, key='secret', algorithms=['HS256'])
+            except jwt.ExpiredSignatureError:
+                raise AuthenticationFailed('Unauthenticated!')
+
+            # Retrieve the user from the database
+            authenticated_user = User.objects.filter(id=payload['id']).first()
+            if not authenticated_user:
+                raise AuthenticationFailed('Unauthenticated!')
+
+            # Get the external user by user_id
+            external_user = User.objects.get(id=user_id)
+
+            # Get the databases where the logged-in user is a collaborator
+            user_collaborations = Collaboration.objects.filter(user=authenticated_user)
+            collaborator_databases = ConnectedDatabase.objects.filter(id__in=user_collaborations.values('database_id'))
+
+            # Get the saved charts created by the external user from these databases
+            charts = SavedChart.objects.filter(created_by=external_user, database__in=collaborator_databases)
+            chart_list = list(charts.values('id', 'chart_name', 'chart_data', 'created_at', 'updated_at', 'database_id'))
+
+            return JsonResponse({'charts': chart_list}, status=200)
+
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
+        except AuthenticationFailed as e:
+            return JsonResponse({'error': str(e)}, status=401)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)

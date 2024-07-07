@@ -20,6 +20,7 @@ import CollaborationConfirm from './Components/Collaboration/CollaborationConfir
 import ViewDatabase from './Components/Collaboration/viewDatabase.jsx';
 import Admin from "./Components/Admin/Admin.jsx"
 import SavedCharts2 from './Components/Visualization/SavedCharts2.jsx';
+import SavedCharts3 from './Components/Visualization/SavedCharts3.jsx';
 
 
 const App = () => {
@@ -50,6 +51,7 @@ const App = () => {
         <Route path="/ChartPage" element={<ChartPage />} />
         <Route path="/saved-charts/:user_id" element={<SavedCharts />} />  
         <Route path="/saved-charts2/:database_id" element={<SavedCharts2 />} />  
+        <Route path="/saved-charts3/:other_user_id/:name" element={<SavedCharts3 />} />  
         <Route path="/profile/:userId" element={<Profile2 />} />
         <Route path="/confirm-collaboration/:db_id/:user_id/:sender_id" element={<CollaborationConfirm/>} />
         <Route path="/databases/:database_id/" element={<ViewDatabase />}/>

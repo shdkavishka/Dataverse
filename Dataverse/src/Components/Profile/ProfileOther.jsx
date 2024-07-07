@@ -13,7 +13,7 @@ const ProfileOther = () => {
   const [user, setUser] = useState(null);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('');
-
+  const name=user.firstName || user.name
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -93,7 +93,8 @@ const ProfileOther = () => {
               </div>
             </div>
             <div>
-                <Link className="save-button20" to={`/saved-charts/${userId}`}>
+
+                <Link className="save-button20" to={`/saved-charts3/${userId}/${name}`}>
                   View {user.firstName || user.name}'s Saved Charts
                 </Link>
               </div>
