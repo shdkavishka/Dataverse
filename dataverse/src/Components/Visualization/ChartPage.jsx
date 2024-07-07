@@ -59,12 +59,7 @@ const ChartPage = ({ LangchainQuery, onChartData ,database_id, createdBy }) => {
     return null;
   };
   
-  const handleGenerateTable = () => {
-    // This function will be called when "Generate Table" is clicked
-    handleQuerySubmit();
-    setChartInstance(null); 
-  };
-
+  
   const handleGenerateChart = () => {
     const validationError = validateData(queryData);
 
