@@ -177,4 +177,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASS')
 
-FRONTEND_URL = 'http://localhost:5173/'
+FRONTEND_URL = 'http://localhost:5174/'
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',  # Replace this with the URL of your React frontend
+]

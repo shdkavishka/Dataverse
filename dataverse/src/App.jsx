@@ -23,6 +23,7 @@ import SavedCharts2 from './Components/Visualization/SavedCharts2.jsx';
 import SavedCharts3 from './Components/Visualization/SavedCharts3.jsx';
 
 
+
 const App = () => {
 
 
@@ -55,6 +56,7 @@ const App = () => {
         <Route path="/profile/:userId" element={<Profile2 />} />
         <Route path="/confirm-collaboration/:db_id/:user_id/:sender_id" element={<CollaborationConfirm/>} />
         <Route path="/databases/:database_id/" element={<ViewDatabase />}/>
+     
 
     </Routes>
     </div>  
