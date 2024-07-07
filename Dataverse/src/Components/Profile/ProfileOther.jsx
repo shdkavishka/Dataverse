@@ -13,7 +13,8 @@ const ProfileOther = () => {
   const [user, setUser] = useState(null);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('');
-  const name=user.firstName || user.name
+  const [name,setname]=useState('')
+
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -25,13 +26,22 @@ const ProfileOther = () => {
         setToastType('error');
       }
     };
+    if (user) {
+      if (user.firstName) {
+        setname(user.firstName);
+      } else {
+        setname(user.name);
+      }
+    }
+
 
     getUser();
-  }, [userId]);
+  }, [userId,user]);
 
   if (!user) {
     return <div>Loading...</div>;
   }
+
 
   const coverImageStyle = user.coverPic ? { backgroundImage: `url(http://localhost:8000${user.coverPicture})` } : {};
   const imageUrl = `http://localhost:8000${user.profilePicture}`;

@@ -47,6 +47,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, database_id ,mess,setMess,view,s
   // NSN - useEffect to handle new chat initialization
   useEffect(() => {
     console.log(database_id)
+    console.log(database)
     if (newChatTrigger) {
       if (messages.length > 1) {
         if (!window.confirm("Are you sure you want to start a new chat? Unsaved messages will be lost.")) {
@@ -187,6 +188,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, database_id ,mess,setMess,view,s
 
   const saveChat = async () => {
     try {
+    
       const formattedMessages = formatMessages();
       const response = await axios.post('http://localhost:8000/api/save_chat/', {
         database: database,
