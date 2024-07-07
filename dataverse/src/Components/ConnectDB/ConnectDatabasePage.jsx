@@ -15,8 +15,19 @@ const ConnectDatabasePage = () => {
   useEffect(() => {
     const fetchLoggedInUser = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/api/users/");
-        setLoggedInUser(response.data);
+        const response = await fetch("http://localhost:8000/api/user", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+      
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+      
+        const data = await response.json();
+        setLoggedInUser(data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching user:', error);
