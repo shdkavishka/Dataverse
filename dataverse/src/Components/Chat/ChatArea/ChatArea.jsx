@@ -13,10 +13,10 @@ import ChartPage from '../../Visualization/ChartPage.jsx';
 const MAX_MESSAGES = 21;
 
 // NSN - ChatArea component 
-const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,setView,nowViewing, setNowViewing,ImageUrl}) => {
+const ChatArea = ({ newChatTrigger, setNewChat, database_id ,mess,setMess,view,setView,nowViewing, setNowViewing,ImageUrl,user}) => {
 
   // NSN - State variables for managing various aspects of the chat
-  const database=databaseId;
+  const database=database_id;
   const [userPrompt, setUserPrompt] = useState("");
   const [query,setQuery] =useState("SELECT p.Name AS PublisherName, SUM(s.TotalAmount) AS TotalSales FROM Publishers p JOIN Books b ON p.PublisherID = b.PublisherID JOIN Sales s ON b.BookID = s.BookID GROUP BY p.PublisherID ORDER BY TotalSales DESC;");
   const [result,setResult] =useState("No result");
@@ -24,6 +24,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
   const [voice, setVoice] = useState(false)
+  
   const [messages, setMessages] = useState([
     {
       prompt: "Hi, I'm dataVerse, what can I visualize for you today?",
@@ -45,6 +46,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
 
   // NSN - useEffect to handle new chat initialization
   useEffect(() => {
+    console.log(database_id)
     if (newChatTrigger) {
       if (messages.length > 1) {
         if (!window.confirm("Are you sure you want to start a new chat? Unsaved messages will be lost.")) {
@@ -287,7 +289,7 @@ const ChatArea = ({ newChatTrigger, setNewChat, databaseId ,mess,setMess,view,se
           </button>
         </div>
         <div>
-          {message.visualisation ? <ChartPage LangchainQuery={query} onChartData={(data) => handleChartData(data, i)} /> : null}
+          {message.visualisation ? <ChartPage LangchainQuery={query} createdBy={user} database_id={database_id} onChartData={(data) => handleChartData(data, i)} /> : null}
         </div>
       </>
     )}

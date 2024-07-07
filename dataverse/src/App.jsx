@@ -19,6 +19,7 @@ import Profile2 from './Components/Profile/ProfileOther.jsx';
 import CollaborationConfirm from './Components/Collaboration/CollaborationConfirm.jsx';
 import ViewDatabase from './Components/Collaboration/viewDatabase.jsx';
 import Admin from "./Components/Admin/Admin.jsx"
+import SavedCharts2 from './Components/Visualization/SavedCharts2.jsx';
 
 
 const App = () => {
@@ -47,7 +48,8 @@ const App = () => {
         <Route path="/ResetPassword" element={<ResetPassword />} />
         <Route path="/api/reset_password_confirm/:uidb64/:token/" element={<ResetPasswordConfirm />} />
         <Route path="/ChartPage" element={<ChartPage />} />
-        <Route path="/saved-charts" element={<SavedCharts />} />  
+        <Route path="/saved-charts/:user_id" element={<SavedCharts />} />  
+        <Route path="/saved-charts2/:database_id" element={<SavedCharts2 />} />  
         <Route path="/profile/:userId" element={<Profile2 />} />
         <Route path="/confirm-collaboration/:db_id/:user_id/:sender_id" element={<CollaborationConfirm/>} />
         <Route path="/databases/:database_id/" element={<ViewDatabase />}/>

@@ -6,12 +6,13 @@ import del from "../../../assets/delete.png";
 import Toast from "../../Toast/Toast";
 import reset from "../../../assets/reset.png"
 
-const ChatHistory = ({  newChatTrigger, setNewChat, databaseId ,mess,setMess ,view,setView,nowViewing, setNowViewing}) => {
+const ChatHistory = ({  newChatTrigger, setNewChat, database_id ,mess,setMess ,view,setView,nowViewing, setNowViewing}) => {
   const [chats, setChats] = useState([]);
-  const [id, setId] = useState(1); // State to store the ID for the request
+  const [id, setId] = useState(database_id); 
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
  
+
 
   const fetchChats = async () => {
     try {

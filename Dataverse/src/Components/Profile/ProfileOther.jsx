@@ -6,7 +6,6 @@ import './profile.css';
 import Toast from '../Toast/Toast';
 import Header from '../header-all/Header1';
 import Footer from '../footer-all/footer';
-import handleLogout from '../Logout/Logout';
 import { Link } from 'react-router-dom';
 
 const ProfileOther = () => {
@@ -94,7 +93,7 @@ const ProfileOther = () => {
               </div>
             </div>
             <div>
-                <Link className="save-button20" to="/saved-charts">
+                <Link className="save-button20" to={`/saved-charts/${userId}`}>
                   View {user.firstName || user.name}'s Saved Charts
                 </Link>
               </div>

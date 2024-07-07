@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import './styles2.css';
 import { useParams } from 'react-router-dom';
 
-const SavedCharts = () => {
+const SavedCharts2 = () => {
   const [savedCharts, setSavedCharts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { user_id } = useParams();
+  const { database_id } = useParams();
 
   useEffect(() => {
     fetchSavedCharts();
-  }, [user_id]);
+  }, [database_id]);
 
   const fetchSavedCharts = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/api/charts/user/${user_id}/`);
+      const response = await fetch(`http://localhost:8000/api/charts/database/${database_id}/`);
       if (response.ok) {
         const data = await response.json();
         setSavedCharts(data.charts);
@@ -29,7 +29,6 @@ const SavedCharts = () => {
       setLoading(false);
     }
   };
-
   const handleDeleteChart = async (chartId) => {
     try {
       const response = await fetch(`http://localhost:8000/api/delete-chart/${chartId}/`, {
@@ -38,10 +37,13 @@ const SavedCharts = () => {
       if (response.ok) {
         setSavedCharts(savedCharts.filter(chart => chart.id !== chartId));
       } else {
-        console.error('Error deleting chart:', response.status);
+        const errorData = await response.json();
+        console.error('Error deleting chart:', response.status, errorData.error);
+        // Handle specific errors or show a user-friendly message
       }
     } catch (error) {
-      console.error('Error deleting chart:', error);
+      console.error('Network error deleting chart:', error.message);
+      // Handle network errors
     }
   };
 
@@ -86,4 +88,4 @@ const SavedCharts = () => {
   );
 };
 
-export default SavedCharts;
+export default SavedCharts2;

@@ -65,7 +65,7 @@ const ViewDatabase = () => {
                     )}
 
                     <Link to={`/Chat/${database_id}`}>Chat </Link>
-                    <Link to="/saved-charts">View saved charts </Link>
+                    <Link to={`/saved-charts2/${database_id}`}>View saved charts </Link>
                     <Link to="" onClick={handleViewCollabs}>View Collaborators </Link>
                     <Link onClick={handleAddCollaborators}>Add Collaborators</Link>
                 </div>

@@ -4,7 +4,7 @@ import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import './styles2.css';
 
-const ChartPage = ({ LangchainQuery, onChartData }) => {
+const ChartPage = ({ LangchainQuery, onChartData ,database_id, createdBy }) => {
   const [query, setQuery] = useState('');
   const [queryData, setQueryData] = useState([]);
   const [data, setData] = useState([]);
@@ -12,7 +12,6 @@ const ChartPage = ({ LangchainQuery, onChartData }) => {
   const [chartType, setChartType] = useState('bar'); 
   const [saveChartOpen, setSaveChartOpen] = useState(false);
   const [savedChartName, setSavedChartName] = useState('');
-  const [createdBy, setCreatedBy] = useState('');
   const [validationError, setValidationError] = useState('');
   const [chartInstance, setChartInstance] = useState(null);
   const canvasRef = useRef(null);
@@ -185,7 +184,7 @@ const ChartPage = ({ LangchainQuery, onChartData }) => {
 
     const dbDetails = {
       db_user: 'root',
-      db_password: '',
+      db_password: 'Aaishah1234',
       db_host: 'localhost',
       db_name: 'dataset',
     };
@@ -250,11 +249,12 @@ const ChartPage = ({ LangchainQuery, onChartData }) => {
         body: JSON.stringify({
           chartName: savedChartName,
           chartData,
-          createdBy,
+          createdBy: createdBy,
+          database_id: database_id,
         }),
       });
-
-      const responseData = await response.json();
+      
+      const result = await response.json();
 
       if (response.ok) {
         console.log('Chart saved successfully');
@@ -267,11 +267,11 @@ const ChartPage = ({ LangchainQuery, onChartData }) => {
 
     setSaveChartOpen(false);
     setSavedChartName('');
-    setCreatedBy('');
+    
   };
 
   const handleViewSavedCharts = () => {
-    navigate('/saved-charts');
+    navigate(`/saved-charts/${createdBy}`);
   };
 
   return (
@@ -354,17 +354,6 @@ const ChartPage = ({ LangchainQuery, onChartData }) => {
                 type="text"
                 value={savedChartName}
                 onChange={(e) => setSavedChartName(e.target.value)}
-                className="save-chart-input"
-              />
-            </div>
-            <br />
-            <div>
-              <label htmlFor="created-by">Created By:</label>
-              <input
-                id="created-by"
-                type="text"
-                value={createdBy}
-                onChange={(e) => setCreatedBy(e.target.value)}
                 className="save-chart-input"
               />
             </div>

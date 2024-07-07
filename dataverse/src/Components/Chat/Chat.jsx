@@ -12,6 +12,7 @@ import { handleLogout } from "../Logout/Logout";  // AH-- to handle logout
 
 const Chat = () => {
   const {database_id}=useParams();
+  const [user, setUser] = useState("");
   const [email, setEmail] = useState("");
   const [first_Name, setFirstName] = useState("");
   const [last_Name, setLastName] = useState("");
@@ -42,6 +43,7 @@ const Chat = () => {
       setLastName(profileData.lastName);
       setUserName(profileData.name);
       setProfilePic(profileData.profilePicture);
+      setUser(profileData.id);
     } catch (error) {
       console.error("Error fetching user data:", error);
       showToast("Error fetching user data:", "error");
@@ -52,6 +54,7 @@ const Chat = () => {
 useEffect(() => {
   
   fetchUserData();
+  console.log(database_id)
   const intervalId = setInterval(fetchUserData, 500);
 
  
@@ -87,7 +90,18 @@ const toggleDropdown = () => {
   // NSN - Function to update the newChatTrigger state
   const setNewChat = (state) => {
     setNewChatTrigger(state);
+
   };
+
+    // AH-- for toast
+    const showToast = (message, type) => {
+      setToastMessage(message);
+      setToastType(type);
+      setTimeout(() => {
+        setToastMessage("");
+        setToastType("");
+      }, 3000); 
+    };
    //AH-- profile pic url
  const ImageUrl = `http://localhost:8000${profilePic}`;
 
@@ -117,8 +131,8 @@ const toggleDropdown = () => {
           </span>
         </div>
         <div className="main"> {/* NSN - Main content area */}
-        <ChatHistory newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId={database_id} mess={mess} setMess={setMess} view={ view} setView={setView} nowViewing={nowViewing} setNowViewing={setNowViewing}/> 
-        <ChatArea newChatTrigger={newChatTrigger} setNewChat={setNewChat} databaseId={database_id}  mess={mess} setMess={setMess} view={ view} setView={setView} nowViewing={nowViewing} setNowViewing={setNowViewing} ImageUrl={ImageUrl}/>
+        <ChatHistory newChatTrigger={newChatTrigger} setNewChat={setNewChat} database_id={database_id} mess={mess} setMess={setMess} view={ view} setView={setView} nowViewing={nowViewing} setNowViewing={setNowViewing}/> 
+        <ChatArea newChatTrigger={newChatTrigger} setNewChat={setNewChat} database_id={database_id}  mess={mess} setMess={setMess} view={ view} setView={setView} nowViewing={nowViewing} setNowViewing={setNowViewing} ImageUrl={ImageUrl} user={user}/>
         </div>
         <Footer /> {/* NSN - Footer component */}
       </div>):(
@@ -141,5 +155,6 @@ const toggleDropdown = () => {
    
   );
 };
+
 
 export default Chat;
