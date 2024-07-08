@@ -90,7 +90,7 @@ const Dashboard = ({ showTour }) => {
     return collaboratedDatabases.map((db, index) => (
       <div key={index} className="database-item">
         <div className="btn1">
-          <Link to={`/collab-databases/${db.id}`} className="btn1">
+          <Link to={`/saved-charts2/${db.id}`} className="btn1">
             {db.name}
           </Link>
         </div>

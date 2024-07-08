@@ -43,7 +43,7 @@ const ProfileOther = () => {
   }
 
 
-  const coverImageStyle = user.coverPic ? { backgroundImage: `url(http://localhost:8000${user.coverPicture})` } : {};
+  const coverImageStyle = user.coverPicture ? { backgroundImage: `url(http://localhost:8000${user.coverPicture})` } : {};
   const imageUrl = `http://localhost:8000${user.profilePicture}`;
 
   return (

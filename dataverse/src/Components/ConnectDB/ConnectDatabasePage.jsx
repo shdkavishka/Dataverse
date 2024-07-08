@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ConnectDatabasePage.css';
 import Header from '../Dashboard/Header';
+import { useNavigate } from 'react-router-dom';
 
 const ConnectDatabasePage = () => {
   const [server, setServer] = useState('');
@@ -13,7 +14,7 @@ const ConnectDatabasePage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
-
+  const navigate=useNavigate()
   useEffect(() => {
     const fetchLoggedInUser = async () => {
       try {
@@ -71,6 +72,7 @@ const ConnectDatabasePage = () => {
         console.log('Connection successful', response.data);
         alert('Connection Successful');
         clearForm();
+        navigate("/Dashboard")
       }
     } catch (error) {
       console.error('Error connecting to database:', error);

@@ -6,12 +6,13 @@
     padding: 16px;
     position: fixed;
     top:23rem;
-    left:47.5%;
+    left:48%;
     max-height: 50%;
     min-height: 5%;
     overflow-y: scroll;
     border-radius: 20px;
     box-shadow: 0 7px 8px #888888;
+    color: white;
   }
 
   .userCardButton{

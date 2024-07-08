@@ -82,7 +82,7 @@ const SavedCharts2 = () => {
           ))}
         </ul>
       ) : (
-        <p>No saved charts available.</p>
+        <p>No saved charts available for this database.</p>
       )}
     </div>
   );
