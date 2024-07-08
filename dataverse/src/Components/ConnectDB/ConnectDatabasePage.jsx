@@ -1,3 +1,5 @@
+// ConnectDatabasePage.jsx
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ConnectDatabasePage.css';
@@ -21,11 +23,11 @@ const ConnectDatabasePage = () => {
           },
           credentials: "include",
         });
-      
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-      
+
         const data = await response.json();
         setLoggedInUser(data);
         setLoading(false);
@@ -47,13 +49,20 @@ const ConnectDatabasePage = () => {
         throw new Error('Logged-in user information not available.');
       }
 
-      const response = await axios.post('http://localhost:8000/api/connected-databases/', {
+      const payload = {
         name: name,
         server: server,
         database: database,
-        username: username,
+        user: username,
         password: password,
         owner: loggedInUser.id,
+      };
+
+      const response = await axios.post('http://localhost:8000/api/connected-databases/', payload, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true  // Send credentials for CORS
       });
 
       if (response.data.error) {
@@ -65,7 +74,15 @@ const ConnectDatabasePage = () => {
       }
     } catch (error) {
       console.error('Error connecting to database:', error);
-      alert('Connection Failed: ' + error.message);
+
+      if (error.response) {
+        console.log('Response data:', error.response.data);
+        console.log('Response status:', error.response.status);
+        console.log('Response headers:', error.response.headers);
+        alert('Connection Failed: ' + (error.response.data.message || error.response.data.error || 'Unknown error'));
+      } else {
+        alert('Connection Failed: ' + error.message);
+      }
     } finally {
       setLoading(false);
     }
