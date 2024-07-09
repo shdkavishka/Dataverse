@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ConnectDatabasePage.css';
 import Header from '../Dashboard/Header';
-import { toast } from './toast'; // Import the toast function
+import { useNavigate } from 'react-router-dom';
 
 const ConnectDatabasePage = () => {
   const [server, setServer] = useState('');
@@ -14,7 +14,7 @@ const ConnectDatabasePage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
-
+  const navigate=useNavigate()
   useEffect(() => {
     const fetchLoggedInUser = async () => {
       try {
@@ -67,11 +67,12 @@ const ConnectDatabasePage = () => {
       });
 
       if (response.data.error) {
-        toast('Credentials Wrong: ' + response.data.error, 'error');
+        alert('Connection Failed: ' + response.data.error);
       } else {
         console.log('Connection successful', response.data);
-        toast('Connection Successful', 'success');
+        alert('Connection Successful');
         clearForm();
+        navigate("/Dashboard")
       }
     } catch (error) {
       console.error('Error connecting to database:', error);
@@ -80,9 +81,9 @@ const ConnectDatabasePage = () => {
         console.log('Response data:', error.response.data);
         console.log('Response status:', error.response.status);
         console.log('Response headers:', error.response.headers);
-        toast('Credentials Wrong: ' + (error.response.data.message || error.response.data.error || 'Unknown Error'), 'error');
+        alert('Connection Failed: ' + (error.response.data.message || error.response.data.error || 'Unknown error'));
       } else {
-        toast('Credentials Wrong: ' + error.message, 'error');
+        alert('Connection Failed: ' + error.message);
       }
     } finally {
       setLoading(false);
