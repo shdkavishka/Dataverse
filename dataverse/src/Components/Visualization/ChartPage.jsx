@@ -3,8 +3,30 @@ import { useNavigate } from 'react-router-dom';
 import Chart from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import './styles2.css';
+import axios from 'axios';
 
 const ChartPage = ({ LangchainQuery, onChartData ,database_id, createdBy }) => {
+
+  const [db_server,setdb_server]=useState("")
+  const [db_name,setdb_name]=useState("")
+  const [db_user,setdb_user]=useState("")
+  const [db_password,setdb_password]=useState("")
+  const fetchData = async () => {
+    try {
+        const response = await axios.get(`http://localhost:8000/api/view-database/${database_id}/`);
+        console.log(response.data);
+        setdb_server(response.data.server);
+        setdb_name(response.data.database);
+        setdb_user(response.data.user);
+        setdb_password(response.data.password);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+};
+  useEffect(() => {
+    
+    fetchData();
+}, [database_id]);
   const [query, setQuery] = useState('');
   const [queryData, setQueryData] = useState([]);
   const [data, setData] = useState([]);
@@ -176,12 +198,12 @@ const ChartPage = ({ LangchainQuery, onChartData ,database_id, createdBy }) => {
         
 
   const handleQuerySubmit = async () => {
-
+     console.log(db_user,db_name,db_password,database_id,db_server)
     const dbDetails = {
-      db_user: 'root',
-      db_password: 'Aaishah1234',
-      db_host: 'localhost',
-      db_name: 'dataset',
+      db_user: db_user,
+      db_password: db_password,
+      db_host: db_server,
+      db_name: db_name,
     };
 
     try {

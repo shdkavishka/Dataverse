@@ -14,12 +14,33 @@ const MAX_MESSAGES = 21;
 
 // NSN - ChatArea component 
 const ChatArea = ({ newChatTrigger, setNewChat, database_id ,mess,setMess,view,setView,nowViewing, setNowViewing,ImageUrl,user}) => {
-
+  const [db_server,setdb_server]=useState("")
+  const [db_name,setdb_name]=useState("")
+  const [db_user,setdb_user]=useState("")
+  const [db_password,setdb_password]=useState("")
   // NSN - State variables for managing various aspects of the chat
   const database=database_id;
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8000/api/view-database/${database_id}/`);
+   
+            console.log(response.data);
+            setdb_server(response.data.server);
+            setdb_name(response.data.database);
+            setdb_user(response.data.user);
+            setdb_password(response.data.password);
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+    
+    fetchData();
+}, [database_id]);
+
   const [userPrompt, setUserPrompt] = useState("");
   const [query,setQuery] =useState("SELECT p.Name AS PublisherName, SUM(s.TotalAmount) AS TotalSales FROM Publishers p JOIN Books b ON p.PublisherID = b.PublisherID JOIN Sales s ON b.BookID = s.BookID GROUP BY p.PublisherID ORDER BY TotalSales DESC;");
-  const [result,setResult] =useState("No result");
+  const [result,setResult] =useState("hi");
   const [isLoading, setIsLoading] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState("");
@@ -90,10 +111,10 @@ const ChatArea = ({ newChatTrigger, setNewChat, database_id ,mess,setMess,view,s
     try {
       // NSN - Send the user's prompt to the backend API
       const response = await axios.post("http://localhost:8000/api/generate_sql_query/", {
-        db_user: "root",
-        db_password: "",
-        db_host: "localhost",
-        db_name: "dataset",
+        db_user: db_user,
+        db_password: db_password,
+        db_host: db_server,
+        db_name: db_name,
         prompt: userPrompt,
       });
       setQuery(response.data.query)
@@ -116,20 +137,16 @@ const ChatArea = ({ newChatTrigger, setNewChat, database_id ,mess,setMess,view,s
     } catch (error) {
       console.error("Error sending message:", error);
       const errorMessage = `Error sending message: ${error.message}`;
+     showToast("Error generating query","error")
       const newMessages = [
         ...messages,
         { prompt: userPrompt, output: "", isBot: false },
         { prompt: "", output: `Query: ${query}\nResult: ${result}`, isBot: true }
       ];
-      if(view){
-        setMessages([])
-      }
+  
       setMessages(newMessages);
       setUserPrompt("");
 
-      if (newMessages.length >= MAX_MESSAGES) {
-        setLimitReached(true);
-      }
     } finally {
       setIsLoading(false);
     }
