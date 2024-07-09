@@ -10,24 +10,59 @@ from django.contrib.auth.models import User
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from users.models import User as CustomUser
 from rest_framework.exceptions import AuthenticationFailed
-import pyodbc
+# import pyodbc
+
+import mysql.connector
+from mysql.connector import Error
 
 # Function to validate database credentials
+# def validate_database_credentials(server, database, username, password):
+#     try:
+#         # Establish a connection to SQL Server using pyodbc
+#         conn = pyodbc.connect(
+#             f'DRIVER=ODBC Driver 17 for SQL Server;'
+#             f'SERVER={server};'
+#             f'DATABASE={database};'
+#             f'UID={username};'
+#             f'PWD={password};'
+#         )
+#         conn.close()
+#         return True  # Credentials are correct
+#     except pyodbc.Error as e:
+#         print(f"Error validating credentials: {str(e)}")
+#         return False  # Credentials are 
+        
 def validate_database_credentials(server, database, username, password):
     try:
-        # Establish a connection to SQL Server using pyodbc
-        conn = pyodbc.connect(
-            f'DRIVER=ODBC Driver 17 for SQL Server;'
-            f'SERVER={server};'
-            f'DATABASE={database};'
-            f'UID={username};'
-            f'PWD={password};'
+        # Establish a connection to MySQL Server using mysql.connector
+        conn = mysql.connector.connect(
+            host=server,
+            database=database,
+            user=username,
+            password=password
         )
-        conn.close()
-        return True  # Credentials are correct
-    except pyodbc.Error as e:
+        if conn.is_connected():
+            conn.close()
+            return True  # Credentials are correct
+    except Error as e:
         print(f"Error validating credentials: {str(e)}")
-        return False  # Credentials are incorrect
+        return False  # Credentials are 
+    
+#sjdsjdkdjks
+
+# Example usage:
+server = 'your_server'
+database = 'your_database'
+username = 'your_username'
+password = 'your_password'
+
+is_valid = validate_database_credentials(server, database, username, password)
+print(f"Credentials are {'valid' if is_valid else 'invalid'}.")
+
+
+
+
+
 
 # View for creating and listing connected databases
 class ConnectedDatabaseListCreate(ListCreateAPIView):

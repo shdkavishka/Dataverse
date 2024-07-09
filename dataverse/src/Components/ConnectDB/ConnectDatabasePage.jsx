@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ConnectDatabasePage.css';
-import Header from '../Dashboard/Header';
+// import Header from '../Dashboard/Header';
+import Header1 from '../header-all/Header1';
 import { toast } from './toast'; // Import the toast function
 
 const ConnectDatabasePage = () => {
@@ -102,8 +103,9 @@ const ConnectDatabasePage = () => {
   }
 
   return (
+    <div> <Header1/>
     <div className="container">
-      <Header />
+     
       <h1 className="form-title">Add Your Database</h1>
       <div className="form">
         <form onSubmit={handleSubmit}>
@@ -132,6 +134,7 @@ const ConnectDatabasePage = () => {
           </button>
         </form>
       </div>
+    </div>
     </div>
   );
 };

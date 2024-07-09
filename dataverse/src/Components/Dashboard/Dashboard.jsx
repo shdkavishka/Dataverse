@@ -4,7 +4,7 @@ import "./Dashboard.css";
 import Joyride from "react-joyride";
 import logo from "../../assets/logo.png";
 import axios from "axios";
-import Header from "./Header";
+import Header1 from "../header-all/Header1";
 import Footer from "../../Components/footer-all/footer";
 
 const Dashboard = ({ showTour }) => {
@@ -137,7 +137,7 @@ const Dashboard = ({ showTour }) => {
     <>
       {email ? (
         <div>
-          <Header /> {/* Render the Header component */}
+          <Header1 /> {/* Render the Header component */}
           <div className="container1">
             <Link to="/ConnectDatabasePage" className="btn2 add-database-btn">
               Add Database
