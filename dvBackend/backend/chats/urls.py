@@ -1,6 +1,6 @@
 
 from django.urls import path
-from .views import generate_sql_query, delete_chat,save_chat,view_chat,get_past_chats,add_messages_to_chat
+from .views import generate_sql_query, delete_chat,save_chat,view_chat,get_past_chats,add_messages_to_chat,get_saved_messages_count
 
 urlpatterns = [
     path('generate_sql_query/', generate_sql_query),
@@ -9,6 +9,7 @@ urlpatterns = [
      path('chat/<int:chat_id>/',view_chat),
      path('pastchats/', get_past_chats),
      path('updatechat/', add_messages_to_chat),
+     path('get_saved_messages_count/<int:chat_id>/', get_saved_messages_count),
 
 ]
 

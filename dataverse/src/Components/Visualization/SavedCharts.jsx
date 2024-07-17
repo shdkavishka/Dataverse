@@ -11,7 +11,8 @@ const SavedCharts = () => {
   useEffect(() => {
     fetchSavedCharts();
   }, [user_id]);
-
+  
+   
   const fetchSavedCharts = async () => {
     try {
       const response = await fetch(`http://localhost:8000/api/charts/user/${user_id}/`);

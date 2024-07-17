@@ -136,7 +136,7 @@ const Dashboard = ({ showTour }) => {
   return (
     <>
       {email ? (
-        <div>
+        <div><div>
           <Header1 /> {/* Render the Header component */}
           <div className="container1">
             <Link to="/ConnectDatabasePage" className="btn2 add-database-btn">
@@ -169,7 +169,7 @@ const Dashboard = ({ showTour }) => {
               showSkipButton={true}
             />
           )}
-        </div>
+        </div></div>
       ) : (
         <div>
           <Link className="link2" to="/Home">

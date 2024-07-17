@@ -46,8 +46,9 @@ const ChartPage = ({ LangchainQuery, onChartData ,database_id, createdBy }) => {
   }, [LangchainQuery]);
 
   useEffect(() => {
-    handleQuerySubmit();
-  }, [query]);
+    handleQuerySubmit(db_user, db_name, db_password, database_id, db_server);
+  }, [query, db_user, db_name, db_password, database_id, db_server]);
+  
 
   useEffect(() => {
     return () => {
@@ -105,6 +106,7 @@ const ChartPage = ({ LangchainQuery, onChartData ,database_id, createdBy }) => {
         },
       ],
     };
+
 
     const colors = [];
 
@@ -197,38 +199,34 @@ const ChartPage = ({ LangchainQuery, onChartData ,database_id, createdBy }) => {
   };
         
 
-  const handleQuerySubmit = async () => {
-     console.log(db_user,db_name,db_password,database_id,db_server)
+  const handleQuerySubmit = async (db_user, db_name, db_password, database_id, db_server) => {
+    console.log(db_user, db_name, db_password, database_id, db_server);
+  
     const dbDetails = {
       db_user: db_user,
       db_password: db_password,
       db_host: db_server,
       db_name: db_name,
     };
-
+  
     try {
-      const response = await fetch('http://localhost:8000/api/query', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query, db_details: dbDetails }),
+      const response = await axios.post('http://localhost:8000/api/query', {
+        query,
+        db_details: dbDetails,
       });
-
-      if (response.ok) {
-        const responseData = await response.json();
-        console.log('Query Data:', responseData);
-        setQueryData(responseData);
-        setData(responseData);
+  
+      if (response.status === 200) {
+        console.log('Query Data:', response.data);
+        setQueryData(response.data);
+        setData(response.data);
       } else {
-        const errorMessage = await response.text();
-        console.error('Error executing query:', errorMessage);
+        console.error('Error executing query:', response.statusText);
       }
     } catch (error) {
       console.error('Error executing query:', error);
     }
   };
-
+  
   const handleEditChartClick = () => {
     setEditChartOpen(true);
   };
@@ -276,7 +274,7 @@ const ChartPage = ({ LangchainQuery, onChartData ,database_id, createdBy }) => {
       if (response.ok) {
         console.log('Chart saved successfully');
       } else {
-        console.error('Error saving chart:', responseData.error || response.statusText);
+        console.error('Error saving chart:', response.Data.error || response.statusText);
       }
     } catch (error) {
       console.error('Error saving chart:', error);

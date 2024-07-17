@@ -6,6 +6,7 @@ import './ConnectDatabasePage.css';
 // import Header from '../Dashboard/Header';
 import Header1 from '../header-all/Header1';
 import { toast } from './toast'; // Import the toast function
+import { useNavigate } from 'react-router-dom';
 
 const ConnectDatabasePage = () => {
   const [server, setServer] = useState('');
@@ -15,6 +16,7 @@ const ConnectDatabasePage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(true);
   const [loggedInUser, setLoggedInUser] = useState(null);
+  const navigate=useNavigate()
 
   useEffect(() => {
     const fetchLoggedInUser = async () => {
@@ -73,6 +75,7 @@ const ConnectDatabasePage = () => {
         console.log('Connection successful', response.data);
         toast('Connection Successful', 'success');
         clearForm();
+        navigate("/Dashboard")
       }
     } catch (error) {
       console.error('Error connecting to database:', error);

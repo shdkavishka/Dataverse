@@ -9,6 +9,8 @@ from langchain_community.tools.sql_database.tool import QuerySQLDataBaseTool
 from .serializers import SQLQuerySerializer,ChatSerializer,MessageSerializer
 from rest_framework import status
 from rest_framework.response import Response
+from connectDb.models import ConnectedDatabase
+from django.http import JsonResponse
 
 
 
@@ -52,18 +54,27 @@ def save_chat(request):
 
     if chat_id:
         try:
-            chat_instance = Chat.objects.get(id=chat_id) 
+            chat_instance = Chat.objects.get(id=chat_id)
             chat_serializer = ChatSerializer(chat_instance, data=request.data, partial=True)
             if chat_serializer.is_valid():
-                chat_instance = chat_serializer.save()  # NSN - Save the updated chat instance
+                chat_instance = chat_serializer.save()
             else:
                 return Response(chat_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         except Chat.DoesNotExist:
             return Response({"error": "Chat instance not found"}, status=status.HTTP_404_NOT_FOUND)
     else:
+        database_id = request.data.get('database')
+        if not database_id:
+            return Response({'error': 'database is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            database = ConnectedDatabase.objects.get(id=database_id)
+        except ConnectedDatabase.DoesNotExist:
+            return Response({'error': 'Database instance not found'}, status=status.HTTP_404_NOT_FOUND)
+
         chat_serializer = ChatSerializer(data=request.data)
         if chat_serializer.is_valid():
-            chat_instance = chat_serializer.save()
+            chat_instance = chat_serializer.save(database=database)
         else:
             return Response(chat_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -78,6 +89,8 @@ def save_chat(request):
         return Response(message_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     return Response(ChatSerializer(chat_instance).data, status=status.HTTP_201_CREATED)
+
+
 
 
 
@@ -113,16 +126,14 @@ def view_chat(request, chat_id):
 @api_view(['POST'])
 def get_past_chats(request):
     try:
-        id = request.data.get('id')
-        if id is None:
-            return Response({'error': 'datavaseid is required'}, status=status.HTTP_400_BAD_REQUEST)
+        database_id = request.data.get('database_id')
+        if database_id is None:
+            return Response({'error': 'database_id is required'}, status=status.HTTP_400_BAD_REQUEST)
         
-        chats = Chat.objects.filter(database=id).values('id', 'title')
+        chats = Chat.objects.filter(database_id=database_id)
         serializer = ChatSerializer(chats, many=True)
         return Response(serializer.data)
     
-    except Chat.DoesNotExist:
-        return Response({'error': 'Chats not found'}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
@@ -152,3 +163,18 @@ def add_messages_to_chat(request):
         return Response(ChatSerializer(chat_instance).data, status=status.HTTP_200_OK)
     else:
         return Response(message_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+@api_view(['GET'])
+def get_saved_messages_count(request, chat_id):
+    try:
+        chat = Chat.objects.get(pk=chat_id)
+        message_count = Message.objects.filter(chat=chat).count()  
+
+        return Response({'count': message_count}, status=status.HTTP_200_OK)
+
+    except Chat.DoesNotExist:
+        return Response({'error': 'Chat not found'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

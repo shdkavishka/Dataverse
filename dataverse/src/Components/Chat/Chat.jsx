@@ -55,7 +55,6 @@ useEffect(() => {
   
   fetchUserData();
   console.log(database_id)
-  const intervalId = setInterval(fetchUserData, 500);
 
  
   const handleClickOutside = (event) => {
@@ -65,9 +64,7 @@ useEffect(() => {
       
     }
      
-  return () => {
-    clearInterval(intervalId);
-  }
+
   };
   document.addEventListener("mousedown", handleClickOutside);
   return () => {
@@ -116,7 +113,7 @@ const toggleDropdown = () => {
           <div
             id="dropdownContent"
             className={`dropdown-content3 ${dropdownVisible ? "show" : ""}`}
-          >
+          >  <Link to="/Dashboard">Dashboard</Link>
             <Link to="/Profile">User Profile</Link>
             <Link to="/Login" onClick={handleLogout}>Logout </Link>  {/* AH-- to logout and redirect to login page */}
           </div></div> 

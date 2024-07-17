@@ -105,7 +105,7 @@ const Header = (props) => {
           <div>{last_Name}</div>
         </div>
         <div className="profile-picture">
-        <img src={ImageUrl} className="dp-header"/>
+        <Link to="/profile"><img src={ImageUrl} className="dp-header"/></Link>
         </div>
        
        

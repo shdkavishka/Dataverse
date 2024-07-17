@@ -52,7 +52,7 @@ class InviteCollaboratorView(APIView):
         # Check if the invitee is a valid user
         invitee = get_object_or_404(User, email=invitee_email)
 
-        confirmation_url = f"{settings.FRONTEND_BASE_URL}confirm-collaboration/{database.id}/{invitee.id}/{user.id}"
+        confirmation_url = f"{settings.FRONTEND_BASE_URL}/confirm-collaboration/{database.id}/{invitee.id}/{user.id}"
         
         send_mail(
             'Collaboration Invitation',
